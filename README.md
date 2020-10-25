@@ -1,1 +1,1 @@
-# CIS400CustomerFrontend
+# CIS400 User Frontend
