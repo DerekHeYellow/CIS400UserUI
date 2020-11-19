@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
 
 const ResetPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+
+
  
   return (
     <View style={styles.container}>
@@ -56,8 +61,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title:{
-    fontWeight: "400",
-    fontSize:35,
+    fontWeight: "300",
+    fontSize:40,
     color:"#fb5b5a",
     marginBottom:40
   },

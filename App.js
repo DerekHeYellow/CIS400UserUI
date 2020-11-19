@@ -6,6 +6,8 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ResetPassword from './screens/ResetPassword';
+import FindBusiness from './screens/FindBusiness';
+
 
 
 
@@ -31,6 +33,10 @@ const App = () => {
           name="Home"
           component={Home}
           options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen
+          name="FindBusiness"
+          component={FindBusiness}
         />
       </Stack.Navigator>
     </NavigationContainer>
