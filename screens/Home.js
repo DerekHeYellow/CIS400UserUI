@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.pageBtn}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.navigate('UserProfile')}>
           <Text style={styles.pageText}>My Profile</Text>
         </TouchableOpacity>
       </View>

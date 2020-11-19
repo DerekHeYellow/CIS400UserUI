@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native';
@@ -10,17 +9,17 @@ const Map = ({ navigation }) => {
     //     <Text style={styles.title}>Map</Text>
     //     {/* <MapView style={styles.mapStyle} /> */}
     //   </View>
-    <View> 
-      <Text style={styles.title}>Map</Text>
-      {/* <MapView
+    // <View style={styles.container}> 
+    //   <Text style={styles.title}>Map</Text>
+    <MapView
       initialRegion={{
         latitude: 37.78825,
         longitude: -122.4324,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
-      /> */}
-    </View>
+    />
+    // </View>
   )
 }
 
