@@ -7,7 +7,8 @@ import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ResetPassword from './screens/ResetPassword';
 import FindBusiness from './screens/FindBusiness';
-
+import ListContacts from './screens/ListContacts';
+import Map from './screens/Map';
 
 
 
@@ -37,6 +38,14 @@ const App = () => {
         <Stack.Screen
           name="FindBusiness"
           component={FindBusiness}
+        />
+        <Stack.Screen
+          name="ListContacts"
+          component={ListContacts}
+        />
+        <Stack.Screen
+          name="Map"
+          component={Map}
         />
       </Stack.Navigator>
     </NavigationContainer>

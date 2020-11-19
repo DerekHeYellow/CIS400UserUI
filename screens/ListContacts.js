@@ -4,44 +4,24 @@ import { SearchBar, Avatar} from 'react-native-elements';
 
 const list = [
   {
-    name: 'Kim\'s',
+    name: 'Derek He',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Chinese'
   },
   {
-    name: 'Magic Carpet',
+    name: 'Ally Zhang',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
   },
   {
-    name: 'Don Memos',
+    name: 'Rosa Sun',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'pleb',
-    addess: 'FoodTruck'
   },
   {
-    name: 'Yue Kee',
+    name: 'Kaung Khant',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
-  },
-  {
-    name: 'Lynn\'s',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
-  } ,
-  {
-    name: 'Hemo\'s',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
-  } ,
-  {
-    name: 'MexiCali',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
-    } ,
+  }
 ];
 
-const FindBusiness = () => {
+const ListContacts = () => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -89,7 +69,7 @@ const FindBusiness = () => {
       <View style={styles.itemStyle} onPress={() => getItem(item)}>
         {/* <Avatar source={{uri: item.avatar_url}} /> */}
         <Text style = {styles.title}> {item.name} </Text>
-        <Text style = {styles.subtitle}> {item.subtitle} </Text>
+        {/* <Text style = {styles.subtitle}> {item.subtitle} </Text> */}
       </View>
     );
   };
@@ -109,7 +89,7 @@ const FindBusiness = () => {
 
   const getItem = (item) => {
     // Function for click on an item
-    alert('Name : ' + item.name + ' Type : ' + item.subtitle);
+    alert('Name : ' + item.name);
   };
 
   return (
@@ -167,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FindBusiness;
+export default ListContacts;

@@ -14,13 +14,18 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.pageBtn}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.navigate('ListContacts')}>
           <Text style={styles.pageText}>Contacts</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.pageBtn}
+          onPress={() => navigation.navigate('Map')}>
+          <Text style={styles.pageText}>Map</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.pageBtn}
           onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.pageText}>Profile</Text>
+          <Text style={styles.pageText}>My Profile</Text>
         </TouchableOpacity>
       </View>
   )
