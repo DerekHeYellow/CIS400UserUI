@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   ScrollView,
   Image,
   TouchableOpacity
 } from 'react-native';
 
-const UserProfile = ({ navigation }) => {
+const EditUserProfile = ({ navigation }) => {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
@@ -18,8 +19,23 @@ const UserProfile = ({ navigation }) => {
             <View style={styles.bodyContent}>
               <Text style={styles.name}>Jennifer Doe</Text>
               <Text style={styles.info}>Foodie / BBQ Lover</Text>
-              <Text style={styles.description}>This is my bio. I tell you a little about myself here.</Text>
 
+
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>First Name</Text>
+                <TextInput style = {styles.input}>
+                </TextInput>
+              </View>
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Last Name</Text>
+                <TextInput style = {styles.input}>
+                </TextInput>
+              </View>
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Bio</Text>
+                    <TextInput style = {styles.input}>
+                    </TextInput>
+                  </View>
               <View style={styles.card}>
                   <Text style={styles.cardTitle}>Email</Text>
                   <Text style={styles.cardInfo}>Jennifer123@gmail.com</Text>
@@ -30,14 +46,8 @@ const UserProfile = ({ navigation }) => {
                   <Text style={styles.cardInfo}>(493)594-3920</Text>
                 </View>
 
-              <TouchableOpacity style={styles.buttonContainer}
-              onPress={() => navigation.navigate('EditUserProfile')}>
-                <Text style = {styles.buttonText}>Edit Profile</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.pageText}>Log Out</Text>
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text style = {styles.buttonText}>Delete Profile</Text>
               </TouchableOpacity>
             </View>
 
@@ -49,7 +59,7 @@ const UserProfile = ({ navigation }) => {
     );
 }
 
-export default UserProfile;
+export default EditUserProfile;
 
 const styles = StyleSheet.create({
   header:{
@@ -116,7 +126,7 @@ const styles = StyleSheet.create({
   cardTitle:{
       color:"#808080",
       fontSize:16,
-      marginBottom:5,
+      marginBottom:-5,
     },
     card:{
       backgroundColor: "#FFFFFF",

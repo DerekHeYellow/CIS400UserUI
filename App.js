@@ -9,6 +9,7 @@ import ResetPassword from './screens/ResetPassword';
 import FindBusiness from './screens/FindBusiness';
 import ListContacts from './screens/ListContacts';
 import UserProfile from './screens/UserProfile';
+import EditUserProfile from './screens/EditUserProfile';
 import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
 
@@ -45,9 +46,13 @@ const App = () => {
           name="ListContacts"
           component={ListContacts}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="UserProfile"
           component={UserProfile}
+        />
+        <Stack.Screen
+          name="EditUserProfile"
+          component={EditUserProfile}
         />
         <Stack.Screen
           name="BusinessProfile"
