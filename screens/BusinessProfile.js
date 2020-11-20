@@ -32,6 +32,10 @@ const BusinessProfile = ({ route, navigation }) => {
               <Text style={styles.cardTitle}>Business Phone</Text>
               <Text style={styles.cardInfo}>(271) 111-1234</Text>
             </View>
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Hours</Text>
+              <Text style={styles.cardInfo}>M-F: 9AM - 3PM</Text>
+            </View>
 
             <TouchableOpacity 
             style={styles.buttonContainer}
