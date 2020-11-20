@@ -10,9 +10,11 @@ import ListBusiness from './screens/ListBusiness';
 import ListContacts from './screens/ListContacts';
 import UserProfile from './screens/UserProfile';
 import EditUserProfile from './screens/EditUserProfile';
+import UserPosts from './screens/UserPosts';
 import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
 import Menu from './screens/Menu';
+
 
 
 
@@ -55,6 +57,10 @@ const App = () => {
         <Stack.Screen
           name="EditUserProfile"
           component={EditUserProfile}
+        />
+        <Stack.Screen
+          name="UserPosts"
+          component={UserPosts}
         />
         <Stack.Screen
           name="BusinessProfile"

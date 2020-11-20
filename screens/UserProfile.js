@@ -31,6 +31,11 @@ const UserProfile = ({ route, navigation }) => {
                   <Text style={styles.cardInfo}>(493)594-3920</Text>
                 </View>
 
+               <TouchableOpacity style={styles.buttonContainer}
+                    onPress={() => navigation.navigate('UserPosts')}>
+                   <Text style = {styles.buttonText}>My Posts</Text>
+               </TouchableOpacity>
+
               <TouchableOpacity style={styles.buttonContainer}
               onPress={() => navigation.navigate('EditUserProfile', 
               {name: name, avatar_url: avatar_url, username: username, email: email})}>
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
+    marginBottom:10,
     width:250,
     borderRadius:30,
     backgroundColor: "#fb5b5a",

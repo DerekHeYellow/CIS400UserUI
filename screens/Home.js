@@ -32,11 +32,6 @@ const Home = ({ route, navigation }) => {
           email:'rosasun@gmail.com'})}>
           <Text style={styles.pageText}>My Profile</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={styles.pageBtn}
-          onPress={() => navigation.navigate('BusinessProfile')}>
-          <Text style={styles.pageText}>I'm Feelin' Lucky!</Text>
-        </TouchableOpacity> */}
       </View>
   )
 }
