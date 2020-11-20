@@ -11,21 +11,32 @@ const UserProfile = ({ navigation }) => {
     return (
       <View style={styles.container}>
           <View style={styles.header}></View>
-          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
           <View style={styles.body}>
             <View style={styles.bodyContent}>
-              <Text style={styles.name}>John Doe</Text>
-              <Text style={styles.info}>UX Designer / Mobile developer</Text>
-              <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
-              
+              <Text style={styles.name}>Jennifer Doe</Text>
+              <Text style={styles.info}>Foodie / BBQ Lover</Text>
+              <Text style={styles.description}>This is my bio. I tell you a little about myself here.</Text>
+
+              <View style={styles.card}>
+                          <Text style={styles.cardTitle}>Email</Text>
+                          <Text style={styles.cardInfo}>Jennifer123@gmail.com</Text>
+                        </View>
+
+                        <View style={styles.card}>
+                          <Text style={styles.cardTitle}>Phone</Text>
+                          <Text style={styles.cardInfo}>(493)594-3920</Text>
+                        </View>
+
               <TouchableOpacity style={styles.buttonContainer}>
-                <Text style = {styles.buttonText}>Uno</Text>  
-              </TouchableOpacity>              
-              <TouchableOpacity style={styles.buttonContainer}>
-                <Text style = {styles.buttonText}>Dos</Text> 
+                <Text style = {styles.buttonText}>Edit Profile</Text>
               </TouchableOpacity>
             </View>
+
         </View>
+
+
+
       </View>
     );
 }
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonContainer: {
-    marginTop:10,
+    marginTop:20,
     height:45,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -90,5 +101,24 @@ const styles = StyleSheet.create({
   },
   buttonText:{
     color:"white"
-  }
+  },
+  wordBold: {
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  cardTitle:{
+      color:"#808080",
+      fontSize:16,
+      marginBottom:5,
+    },
+    card:{
+      backgroundColor: "#FFFFFF",
+      padding:10,
+      height:60,
+      width:350,
+      marginTop:5,
+    },
+    cardInfo:{
+      fontSize:13,
+    }
 });
