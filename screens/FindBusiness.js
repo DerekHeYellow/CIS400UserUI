@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, FlatList } from 'react-native';
-import { SearchBar, Avatar} from 'react-native-elements';
+import { SearchBar, Avatar } from 'react-native-elements';
 
 const list = [
   {

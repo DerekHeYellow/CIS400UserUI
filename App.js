@@ -10,6 +10,7 @@ import FindBusiness from './screens/FindBusiness';
 import ListContacts from './screens/ListContacts';
 import UserProfile from './screens/UserProfile';
 import Map from './screens/Map';
+import BusinessProfile from './screens/BusinessProfile';
 
 
 
@@ -47,6 +48,10 @@ const App = () => {
          <Stack.Screen
           name="UserProfile"
           component={UserProfile}
+        />
+        <Stack.Screen
+          name="BusinessProfile"
+          component={BusinessProfile}
         />
         <Stack.Screen
           name="Map"

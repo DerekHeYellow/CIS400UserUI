@@ -7,29 +7,32 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-const UserProfile = ({ navigation }) => {
+const BusinessProfile = ({ navigation }) => {
     return (
       <View style={styles.container}>
           <View style={styles.header}></View>
-          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
+          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
           <View style={styles.body}>
             <View style={styles.bodyContent}>
-              <Text style={styles.name}>Jennifer Doe</Text>
-              <Text style={styles.info}>Foodie / BBQ Lover</Text>
-              <Text style={styles.description}>This is my bio. I tell you a little about myself here.</Text>
+              <Text style={styles.name}>Magic Carpet</Text>
+              <Text style={styles.info}>Middle Eastern Food Truck</Text>
+              <Text style={styles.description}>Wholesome yummy food that everyone can enjoy! Stop by today!</Text>
 
               <View style={styles.card}>
-                          <Text style={styles.cardTitle}>Email</Text>
-                          <Text style={styles.cardInfo}>Jennifer123@gmail.com</Text>
+                          <Text style={styles.cardTitle}>Business Email</Text>
+                          <Text style={styles.cardInfo}>magiccarpetride@gmail.com</Text>
                         </View>
 
                         <View style={styles.card}>
-                          <Text style={styles.cardTitle}>Phone</Text>
-                          <Text style={styles.cardInfo}>(493)594-3920</Text>
+                          <Text style={styles.cardTitle}>Business Phone</Text>
+                          <Text style={styles.cardInfo}>(271) 111-1234</Text>
                         </View>
 
               <TouchableOpacity style={styles.buttonContainer}>
-                <Text style = {styles.buttonText}>Edit Profile</Text>
+                <Text style = {styles.buttonText}>Menus</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonContainer}>
+                  <Text style = {styles.buttonText}>Reviews</Text>
               </TouchableOpacity>
             </View>
 
@@ -41,11 +44,11 @@ const UserProfile = ({ navigation }) => {
     );
 }
 
-export default UserProfile;
+export default BusinessProfile;
 
 const styles = StyleSheet.create({
   header:{
-    backgroundColor: "#003f5c",
+    backgroundColor: "#fb5b5a",
     height:150,
   },
   avatar: {
@@ -58,9 +61,9 @@ const styles = StyleSheet.create({
     marginTop:80
   },
   name:{
+    fontWeight:'bold',
     fontSize:22,
     color:"#FFFFFF",
-    fontWeight:'600',
   },
   body:{
     marginTop:40,
@@ -93,17 +96,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
     width:250,
     borderRadius:30,
     backgroundColor: "#fb5b5a",
   },
   buttonText:{
     color:"white"
-  },
-  wordBold: {
-    fontWeight: 'bold',
-    color: 'black'
   },
   cardTitle:{
       color:"#808080",

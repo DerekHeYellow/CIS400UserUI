@@ -27,6 +27,11 @@ const Home = ({ navigation }) => {
           onPress={() => navigation.navigate('UserProfile')}>
           <Text style={styles.pageText}>My Profile</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.pageBtn}
+          onPress={() => navigation.navigate('BusinessProfile')}>
+          <Text style={styles.pageText}>I'm Feelin' Lucky!</Text>
+        </TouchableOpacity>
       </View>
   )
 }
