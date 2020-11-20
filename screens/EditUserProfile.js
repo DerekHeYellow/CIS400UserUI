@@ -15,10 +15,9 @@ const EditUserProfile = ({ navigation }) => {
         <ScrollView style={styles.scrollView}>
           <View style={styles.header}></View>
           <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
+          <Text style={styles.editAvatar}>Click to Edit</Text>
           <View style={styles.body}>
             <View style={styles.bodyContent}>
-              <Text style={styles.name}>Jennifer Doe</Text>
-              <Text style={styles.info}>Foodie / BBQ Lover</Text>
 
 
               <View style={styles.card}>
@@ -53,7 +52,7 @@ const EditUserProfile = ({ navigation }) => {
 <TouchableOpacity style={styles.buttonContainer}>
                 <Text style = {styles.buttonText}>Save</Text>
               </TouchableOpacity>
-              
+
               <TouchableOpacity style={styles.buttonContainer}>
                               <Text style = {styles.buttonText}>Cancel</Text>
                             </TouchableOpacity>
@@ -76,7 +75,7 @@ export default EditUserProfile;
 const styles = StyleSheet.create({
   header:{
     backgroundColor: "#003f5c",
-    height:150,
+    height:100,
   },
   avatar: {
     width: 130,
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
     alignSelf:'center',
     position: 'absolute',
-    marginTop:80
+    marginTop:30
   },
   name:{
     fontSize:22,
@@ -131,9 +130,11 @@ const styles = StyleSheet.create({
   buttonText:{
     color:"white"
   },
-  wordBold: {
+  editAvatar: {
     fontWeight: 'bold',
-    color: 'black'
+    color: 'white',
+    alignSelf:'center',
+    fontSize:19
   },
   cardTitle:{
       color:"#808080",
@@ -149,5 +150,5 @@ const styles = StyleSheet.create({
     },
     cardInfo:{
       fontSize:13,
-    }
+    },
 });
