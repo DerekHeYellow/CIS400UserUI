@@ -1,27 +1,22 @@
-import React, { Component } from 'react';
-import MapView from 'react-native-maps';
+
+import React, { Component, useEffect, useRef, useState } from 'react';
+import MapView, {AnimatedRegion} from 'react-native-maps';
 import { StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native';
 
-
 const Map = ({ navigation }) => {
+
   return (
     // <View style={styles.container}>
     //     <Text style={styles.title}>Map</Text>
     //     {/* <MapView style={styles.mapStyle} /> */}
     //   </View>
-    // <View style={styles.container}> 
-    //   <Text style={styles.title}>Map</Text>
-    <MapView
-      initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
+  
+    <MapView style={{flex: 1}} 
+            showsUserLocation={true}
     />
-    // </View>
   )
 }
+
 
 
 export default Map;
