@@ -1,47 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, FlatList } from 'react-native';
-import { SearchBar, Avatar } from 'react-native-elements';
+import { SearchBar, Avatar, ListItem } from 'react-native-elements';
 
 const list = [
   {
     name: 'Kim\'s',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Chinese'
+    subtitle: 'Chinese Food Truck',
+    email: 'kims@gmail.com'
   },
   {
     name: 'Magic Carpet',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
+    subtitle: 'Middle Eastern Food Truck',
+    email: 'magiccarpet@gmail.com'
   },
   {
     name: 'Don Memos',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'pleb',
-    addess: 'FoodTruck'
+    subtitle: 'Mexican Food Truck',
+    email: 'donmemos@gmail.com'
   },
   {
     name: 'Yue Kee',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
+    subtitle: 'Chinese Food Truck',
+    email: 'yuekees@gmail.com'
   },
   {
     name: 'Lynn\'s',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
+    subtitle: 'Breakfast/Sandwich Food Truck',
+    email: 'lynns@gmail.com'
   } ,
   {
     name: 'Hemo\'s',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
+    subtitle: 'Breakfast/Sandwich Food Truck',
+    email: 'hemos@gmail.com'
   } ,
   {
     name: 'MexiCali',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'FoodTruck'
+    subtitle: 'Mexican Food Truck',
+    email: 'mexicali@gmail.com'
     } ,
 ];
 
-const FindBusiness = () => {
+const FindBusiness = ({ navigation }) => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -86,11 +92,28 @@ const FindBusiness = () => {
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <View style={styles.itemStyle} onPress={() => getItem(item)}>
-        {/* <Avatar source={{uri: item.avatar_url}} /> */}
-        <Text style = {styles.title}> {item.name} </Text>
-        <Text style = {styles.subtitle}> {item.subtitle} </Text>
+      <View>
+      <ListItem 
+      bottomDivider
+      containerStyle={{backgroundColor:'#003f5c'}}
+      onPress={() => getItem(item)} >
+        <Avatar title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
+        <ListItem.Content>
+          <ListItem.Title style = {styles.title}>{item.name}</ListItem.Title>
+          <ListItem.Subtitle style = {styles.subtitle}>{item.subtitle}</ListItem.Subtitle>
+        </ListItem.Content>
+        <ListItem.Chevron/>
+      </ListItem>
       </View>
+      // style={styles.itemStyle} >
+      //   <ListItem
+      //     style={styles.listItemStyle}
+      //     onPress={() => getItem(item)}>
+      //   {/* <Avatar source={{uri: item.avatar_url}} /> */}
+      //   <Text style = {styles.title} > {item.name} </Text>
+      //   <Text style = {styles.subtitle}> {item.subtitle} </Text>
+      //   </ListItem>
+      // </View>
     );
   };
 
@@ -109,7 +132,9 @@ const FindBusiness = () => {
 
   const getItem = (item) => {
     // Function for click on an item
-    alert('Name : ' + item.name + ' Type : ' + item.subtitle);
+    // alert('Name : ' + item.name + ' Type : ' + item.subtitle);
+    navigation.navigate('BusinessProfile', 
+    {name: item.name, type: item.subtitle, email: item.email})
   };
 
   return (
@@ -120,7 +145,7 @@ const FindBusiness = () => {
           searchIcon={{ size: 24 }}
           onChangeText={(text) => searchFilterFunction(text)}
           onClear={(text) => searchFilterFunction('')}
-          placeholder="Search Contact..."
+          placeholder="Search Business..."
           value={search}
         />
         <FlatList
@@ -162,9 +187,9 @@ const styles = StyleSheet.create({
     color:"white"
   },
   subtitle:{
-    fontSize: 15,
-    color:"gray"
-  },
+    fontSize: 12,
+    color:'#D3D3D3'
+  }
 });
 
 export default FindBusiness;
