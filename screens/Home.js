@@ -26,7 +26,10 @@ const Home = ({ route, navigation }) => {
         <TouchableOpacity 
           style={styles.pageBtn}
           onPress={() => navigation.navigate('UserProfile', 
-          {name: name, avatar_url: "", username: username, email: email})}>
+          {name: 'Rosa Sun',
+          avatar_url: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+          username: 'rosasun',
+          email:'rosasun@gmail.com'})}>
           <Text style={styles.pageText}>My Profile</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity

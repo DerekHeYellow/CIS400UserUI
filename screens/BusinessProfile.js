@@ -33,7 +33,9 @@ const BusinessProfile = ({ route, navigation }) => {
               <Text style={styles.cardInfo}>(271) 111-1234</Text>
             </View>
 
-            <TouchableOpacity style={styles.buttonContainer}>
+            <TouchableOpacity 
+            style={styles.buttonContainer}
+            onPress={() => navigation.navigate('Menu')}>
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer}>

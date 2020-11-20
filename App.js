@@ -12,6 +12,8 @@ import UserProfile from './screens/UserProfile';
 import EditUserProfile from './screens/EditUserProfile';
 import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
+import Menu from './screens/Menu';
+
 
 
 
@@ -61,6 +63,10 @@ const App = () => {
         <Stack.Screen
           name="Map"
           component={Map}
+        />
+        <Stack.Screen
+          name="Menu"
+          component={Menu}
         />
       </Stack.Navigator>
     </NavigationContainer>
