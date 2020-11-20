@@ -35,16 +35,28 @@ const EditUserProfile = ({ navigation }) => {
                     <Text style={styles.cardTitle}>Bio</Text>
                     <TextInput style = {styles.input}>
                     </TextInput>
-                  </View>
-              <View style={styles.card}>
-                  <Text style={styles.cardTitle}>Email</Text>
-                  <Text style={styles.cardInfo}>Jennifer123@gmail.com</Text>
                 </View>
 
+
+              <View style={styles.card}>
+                                  <Text style={styles.cardTitle}>Email</Text>
+                                  <TextInput style = {styles.input}>
+                                  </TextInput>
+                              </View>
+
                 <View style={styles.card}>
-                  <Text style={styles.cardTitle}>Phone</Text>
-                  <Text style={styles.cardInfo}>(493)594-3920</Text>
-                </View>
+                                    <Text style={styles.cardTitle}>Phone</Text>
+                                    <TextInput style = {styles.input}>
+                                    </TextInput>
+                                </View>
+
+<TouchableOpacity style={styles.buttonContainer}>
+                <Text style = {styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.buttonContainer}>
+                              <Text style = {styles.buttonText}>Cancel</Text>
+                            </TouchableOpacity>
 
               <TouchableOpacity style={styles.buttonContainer}>
                 <Text style = {styles.buttonText}>Delete Profile</Text>
