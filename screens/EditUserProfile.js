@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
   ScrollView,
   Image,
   TouchableOpacity
 } from 'react-native';
 
-const UserProfile = ({ route, navigation }) => {
+const EditUserProfile = ({ route, navigation }) => {
   const { name, avatar_url, username, email } = route.params;
     return (
       <View style={styles.container}>
@@ -18,28 +19,48 @@ const UserProfile = ({ route, navigation }) => {
           <View style={styles.body}>
             <View style={styles.bodyContent}>
               <Text style={styles.name}>{name}</Text>
-              <Text style={styles.username}>{username}</Text>
-              <Text style={styles.description}>This is my bio. I tell you a little about myself here.</Text>
+              <Text style={styles.info}>{username}</Text>
+
 
               <View style={styles.card}>
-                  <Text style={styles.cardTitle}>Email</Text>
-                  <Text style={styles.cardInfo}>{email}</Text>
+                <Text style={styles.cardTitle}>First Name</Text>
+                <TextInput style = {styles.input}>
+                </TextInput>
+              </View>
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Last Name</Text>
+                <TextInput style = {styles.input}>
+                </TextInput>
+              </View>
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Bio</Text>
+                    <TextInput style = {styles.input}>
+                    </TextInput>
                 </View>
+
+
+              <View style={styles.card}>
+                                  <Text style={styles.cardTitle}>Email</Text>
+                                  <TextInput style = {styles.input}>
+                                  </TextInput>
+                              </View>
 
                 <View style={styles.card}>
-                  <Text style={styles.cardTitle}>Phone</Text>
-                  <Text style={styles.cardInfo}>(493)594-3920</Text>
-                </View>
+                                    <Text style={styles.cardTitle}>Phone</Text>
+                                    <TextInput style = {styles.input}>
+                                    </TextInput>
+                                </View>
 
-              <TouchableOpacity style={styles.buttonContainer}
-              onPress={() => navigation.navigate('EditUserProfile', 
-              {name: name, avatar_url: avatar_url, username: username, email: email})}>
-                <Text style = {styles.buttonText}>Edit Profile</Text>
+<TouchableOpacity style={styles.buttonContainer}>
+                <Text style = {styles.buttonText}>Save</Text>
               </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.buttonContainer}>
+                              <Text style = {styles.buttonText}>Cancel</Text>
+                            </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.pageText}>Log Out</Text>
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text style = {styles.buttonText}>Delete Profile</Text>
               </TouchableOpacity>
             </View>
 
@@ -51,7 +72,7 @@ const UserProfile = ({ route, navigation }) => {
     );
 }
 
-export default UserProfile;
+export default EditUserProfile;
 
 const styles = StyleSheet.create({
   header:{
@@ -85,7 +106,7 @@ const styles = StyleSheet.create({
     color: "#696969",
     fontWeight: "600"
   },
-  username:{
+  info:{
     fontSize:16,
     color: "#00BFFF",
     marginTop:10
@@ -118,7 +139,7 @@ const styles = StyleSheet.create({
   cardTitle:{
       color:"#808080",
       fontSize:16,
-      marginBottom:5,
+      marginBottom:-5,
     },
     card:{
       backgroundColor: "#FFFFFF",

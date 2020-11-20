@@ -6,9 +6,10 @@ import Home from './screens/Home';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ResetPassword from './screens/ResetPassword';
-import FindBusiness from './screens/FindBusiness';
+import ListBusiness from './screens/ListBusiness';
 import ListContacts from './screens/ListContacts';
 import UserProfile from './screens/UserProfile';
+import EditUserProfile from './screens/EditUserProfile';
 import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
 
@@ -38,16 +39,20 @@ const App = () => {
           options={{ title: 'Welcome' }}
         />
         <Stack.Screen
-          name="FindBusiness"
-          component={FindBusiness}
+          name="ListBusiness"
+          component={ListBusiness}
         />
         <Stack.Screen
           name="ListContacts"
           component={ListContacts}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="UserProfile"
           component={UserProfile}
+        />
+        <Stack.Screen
+          name="EditUserProfile"
+          component={EditUserProfile}
         />
         <Stack.Screen
           name="BusinessProfile"

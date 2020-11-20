@@ -47,7 +47,7 @@ const list = [
     } ,
 ];
 
-const FindBusiness = ({ navigation }) => {
+const ListBusiness = ({ navigation }) => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -73,8 +73,8 @@ const FindBusiness = ({ navigation }) => {
       // Filter the masterDataSource
       // Update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
-        const itemData = item.name
-          ? item.name.toUpperCase()
+        const itemData = (item.name + item.subtitle)
+          ? (item.name + item.subtitle).toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -105,15 +105,6 @@ const FindBusiness = ({ navigation }) => {
         <ListItem.Chevron/>
       </ListItem>
       </View>
-      // style={styles.itemStyle} >
-      //   <ListItem
-      //     style={styles.listItemStyle}
-      //     onPress={() => getItem(item)}>
-      //   {/* <Avatar source={{uri: item.avatar_url}} /> */}
-      //   <Text style = {styles.title} > {item.name} </Text>
-      //   <Text style = {styles.subtitle}> {item.subtitle} </Text>
-      //   </ListItem>
-      // </View>
     );
   };
 
@@ -132,7 +123,6 @@ const FindBusiness = ({ navigation }) => {
 
   const getItem = (item) => {
     // Function for click on an item
-    // alert('Name : ' + item.name + ' Type : ' + item.subtitle);
     navigation.navigate('BusinessProfile', 
     {name: item.name, type: item.subtitle, email: item.email})
   };
@@ -192,4 +182,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FindBusiness;
+export default ListBusiness;

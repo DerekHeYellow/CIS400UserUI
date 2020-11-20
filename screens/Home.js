@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 
-const Home = ({ navigation }) => {
+const Home = ({ route, navigation }) => {
+  const { name, username, email } = route.params;
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Welcome to Vici</Text>
         <TouchableOpacity
           style={styles.pageBtn}
-          onPress={() => navigation.navigate('FindBusiness')}>
+          onPress={() => navigation.navigate('ListBusiness')}>
           <Text style={styles.pageText}>Businesses</Text>
         </TouchableOpacity>
         <TouchableOpacity 
@@ -24,7 +25,8 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.pageBtn}
-          onPress={() => navigation.navigate('UserProfile')}>
+          onPress={() => navigation.navigate('UserProfile', 
+          {name: name, avatar_url: "", username: username, email: email})}>
           <Text style={styles.pageText}>My Profile</Text>
         </TouchableOpacity>
         {/* <TouchableOpacity

@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -11,32 +12,36 @@ const BusinessProfile = ({ route, navigation }) => {
   const { name, type, email } = route.params;
   return (
     <View style={styles.container}>
-      <View style={styles.header}></View>
-      <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
-      <View style={styles.body}>
-        <View style={styles.bodyContent}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.info}>{type}</Text>
-          <Text style={styles.description}>Wholesome yummy food that everyone can enjoy! Stop by today!</Text>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Business Email</Text>
-            <Text style={styles.cardInfo}>{email}</Text>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.header}></View>
+        <Image style={styles.avatar} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg' }} />
+        <View style={styles.body}>
+          <View style={styles.bodyContent}>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.info}>{type}</Text>
+            <Text style={styles.description}>Wholesome yummy food that everyone can enjoy! Stop by today!</Text>
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Our Location</Text>
+              <Text style={styles.cardInfo}>3900 Walnut Street, Philadelphia PA, USA</Text>
+            </View>
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Business Email</Text>
+              <Text style={styles.cardInfo}>{email}</Text>
+            </View>
+            <View style={styles.card}>
+              <Text style={styles.cardTitle}>Business Phone</Text>
+              <Text style={styles.cardInfo}>(271) 111-1234</Text>
+            </View>
+
+            <TouchableOpacity style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>Menus</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>Reviews</Text>
+            </TouchableOpacity>
+            </View>
           </View>
-
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Business Phone</Text>
-            <Text style={styles.cardInfo}>(271) 111-1234</Text>
-          </View>
-
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Menus</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Reviews</Text>
-          </TouchableOpacity>
-        </View>
-
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -78,14 +83,14 @@ const styles = StyleSheet.create({
     color: "#696969",
     fontWeight: "600",
     marginTop: 20,
-    height:50,
-    padding:10
+    height: 50,
+    padding: 10
   },
   info: {
     fontSize: 16,
     color: "#00BFFF",
     marginTop: 10,
-    height:20
+    height: 20
   },
   description: {
     fontSize: 16,
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 20,
-    height:50,
+    height: 50,
     width: 300
   },
   buttonContainer: {

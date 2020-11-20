@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, FlatList } from 'react-native';
-import { SearchBar, Avatar} from 'react-native-elements';
+import { SearchBar, Avatar, ListItem} from 'react-native-elements';
 
 const list = [
   {
     name: 'Derek He',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
+    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar5.png',
+    username: 'derekhe',
+    email:'derekhe@gmail.com'
   },
   {
     name: 'Ally Zhang',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
+    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar8.png',
+    username: 'allyzhang',
+    email:'allyzhang@gmail.com'
   },
   {
     name: 'Rosa Sun',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
+    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+    username: 'rosasun',
+    email:'rosasun@gmail.com'
   },
   {
     name: 'Kaung Khant',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
+    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar2.png',
+    username: 'kaungkhant',
+    email:'kk@gmail.com'
   }
 ];
 
-const ListContacts = () => {
+const ListContacts = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
@@ -66,11 +74,25 @@ const ListContacts = () => {
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <View style={styles.itemStyle} onPress={() => getItem(item)}>
-        {/* <Avatar source={{uri: item.avatar_url}} /> */}
-        <Text style = {styles.title}> {item.name} </Text>
-        {/* <Text style = {styles.subtitle}> {item.subtitle} </Text> */}
+      <View>
+        <ListItem 
+        bottomDivider
+        containerStyle={{backgroundColor:'#003f5c'}}
+        onPress={() => getItem(item)} >
+          <Avatar title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
+          <ListItem.Content>
+            <ListItem.Title style = {styles.title}>{item.name}</ListItem.Title>
+            <ListItem.Subtitle style = {styles.username}>{item.username}</ListItem.Subtitle>
+          </ListItem.Content>
+          <ListItem.Chevron/>
+        </ListItem>
       </View>
+
+      // <View style={styles.itemStyle} onPress={() => getItem(item)}>
+      //   {/* <Avatar source={{uri: item.avatar_url}} /> */}
+      //   <Text style = {styles.title}> {item.name} </Text>
+      //   {/* <Text style = {styles.subtitle}> {item.subtitle} </Text> */}
+      // </View>
     );
   };
 
@@ -89,7 +111,8 @@ const ListContacts = () => {
 
   const getItem = (item) => {
     // Function for click on an item
-    alert('Name : ' + item.name);
+    navigation.navigate('UserProfile', 
+    {name: item.name, avatar_url: item.avatar_url, username: item.username, email: item.email})
   };
 
   return (
@@ -141,7 +164,7 @@ const styles = StyleSheet.create({
     height: 30,
     color:"white"
   },
-  subtitle:{
+  username:{
     fontSize: 15,
     color:"gray"
   },
