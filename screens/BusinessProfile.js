@@ -38,8 +38,9 @@ const BusinessProfile = ({ route, navigation }) => {
             onPress={() => navigation.navigate('Menu')}>
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Reviews</Text>
+            <TouchableOpacity style={styles.buttonContainer}
+            onPress={() => navigation.navigate('BusinessMentions')}>
+              <Text style={styles.buttonText}>Mentions</Text>
             </TouchableOpacity>
             </View>
           </View>

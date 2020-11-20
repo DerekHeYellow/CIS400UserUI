@@ -7,7 +7,7 @@ const Home = ({ route, navigation }) => {
   const { name, username, email } = route.params;
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Welcome to Vici</Text>
+        <Text style={styles.title}>Welcome to Vici.</Text>
         <TouchableOpacity
           style={styles.pageBtn}
           onPress={() => navigation.navigate('ListBusiness')}>
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: "400",
+    fontWeight: "bold",
     fontSize: 35,
-    color:"#fb5b5a",
+    color:"white",
     marginBottom:40,
   },
 
@@ -69,15 +69,14 @@ const styles = StyleSheet.create({
   pageBtn:{
     width:"80%",
     backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
+    height:60,
     alignItems:"center",
     justifyContent:"center",
     marginTop:40,
-    marginBottom:10
   },
   pageText:{
-    color:"white"
+    color:"white",
+    fontSize:20
   }
 });
 
