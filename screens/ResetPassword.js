@@ -18,7 +18,7 @@ const ResetPassword = ({ navigation }) => {
       <View style={styles.inputView}>
           <TextInput style={styles.inputText}
               placeholder="Email"
-              placeholderTextColor="#003f5c"
+              placeholderTextColor="#2B2D42"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
               onChangeText={(email) => setEmail({email})}/>
@@ -27,7 +27,7 @@ const ResetPassword = ({ navigation }) => {
         <View style={styles.inputView}>
           <TextInput style={styles.inputText}
               placeholder="New Password"
-              placeholderTextColor="#003f5c"
+              placeholderTextColor="#2B2D42"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
               onChangeText={(password) => setPassword({password})}/>
@@ -36,7 +36,7 @@ const ResetPassword = ({ navigation }) => {
         <View style={styles.inputView}>
           <TextInput style={styles.inputText}
               placeholder="Confirm New Password"
-              placeholderTextColor="#003f5c"
+              placeholderTextColor="#2B2D42"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
               onChangeText={(confirmPassword) => setPassword({confirmPassword})}/>
@@ -45,7 +45,7 @@ const ResetPassword = ({ navigation }) => {
         <TouchableOpacity 
           style={styles.resetBtn}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.resetText}>Reset Password</Text>
+          <Text style={styles.resetText}>Reset</Text>
         </TouchableOpacity>
     </View>
   );
@@ -56,33 +56,31 @@ export default ResetPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#2B2D42',
     alignItems: 'center',
     justifyContent: 'center',
   },
   title:{
-    fontWeight: "300",
-    fontSize:40,
-    color:"#fb5b5a",
+    fontWeight: "bold",
+    fontSize:35,
+    color:"#ffffff",
     marginBottom:40
   },
-
   inputView:{
-    width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
+    width:"75%",
+    backgroundColor:"#595d88",
+    height:42,
+    marginBottom:15,
     justifyContent:"center",
-    padding:20
+    padding:15
   },
   inputText:{
     height:50,
     color:"white"
   },
   resetBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
+    width:"75%",
+    backgroundColor:"#8d99ae",
     borderRadius:25,
     height:50,
     alignItems:"center",
@@ -91,7 +89,8 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   resetText:{
-    color:"white"
+    color:"white",
+    fontWeight: "bold"
   }
 });
 

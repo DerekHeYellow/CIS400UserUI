@@ -15,15 +15,15 @@ const Login = ({ navigation }) => {
           <TextInput  
             style={styles.inputText}
             placeholder="Username" 
-            placeholderTextColor="#003f5c"
+            placeholderTextColor="#2B2D42"
             onChangeText={username => setUsername(username)}/>
         </View>
         <View style={styles.inputView} >
           <TextInput  
             secureTextEntry
             style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
+            placeholder="Password" 
+            placeholderTextColor="#2B2D42"
             onChangeText={password => setPassword(password)}/>
         </View>
         <TouchableOpacity
@@ -34,11 +34,12 @@ const Login = ({ navigation }) => {
           style={styles.loginBtn}
           onPress={() => navigation.navigate('Home', 
           {name:"", username: username, email: email})}>
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={styles.signupBtn}
           onPress={() => navigation.navigate('Signup')}>
-          <Text style={styles.loginText}>Signup</Text>
+          <Text style={styles.loginText}>Sign Up</Text>
         </TouchableOpacity>
 
   
@@ -50,45 +51,50 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#2B2D42',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo:{
-    fontWeight:"bold",
+    fontWeight: "bold",
     fontSize:50,
-    color:"#fb5b5a",
+    color:"#FFFFFF",
     marginBottom:40
   },
   inputView:{
-    width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
+    width:"65%",
+    backgroundColor:"#595d88",
+    height:42,
+    marginBottom:15,
     justifyContent:"center",
-    padding:20
+    padding:15
   },
   inputText:{
-    height:50,
+    height:45,
     color:"white"
   },
   forgot:{
-    color:"white",
+    color:"gray",
     fontSize:11
   },
   loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
+    width:"65%",
+    backgroundColor:"#ef233c",
     borderRadius:25,
-    height:50,
+    height:42,
     alignItems:"center",
     justifyContent:"center",
     marginTop:40,
     marginBottom:10
   },
   loginText:{
-    color:"white"
+    color:"white",
+    fontWeight: "bold"
+  },
+  signupBtn:{
+    height:42,
+    alignItems:"center",
+    justifyContent:"center"
   }
 });
 

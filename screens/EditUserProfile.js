@@ -34,35 +34,34 @@ const EditUserProfile = ({ route, navigation }) => {
                 <TextInput style = {styles.input}>
                 </TextInput>
               </View>
-                <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Bio</Text>
-                    <TextInput style = {styles.input}>
-                    </TextInput>
-                </View>
-
-
               <View style={styles.card}>
-                                  <Text style={styles.cardTitle}>Email</Text>
-                                  <TextInput style = {styles.input}>
-                                  </TextInput>
-                              </View>
+                  <Text style={styles.cardTitle}>Bio</Text>
+                  <TextInput style = {styles.input}>
+                  </TextInput>
+              </View>
+              <View style={styles.card}>
+                  <Text style={styles.cardTitle}>Email</Text>
+                  <TextInput style = {styles.input}>
+                  </TextInput>
+              </View>
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Phone</Text>
+                <TextInput style = {styles.input}>
+                </TextInput>
+              </View>
 
-                <View style={styles.card}>
-                                    <Text style={styles.cardTitle}>Phone</Text>
-                                    <TextInput style = {styles.input}>
-                                    </TextInput>
-                                </View>
-
-<TouchableOpacity style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.buttonContainer} 
+              onPress={() => navigation.navigate('UserProfile')}>
                 <Text style = {styles.buttonText}>Save</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.buttonContainer}>
-                              <Text style = {styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
+              <TouchableOpacity
+              onPress={() => navigation.navigate('UserProfile')}>
+                <Text style = {styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
 
-              <TouchableOpacity style={styles.buttonContainer}>
-                <Text style = {styles.buttonText}>Delete Profile</Text>
+              <TouchableOpacity>
+                <Text style = {styles.deleteText}>Delete Profile</Text>
               </TouchableOpacity>
             </View>
 
@@ -77,8 +76,12 @@ const EditUserProfile = ({ route, navigation }) => {
 export default EditUserProfile;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#edf2f4"
+  },
   header:{
-    backgroundColor: "#003f5c",
+    backgroundColor: "#2B2D42",
     height:100,
   },
   avatar: {
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
   },
   name:{
     fontSize:22,
-    color:"#FFFFFF",
+    color:"#2B2D42",
     fontWeight:'600',
   },
   body:{
@@ -102,11 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding:30,
-  },
-  name:{
-    fontSize:28,
-    color: "#696969",
-    fontWeight: "600"
   },
   info:{
     fontSize:16,
@@ -121,18 +119,30 @@ const styles = StyleSheet.create({
     marginBottom:20,
   },
   buttonContainer: {
-    marginTop:20,
+    marginTop:10,
     height:45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "#fb5b5a",
+    marginBottom:10,
+    width:"50%",
+    borderRadius:25,
+    backgroundColor: "#2B2D42",
   },
   buttonText:{
-    color:"white"
+    color:"white",
+    fontWeight:"bold"
+  },
+  cancelText:{
+    color: "#2B2D42",
+    fontWeight: "bold",
+    marginTop:10,
+    marginBottom:50
+  },
+  deleteText:{
+    color: "#ef233c",
+    fontWeight: "bold",
+    marginTop:10
   },
   editAvatar: {
     fontWeight: 'bold',
@@ -141,18 +151,18 @@ const styles = StyleSheet.create({
     fontSize:19
   },
   cardTitle:{
-      color:"#808080",
-      fontSize:16,
-      marginBottom:-5,
-    },
-    card:{
-      backgroundColor: "#FFFFFF",
-      padding:10,
-      height:60,
-      width:350,
-      marginTop:5,
-    },
-    cardInfo:{
-      fontSize:13,
-    },
+    color:"#8d99ae",
+    fontSize:14,
+    marginBottom:-10
+  },
+  card:{
+    backgroundColor: "#FFFFFF",
+    padding:10,
+    height:65,
+    width:"95%",
+    marginBottom:15,
+  },
+  cardInfo:{
+    fontSize:14,
+  },
 });

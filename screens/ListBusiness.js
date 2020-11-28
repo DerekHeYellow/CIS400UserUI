@@ -95,7 +95,7 @@ const ListBusiness = ({ navigation }) => {
       <View>
       <ListItem 
       bottomDivider
-      containerStyle={{backgroundColor:'#003f5c'}}
+      containerStyle={{backgroundColor:'#2B2D42'}}
       onPress={() => getItem(item)} >
         <Avatar title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
         <ListItem.Content>
@@ -113,9 +113,9 @@ const ListBusiness = ({ navigation }) => {
       // Flat List Item Separator
       <View
         style={{
-          height: 0.5,
+          height: 1.5,
           width: '100%',
-          backgroundColor: '#C8C8C8',
+          backgroundColor: '#8d99ae',
         }}
       />
     );
@@ -151,7 +151,7 @@ const ListBusiness = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#2B2D42',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
   },
   inputView:{
     width:"80%",
-    backgroundColor:"#465881",
     borderRadius:25,
     height:50,
     marginBottom:20,
@@ -173,12 +172,13 @@ const styles = StyleSheet.create({
   },
   title:{
     fontSize: 20,
+    fontWeight: "bold",
     height: 30,
     color:"white"
   },
   subtitle:{
-    fontSize: 12,
-    color:'#D3D3D3'
+    fontSize: 14,
+    color:'#8d99ae'
   }
 });
 

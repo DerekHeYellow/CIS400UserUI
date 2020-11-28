@@ -19,7 +19,6 @@ const BusinessProfile = ({ route, navigation }) => {
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{name}</Text>
             <Text style={styles.info}>{type}</Text>
-            <Text style={styles.description}>Wholesome yummy food that everyone can enjoy! Stop by today!</Text>
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Our Location</Text>
               <Text style={styles.cardInfo}>3900 Walnut Street, Philadelphia PA, USA</Text>
@@ -42,9 +41,9 @@ const BusinessProfile = ({ route, navigation }) => {
             onPress={() => navigation.navigate('Menu')}>
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer}
+            <TouchableOpacity style={styles.buttonContainer2}
             onPress={() => navigation.navigate('BusinessMentions')}>
-              <Text style={styles.buttonText}>Mentions</Text>
+              <Text style={styles.buttonText2}>Mentions</Text>
             </TouchableOpacity>
             </View>
           </View>
@@ -58,10 +57,11 @@ export default BusinessProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#edf2f4"
   },
   header: {
-    backgroundColor: "#fb5b5a",
-    height: 150,
+    backgroundColor: "#2B2D42",
+    height: 170
   },
   avatar: {
     width: 130,
@@ -70,71 +70,78 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'center',
     position: 'absolute',
-    marginTop: 80
-  },
-  name: {
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: "#FFFFFF",
+    marginTop: 100
   },
   body: {
     marginTop: 40,
+    marginBottom: 50
   },
   bodyContent: {
     flex: 1,
-    alignItems: 'center',
-    padding: 5,
+    alignItems: 'center'
   },
   name: {
     fontSize: 28,
-    color: "#696969",
-    fontWeight: "600",
+    color: "#2B2D42",
+    fontWeight: "bold",
     marginTop: 20,
-    height: 50,
+    height: 60,
     padding: 10
   },
   info: {
     fontSize: 16,
-    color: "#00BFFF",
-    marginTop: 10,
-    height: 20
+    color: "#8d99ae",
+    height: 20,
+    marginBottom: 20
   },
   description: {
     fontSize: 16,
-    color: "#696969",
+    color: "#8d99ae",
     marginTop: 10,
     textAlign: 'center',
-    marginTop: 10,
     marginBottom: 20,
     height: 50,
     width: 300
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 30,
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: 250,
     borderRadius: 30,
-    backgroundColor: "#fb5b5a",
+    backgroundColor: "#2B2D42",
+  },
+  buttonContainer2: {
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 250,
+    borderRadius: 30
   },
   buttonText: {
-    color: "white"
+    color: "white",
+    fontWeight: "bold"
+  },
+  buttonText2: {
+    color: "#2B2D42",
+    fontWeight: "bold"
   },
   cardTitle: {
-    color: "#808080",
-    fontSize: 16,
-    marginBottom: 5,
+    color: "#8d99ae",
+    fontSize: 14
   },
   card: {
     backgroundColor: "#FFFFFF",
     padding: 10,
     height: 60,
     width: 350,
-    marginTop: 5,
+    marginTop: 10,
   },
   cardInfo: {
-    fontSize: 13,
+    fontSize: 14,
+    color: "#2B2D42"
   }
 });

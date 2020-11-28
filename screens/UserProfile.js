@@ -44,7 +44,7 @@ const UserProfile = ({ route, navigation }) => {
 
               <TouchableOpacity
                 onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.pageText}>Log Out</Text>
+                <Text style={styles.logouttext}>Log Out</Text>
               </TouchableOpacity>
             </View>
 
@@ -59,9 +59,13 @@ const UserProfile = ({ route, navigation }) => {
 export default UserProfile;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#edf2f4"
+  },
   header:{
-    backgroundColor: "#003f5c",
-    height:150,
+    backgroundColor: "#2B2D42",
+    height:170,
   },
   avatar: {
     width: 130,
@@ -70,12 +74,12 @@ const styles = StyleSheet.create({
     marginBottom:10,
     alignSelf:'center',
     position: 'absolute',
-    marginTop:80
+    marginTop:100
   },
   name:{
-    fontSize:22,
-    color:"#FFFFFF",
-    fontWeight:'600',
+    fontSize:28,
+    color:"#2B2D42",
+    fontWeight: "bold",
   },
   body:{
     marginTop:40,
@@ -85,54 +89,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding:30,
   },
-  name:{
-    fontSize:28,
-    color: "#696969",
-    fontWeight: "600"
-  },
   username:{
     fontSize:16,
-    color: "#00BFFF",
+    color: "#2B2D42",
     marginTop:10
   },
   description:{
     fontSize:16,
-    color: "#696969",
+    color: "#8d99ae",
     marginTop:10,
     textAlign: 'center',
     marginBottom:20,
   },
   buttonContainer: {
-    marginTop:20,
+    marginTop:10,
     height:45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:10,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "#fb5b5a",
+    width:"50%",
+    borderRadius:25,
+    backgroundColor: "#2B2D42",
   },
   buttonText:{
-    color:"white"
+    color:"white",
+    fontWeight: "bold"
   },
-  wordBold: {
+  wordBold:{
     fontWeight: 'bold',
     color: 'black'
   },
   cardTitle:{
-      color:"#808080",
-      fontSize:16,
-      marginBottom:5,
-    },
-    card:{
-      backgroundColor: "#FFFFFF",
-      padding:10,
-      height:60,
-      width:350,
-      marginTop:5,
-    },
-    cardInfo:{
-      fontSize:13,
-    }
+      color:"#8d99ae",
+      fontSize:14
+  },
+  logouttext:{
+    color: "#2B2D42",
+    fontWeight: "bold"
+  },
+  card:{
+    backgroundColor: "#FFFFFF",
+    padding:10,
+    height:60,
+    width:"95%",
+    marginBottom:15
+  },
+  cardInfo:{
+    fontSize:14
+  }
 });
