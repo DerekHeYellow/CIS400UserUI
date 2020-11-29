@@ -16,9 +16,9 @@ import BusinessProfile from './screens/BusinessProfile';
 import BusinessMentions from './screens/BusinessMentions';
 import Menu from './screens/Menu';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
-
+const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 

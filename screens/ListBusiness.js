@@ -97,7 +97,7 @@ const ListBusiness = ({ navigation }) => {
       bottomDivider
       containerStyle={{backgroundColor:'#2B2D42'}}
       onPress={() => getItem(item)} >
-        <Avatar title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
+        <Avatar rounded size={55} title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
         <ListItem.Content>
           <ListItem.Title style = {styles.title}>{item.name}</ListItem.Title>
           <ListItem.Subtitle style = {styles.subtitle}>{item.subtitle}</ListItem.Subtitle>

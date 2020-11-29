@@ -77,9 +77,9 @@ const ListContacts = ({navigation}) => {
       <View>
         <ListItem 
         bottomDivider
-        containerStyle={{backgroundColor:'#003f5c'}}
+        containerStyle={{backgroundColor:'#2B2D42'}}
         onPress={() => getItem(item)} >
-          <Avatar title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
+          <Avatar rounded size={55} title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }}/>
           <ListItem.Content>
             <ListItem.Title style = {styles.title}>{item.name}</ListItem.Title>
             <ListItem.Subtitle style = {styles.username}>{item.username}</ListItem.Subtitle>
@@ -101,9 +101,8 @@ const ListContacts = ({navigation}) => {
       // Flat List Item Separator
       <View
         style={{
-          height: 0.5,
           width: '100%',
-          backgroundColor: '#C8C8C8',
+          backgroundColor: '#8d99ae',
         }}
       />
     );
@@ -139,16 +138,15 @@ const ListContacts = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#2B2D42',
     // alignItems: 'center',
     // justifyContent: 'center',
   },
   itemStyle: {
-    padding: 10,
+    padding: 10
   },
   inputView:{
     width:"80%",
-    backgroundColor:"#465881",
     borderRadius:25,
     height:50,
     marginBottom:20,
@@ -166,7 +164,7 @@ const styles = StyleSheet.create({
   },
   username:{
     fontSize: 15,
-    color:"gray"
+    color:"#8d99ae"
   },
 });
 

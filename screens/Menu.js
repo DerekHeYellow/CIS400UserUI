@@ -12,7 +12,7 @@ const Menu = ({ navigation }) => {
       keyExtractor={(item, index) => item + index}
       renderItem={({ item }) => <Item title={item} />}
       renderSectionHeader={({ section: { title } }) => (
-        <Text style={{fontFamily: 'sans-serif-medium', fontSize: 25, color: "#003049", marginTop: 10}}>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
       )}
     />
   </SafeAreaView>
@@ -40,7 +40,7 @@ const DATA = [
 
 const Item = ({ title }) => (
   <View style={styles.item}>
-    <Text style={{fontFamily: 'sans-serif', fontSize: 15, color: "#003049"}}>{title}</Text>
+    <Text style={{fontSize: 15, color: "#003049"}}>{title}</Text>
   </View>
 );
 
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
     fontSize: 32
   },
   title: {
-    fontSize: 24
+    color: "#003049", 
+    marginTop: 10,
+    fontSize: 25
   }
 });
 
