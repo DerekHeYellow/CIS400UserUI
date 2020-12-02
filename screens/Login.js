@@ -1,12 +1,36 @@
 import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
+import { loginUser } from '../js/fetchData';
+
 
 const Login = ({ navigation }) => {
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+
+
+  const handleLogin = () => {
+    if(username.length == 0 || password.length == 0) {
+      setLoginError('Fields cannot be blank')
+      console.log("Fill out all fields")
+      return;
+    }
+    loginUser(username, password).then((response) => {
+      if (response === 'Success.') {
+        console.log('success');
+        navigation.navigate('Home', 
+          {name:"", username: username, email: email});
+      } else {
+        setLoginError('Login Failed')
+        //make error more specific?
+        console.log(response)
+      }
+    });
+  };
 
   return (
       <View style={styles.container}>
@@ -32,8 +56,7 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.loginBtn}
-          onPress={() => navigation.navigate('Home', 
-          {name:"", username: username, email: email})}>
+          onPress={handleLogin}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -41,6 +64,9 @@ const Login = ({ navigation }) => {
           onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.loginText}>Sign Up</Text>
         </TouchableOpacity>
+        <Text style={styles.errorText}>
+          {loginError}
+        </Text>
 
   
       </View>
@@ -95,7 +121,12 @@ const styles = StyleSheet.create({
     height:42,
     alignItems:"center",
     justifyContent:"center"
-  }
+  },
+  errorText:{
+    height: 50,
+    color: "red",
+    paddingTop: 20
+  },
 });
 
 export default Login;
