@@ -7,7 +7,6 @@ import { loginUser } from '../js/fetchData';
 const Login = ({ navigation }) => {
 
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
 
@@ -23,7 +22,7 @@ const Login = ({ navigation }) => {
       if (response === 'Success.') {
         console.log('success');
         navigation.navigate('Home', 
-          {name:"", username: username, email: email});
+          {name:"", username: username});
       } else {
         setLoginError('Login Failed')
         //make error more specific?

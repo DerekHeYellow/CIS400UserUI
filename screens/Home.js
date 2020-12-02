@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements'
 
 
 const Home = ({ route, navigation }) => {
-  const { name, username, email } = route.params;
+  const { name, username } = route.params;
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Welcome to Vici.</Text>

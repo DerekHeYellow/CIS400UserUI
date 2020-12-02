@@ -5,7 +5,6 @@ import { signupUser } from '../js/fetchData';
 
 const Signup = ({ navigation }) => {
   const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isBusiness, setIsBusiness] = useState(false);
   const [userType, setUserType] = useState('Customer');
@@ -103,17 +102,6 @@ const Signup = ({ navigation }) => {
           {unError}
         </Text>
       </View>
-{/* 
-      <View style={styles.labelView}>
-        <View style={styles.inputView}>
-          <TextInput style={styles.inputText}
-            placeholder="Email"
-            placeholderTextColor="#2b2d42"
-            keyboardType="email-address"
-            underlineColorAndroid='transparent'
-            onChangeText={(email) => setEmail(email)} />
-        </View>
-      </View> */}
 
       <View style={styles.labelView}>
         <View style={styles.inputView}>
