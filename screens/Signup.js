@@ -1,87 +1,97 @@
 import React, { useState } from 'react';
-import { StyleSheet, Switch, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet, Switch, View, Text, TextInput, TouchableOpacity,
+} from 'react-native';
 
+import ErrorPopup from '../components/ErrorPopup';
+import { Status, UserType } from '../js/enums';
 import { signupUser } from '../js/fetchData';
 
 const Signup = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isBusiness, setIsBusiness] = useState(false);
-  const [userType, setUserType] = useState('Customer');
+  const [userType, setUserType] = useState(UserType.CUSTOMER);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [unError, setUNError] = useState('');
   const [pwError, setPWError] = useState('');
   const [cpwError, setCPWError] = useState('');
-
+  const [signupErrorShow, setSignupErrorShow] = useState(false);
+  const [signupError, setSignupError] = useState('');
 
   const handleUsername = (un) => {
     setUsername(un);
-    if (un.length < 1) {
-      setUNError("Username cannot be empty")
-    } else {
-      setUNError('')
-    }
-  }
+    setUNError('');
+  };
 
   const handlePassword = (pw) => {
     setPassword(pw);
-    if (pw.length < 5) {
-      setPWError("Password must be at least 5 characters")
-    } else {
-      setPWError('')
-    }
-  }
+    setPWError('');
+  };
 
   const handleConfirmPassword = (cpw) => {
     setConfirmPassword(cpw);
-    if (cpw !== password) {
-      setCPWError("Passwords must match")
-    } else {
-      setCPWError('')
-    }
-  }
+    setCPWError('');
+  };
 
   const toggleSwitch = () => {
     if (isBusiness) {
-      setUserType("Customer")
+      setUserType(UserType.CUSTOMER);
     } else {
-      setUserType("Business")
+      setUserType(UserType.BUSINESS);
     }
-    setIsBusiness(previousState => !previousState);
-  }
+    setIsBusiness((previousState) => !previousState);
+  };
 
-  const validateData = (usr, pwd) => {
-    // check if username is valid 
-    if (!(usr.toString().match(/^[0-9a-zA-Z]+$/))) {
-      return 'Username must only contain alphanumeric characters!';
+  /**
+   * Returns true if data is valid, else false
+   * 
+   * @param {string} usr 
+   * @param {string} pwd 
+   * @param {string} checkPwd 
+   */
+  const validateData = (usr, pwd, checkPwd) => {
+    // validate password
+    let error = false;
+    if (!usr) {
+      setUNError(Status.ERROR.USERNAME_IS_EMPTY_ERROR);
+      error = true;
+    } else if (!(usr.toString().match(/^[0-9a-zA-Z]+$/))) {
+      setUNError(Status.ERROR.USERNAME_NOT_ALPHANUM_ERROR);
+      error = true;
     }
-    // check if password is valid
-    if (pwd.length < 5) {
-      return 'Password length is too short! Must be at least 5 characters.';
+    // validate password
+    if (!pwd) {
+      setPWError(Status.ERROR.PASSWORD_IS_EMPTY_ERROR);
+      error = true;
+    } else if (pwd.length < 5) {
+      setPWError(Status.ERROR.PASSWORD_LENGTH_ERROR);
+      error = true;
+    } else if (checkPwd !== pwd) {
+      setCPWError(Status.ERROR.CONFIRM_PASSWORD_ERROR);
+      error = true;
     }
-    return "Success";
+    return !error;
   };
 
   const handleSignup = () => {
-    if (password !== confirmPassword) {
-      // add an alert?
-      console.log("passwords don't match!");
-    }
-    const status = validateData(username, password)
-    if (status === "Success") {
+    // reset errors
+    setUNError('');
+    setPWError('');
+    setCPWError('');
+    setSignupErrorShow(false);
+
+    const isValid = validateData(username, password, confirmPassword);
+    if (isValid) {
       signupUser(username, password, userType).then((response) => {
-        if (response === 'User already exists.') {
-          console.log('User already exists.');
-          //show some error handling
-        } else if (response === 'Success.') {
-          console.log('success');
+        if (response === Status.SUCCESS) {
+          console.log(response);
           navigation.navigate('Login');
         } else {
-          console.log(response)
+          setSignupErrorShow(true);
+          setSignupError(response);
         }
       });
-    } else {
-      console.log("Error: ", status);
     }
   };
 
@@ -89,14 +99,23 @@ const Signup = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Sign up now.</Text>
 
+      <ErrorPopup 
+        show={signupErrorShow} 
+        error={signupError} 
+        onClose={() => setSignupErrorShow(false)}
+      />
+
       <View style={styles.labelView}>
         <View style={styles.inputView}>
-          <TextInput style={styles.inputText}
+          <TextInput
+            style={styles.inputText}
+            textContentType="username"
+            autoCapitalize = "none"
             placeholder="Username"
             placeholderTextColor="#2b2d42"
-            keyboardType="email-address"
-            underlineColorAndroid='transparent'
-            onChangeText={(username) => handleUsername(username)} />
+            underlineColorAndroid="transparent"
+            onChangeText={handleUsername}
+          />
         </View>
         <Text style={styles.errorText}>
           {unError}
@@ -105,26 +124,33 @@ const Signup = ({ navigation }) => {
 
       <View style={styles.labelView}>
         <View style={styles.inputView}>
-          <TextInput style={styles.inputText}
+          <TextInput style={styles.signupErrorText}
+            style={styles.inputText}
+            textContentType="password"
             placeholder="Password"
             placeholderTextColor="#2b2d42"
-            secureTextEntry={true}
-            underlineColorAndroid='transparent'
-            onChangeText={(password) => handlePassword(password)} />
+            secureTextEntry
+            underlineColorAndroid="transparent"
+            onChangeText={handlePassword}
+          />
         </View>
-        <Text style={styles.errorText}>
-          {pwError}
-        </Text>
+        <View style={styles.errorView}>
+          <Text style={styles.errorText}>
+            {pwError}
+          </Text>
+        </View>
       </View>
-
+      
       <View style={styles.labelView}>
         <View style={styles.inputView}>
-          <TextInput style={styles.inputText}
+          <TextInput
+            style={styles.inputText}
             placeholder="Confirm Password"
             placeholderTextColor="#2b2d42"
-            secureTextEntry={true}
-            underlineColorAndroid='transparent'
-            onChangeText={(confirmPassword) => handleConfirmPassword(confirmPassword)} />
+            secureTextEntry
+            underlineColorAndroid="transparent"
+            onChangeText={handleConfirmPassword}
+          />
         </View>
         <Text style={styles.errorText}>
           {cpwError}
@@ -132,7 +158,8 @@ const Signup = ({ navigation }) => {
       </View>
 
       <View style={styles.toggleView}>
-        <Switch style={styles.toggleButton}
+        <Switch
+          style={styles.toggleButton}
           ios_backgroundColor="#595d88"
           trackColor={{ true: '#595d88', false: '#595d88' }}
           onValueChange={toggleSwitch}
@@ -145,7 +172,8 @@ const Signup = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.signupBtn}
-        onPress={handleSignup}>
+        onPress={handleSignup}
+      >
         <Text style={styles.signupText}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -163,65 +191,58 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 35,
-    color: "#ffffff",
-    marginBottom: 40
+    color: '#ffffff',
+    marginBottom: 40,
   },
   labelView: {
-    width: "75%",
-    // padding: 15,
-    marginBottom: 15,
-    height: 50,
-    paddingBottom: 15
+    width: '75%',
+    marginBottom: 8,
   },
   inputView: {
-    // width: "75%",
-    backgroundColor: "#595d88",
-    // height: 42,
-    // marginBottom: 15,
-    justifyContent: "center",
+    backgroundColor: '#595d88',
+    justifyContent: 'center',
     paddingLeft: 15,
-    paddingRight: 15
-    // padding: 15
+    paddingRight: 15,
+    marginBottom: 2,
   },
   inputText: {
     height: 45,
-    color: "white"
+    color: 'white',
   },
   errorText: {
-    height: 30,
-    color: "red",
-    textAlign: "left"
+    color: 'red',
+    textAlign: 'left',
+    paddingHorizontal: 2,
   },
   toggleView: {
-    width: "75%",
+    width: '75%',
     height: 42,
     marginTop: 15,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   toggleButton: {
-    backgroundColor: "#595d88",
+    backgroundColor: '#595d88',
   },
   toggleText: {
     height: 35,
-    color: "white",
-    padding: 5
+    color: 'white',
+    padding: 5,
   },
   signupBtn: {
-    width: "75%",
-    backgroundColor: "#ef233c",
+    width: '75%',
+    backgroundColor: '#ef233c',
     borderRadius: 25,
     height: 42,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 30,
-    marginBottom: 10
+    marginBottom: 10,
   },
   signupText: {
-    color: "white",
-    fontWeight: "bold"
-  }
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
-

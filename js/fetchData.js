@@ -1,3 +1,5 @@
+import { Status } from './enums';
+
 const SERVICE = 'http://localhost:8080/v1/api/';
 
 /**
@@ -17,15 +19,16 @@ async function signupUser(username, password, usertype) {
     body: JSON.stringify({
       username,
       password,
-      usertype
+      usertype,
     }),
   });
   if (response.status === 200) {
-    return 'Success.';
-  } else if (response.status === 409) {
-    return 'User already exists.';
-  } 
-  return 'Error';
+    return Status.SUCCESS;
+  }
+  if (response.status === 409) {
+    return Status.ERROR.USER_ALREADY_EXISTS_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
 }
 
 /**
@@ -42,17 +45,17 @@ async function loginUser(username, password) {
     },
     body: JSON.stringify({
       username,
-      password
+      password,
     }),
   });
   if (response.status === 200) {
-    return 'Success.';
-  } 
-  //add more errors
-  return 'Error';
+    return Status.ERROR.NO_ERROR;
+  }
+  // add more errors
+  return Status.ERROR.OTHER_ERROR;
 }
 
 export {
-    signupUser,
-    loginUser,
-}
+  signupUser,
+  loginUser,
+};
