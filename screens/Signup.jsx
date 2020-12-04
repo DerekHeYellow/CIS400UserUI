@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet, Switch, View, Text, TextInput, TouchableOpacity,
 } from 'react-native';
@@ -45,10 +46,10 @@ const Signup = ({ navigation }) => {
 
   /**
    * Returns true if data is valid, else false
-   * 
-   * @param {string} usr 
-   * @param {string} pwd 
-   * @param {string} checkPwd 
+   *
+   * @param {string} usr
+   * @param {string} pwd
+   * @param {string} checkPwd
    */
   const validateData = (usr, pwd, checkPwd) => {
     // validate password
@@ -85,7 +86,6 @@ const Signup = ({ navigation }) => {
     if (isValid) {
       signupUser(username, password, userType).then((response) => {
         if (response === Status.SUCCESS) {
-          console.log(response);
           navigation.navigate('Login');
         } else {
           setSignupErrorShow(true);
@@ -99,9 +99,9 @@ const Signup = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Sign up now.</Text>
 
-      <ErrorPopup 
-        show={signupErrorShow} 
-        error={signupError} 
+      <ErrorPopup
+        show={signupErrorShow}
+        error={signupError}
         onClose={() => setSignupErrorShow(false)}
       />
 
@@ -110,7 +110,7 @@ const Signup = ({ navigation }) => {
           <TextInput
             style={styles.inputText}
             textContentType="username"
-            autoCapitalize = "none"
+            autoCapitalize="none"
             placeholder="Username"
             placeholderTextColor="#2b2d42"
             underlineColorAndroid="transparent"
@@ -124,7 +124,7 @@ const Signup = ({ navigation }) => {
 
       <View style={styles.labelView}>
         <View style={styles.inputView}>
-          <TextInput style={styles.signupErrorText}
+          <TextInput
             style={styles.inputText}
             textContentType="password"
             placeholder="Password"
@@ -134,13 +134,11 @@ const Signup = ({ navigation }) => {
             onChangeText={handlePassword}
           />
         </View>
-        <View style={styles.errorView}>
-          <Text style={styles.errorText}>
-            {pwError}
-          </Text>
-        </View>
+        <Text style={styles.errorText}>
+          {pwError}
+        </Text>
       </View>
-      
+
       <View style={styles.labelView}>
         <View style={styles.inputView}>
           <TextInput
@@ -179,6 +177,12 @@ const Signup = ({ navigation }) => {
 
     </View>
   );
+};
+
+Signup.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Signup;

@@ -5,34 +5,34 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-const ErrorPopup = ({error, show, onClose}) => {
-  return (
-    <View style={styles.errorContainer}>
-      {
-        show &&
+const ErrorPopup = ({ error, show, onClose }) => (
+  <View style={styles.errorContainer}>
+    {
+        show
+        && (
         <View style={styles.errorView}>
-          <View style={styles.closeButton}> 
-            <Icon name="clear" type="material" size={20} color="#905300" onPress={onClose}/>
+          <View style={styles.closeButton}>
+            <Icon name="clear" type="material" size={20} color="#905300" onPress={onClose} />
           </View>
           <Icon name="error-outline" type="material" size={35} color="#905300" />
           <Text style={styles.errorText}>
             {error}
           </Text>
         </View>
+        )
       }
-    </View>
-  );
-};
+  </View>
+);
 
 ErrorPopup.propTypes = {
   error: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-}
+};
 
 const styles = StyleSheet.create({
   closeButton: {
-    position: "absolute",
+    position: 'absolute',
     top: 6,
     right: 10,
   },
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     color: '#905300',
     textAlign: 'center',
     width: '85%',
-    fontWeight: "bold",
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default ErrorPopup;

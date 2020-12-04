@@ -49,9 +49,11 @@ async function loginUser(username, password) {
     }),
   });
   if (response.status === 200) {
-    return Status.ERROR.NO_ERROR;
+    return Status.SUCCESS;
   }
-  // add more errors
+  if (response.status === 401) {
+    return Status.ERROR.LOGIN_ERROR;
+  }
   return Status.ERROR.OTHER_ERROR;
 }
 
