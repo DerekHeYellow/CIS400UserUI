@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet, Switch, View, Text, TextInput, TouchableOpacity,
 } from 'react-native';
 
-import ErrorPopup from '../components/ErrorPopup';
+import Alert from '../components/Alert';
 import { Status, UserType } from '../js/enums';
 import { signupUser } from '../js/fetchData';
 
@@ -14,11 +14,27 @@ const Signup = ({ navigation }) => {
   const [isBusiness, setIsBusiness] = useState(false);
   const [userType, setUserType] = useState(UserType.CUSTOMER);
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // errors
   const [unError, setUNError] = useState('');
   const [pwError, setPWError] = useState('');
   const [cpwError, setCPWError] = useState('');
   const [signupErrorShow, setSignupErrorShow] = useState(false);
   const [signupError, setSignupError] = useState('');
+
+  // success
+  const [signupDone, setSignupDone] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
+
+  useEffect(() => {
+    let timer;
+    if (signupDone) {
+      timer = setTimeout(() => {
+        navigation.navigate('Login');
+      }, 1500);
+    }
+    return () => clearTimeout(timer);
+  }, [signupDone]);
 
   const handleUsername = (un) => {
     setUsername(un);
@@ -86,7 +102,8 @@ const Signup = ({ navigation }) => {
     if (isValid) {
       signupUser(username, password, userType).then((response) => {
         if (response === Status.SUCCESS) {
-          navigation.navigate('Login');
+          setSuccessMsg('Signup was succesful!');
+          setSignupDone(true);
         } else {
           setSignupErrorShow(true);
           setSignupError(response);
@@ -97,84 +114,92 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign up now.</Text>
-
-      <ErrorPopup
-        show={signupErrorShow}
-        error={signupError}
-        onClose={() => setSignupErrorShow(false)}
-      />
-
-      <View style={styles.labelView}>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.inputText}
-            textContentType="username"
-            autoCapitalize="none"
-            placeholder="Username"
-            placeholderTextColor="#2b2d42"
-            underlineColorAndroid="transparent"
-            onChangeText={handleUsername}
-          />
-        </View>
-        <Text style={styles.errorText}>
-          {unError}
+      <View style={styles.signupContainer}>
+        <Text style={styles.title}>
+          Sign up now.
         </Text>
-      </View>
-
-      <View style={styles.labelView}>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.inputText}
-            textContentType="password"
-            placeholder="Password"
-            placeholderTextColor="#2b2d42"
-            secureTextEntry
-            underlineColorAndroid="transparent"
-            onChangeText={handlePassword}
-          />
-        </View>
-        <Text style={styles.errorText}>
-          {pwError}
-        </Text>
-      </View>
-
-      <View style={styles.labelView}>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.inputText}
-            placeholder="Confirm Password"
-            placeholderTextColor="#2b2d42"
-            secureTextEntry
-            underlineColorAndroid="transparent"
-            onChangeText={handleConfirmPassword}
-          />
-        </View>
-        <Text style={styles.errorText}>
-          {cpwError}
-        </Text>
-      </View>
-
-      <View style={styles.toggleView}>
-        <Switch
-          style={styles.toggleButton}
-          ios_backgroundColor="#595d88"
-          trackColor={{ true: '#595d88', false: '#595d88' }}
-          onValueChange={toggleSwitch}
-          value={isBusiness}
+        <Alert
+          show={signupErrorShow}
+          msg={signupError}
+          onClose={() => setSignupErrorShow(false)}
+          dismissable
+          variant="error"
         />
-        <Text style={styles.toggleText}>
-          {userType}
-        </Text>
+        <Alert
+          show={signupDone}
+          msg={successMsg}
+          variant="success"
+        />
+        <View style={styles.labelView}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.inputText}
+              textContentType="username"
+              autoCapitalize="none"
+              placeholder="Username"
+              placeholderTextColor="#2b2d42"
+              underlineColorAndroid="transparent"
+              onChangeText={handleUsername}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {unError}
+          </Text>
+        </View>
+
+        <View style={styles.labelView}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.inputText}
+              textContentType="password"
+              placeholder="Password"
+              placeholderTextColor="#2b2d42"
+              secureTextEntry
+              underlineColorAndroid="transparent"
+              onChangeText={handlePassword}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {pwError}
+          </Text>
+        </View>
+
+        <View style={styles.labelView}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.inputText}
+              placeholder="Confirm Password"
+              placeholderTextColor="#2b2d42"
+              secureTextEntry
+              underlineColorAndroid="transparent"
+              onChangeText={handleConfirmPassword}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {cpwError}
+          </Text>
+        </View>
+
+        <View style={styles.toggleView}>
+          <Switch
+            style={styles.toggleButton}
+            ios_backgroundColor="#595d88"
+            trackColor={{ true: '#595d88', false: '#595d88' }}
+            onValueChange={toggleSwitch}
+            value={isBusiness}
+          />
+          <Text style={styles.toggleText}>
+            {userType}
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.signupBtn}
+          onPress={handleSignup}
+        >
+          <Text style={styles.signupText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity
-        style={styles.signupBtn}
-        onPress={handleSignup}
-      >
-        <Text style={styles.signupText}>Sign Up</Text>
-      </TouchableOpacity>
-
     </View>
   );
 };
@@ -199,9 +224,9 @@ const styles = StyleSheet.create({
     fontSize: 35,
     color: '#ffffff',
     marginBottom: 40,
+    textAlign: 'center',
   },
   labelView: {
-    width: '75%',
     marginBottom: 8,
   },
   inputView: {
@@ -221,7 +246,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   toggleView: {
-    width: '75%',
     height: 42,
     marginTop: 15,
     justifyContent: 'center',
@@ -236,7 +260,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   signupBtn: {
-    width: '75%',
     backgroundColor: '#ef233c',
     borderRadius: 25,
     height: 42,
@@ -244,6 +267,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
     marginBottom: 10,
+  },
+  signupContainer: {
+    width: '75%',
   },
   signupText: {
     color: 'white',

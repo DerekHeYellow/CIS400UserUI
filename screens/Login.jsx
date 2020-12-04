@@ -5,7 +5,7 @@ import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
 
-import ErrorPopup from '../components/ErrorPopup';
+import Alert from '../components/Alert';
 import { Status } from '../js/enums';
 import { loginUser } from '../js/fetchData';
 
@@ -62,11 +62,15 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Vicinity</Text>
-      <ErrorPopup
-        show={loginErrorShow}
-        error={loginError}
-        onClose={() => setLoginErrorShow(false)}
-      />
+      <View style={styles.loginErrorPopup}>
+        <Alert
+          variant="error"
+          show={loginErrorShow}
+          msg={loginError}
+          onClose={() => setLoginErrorShow(false)}
+          dismissable
+        />
+      </View>
       <View style={styles.labelView}>
         <View style={styles.inputView}>
           <TextInput
@@ -90,7 +94,6 @@ const Login = ({ navigation }) => {
             placeholderTextColor="#2B2D42"
             onChangeText={handlePasswordChange}
           />
-
         </View>
         <Text style={styles.errorText}>
           {pwdError}
@@ -146,6 +149,9 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: '#FFFFFF',
     marginBottom: 40,
+  },
+  loginErrorPopup: {
+    width: '75%',
   },
   inputView: {
     backgroundColor: '#595d88',
