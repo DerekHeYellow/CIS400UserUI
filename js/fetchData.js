@@ -1,6 +1,4 @@
-import { Status } from './enums';
-
-const SERVICE = 'http://localhost:8080/v1/api';
+import { Status, HttpStatus, Api } from './enums';
 
 /**
  * Create a new user
@@ -11,7 +9,7 @@ const SERVICE = 'http://localhost:8080/v1/api';
 
  */
 async function signupUser(username, password, email, usertype) {
-  const response = await fetch(`${SERVICE}/accounts`, {
+  const response = await fetch(`${Api.DOMAIN}/accounts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,10 +21,11 @@ async function signupUser(username, password, email, usertype) {
       usertype,
     }),
   });
-  if (response.status === 200) {
+
+  if (response.status.ok) {
     return Status.SUCCESS;
   }
-  if (response.status === 409) {
+  if (response.status === HttpStatus.CONFLICT) {
     return Status.ERROR.USER_ALREADY_EXISTS_ERROR;
   }
   console.log("here", response)
@@ -40,7 +39,7 @@ async function signupUser(username, password, email, usertype) {
  * @param {String} password
  */
 async function loginUser(username, password) {
-  const response = await fetch(`${SERVICE}/login`, {
+  const response = await fetch(`${Api.DOMAIN}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,11 +49,39 @@ async function loginUser(username, password) {
       password,
     }),
   });
-  if (response.status === 200) {
+  if (response.ok) {
     return Status.SUCCESS;
   }
-  if (response.status === 401) {
-    return Status.ERROR.LOGIN_ERROR;
+  if (response.status === HttpStatus.UNAUTHORIZED) {
+    return Status.ERROR.LOGIN_PASSWORD_ERROR;
+  }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.USERNAME_NOT_EXIST_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Reset the password of a user.
+ *
+ * @param {String} username
+ * @param {String} password
+ */
+async function resetPassword(username, newPassword) {
+  const response = await fetch(`${Api.DOMAIN}/accounts/${username}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newPassword,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.USERNAME_NOT_EXIST_ERROR;
   }
   return Status.ERROR.OTHER_ERROR;
 }
@@ -62,4 +89,5 @@ async function loginUser(username, password) {
 export {
   signupUser,
   loginUser,
+  resetPassword,
 };
