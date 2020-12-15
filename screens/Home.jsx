@@ -5,63 +5,53 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-const Home = ({ route, navigation }) => {
-  // eslint-disable-next-line no-unused-vars
-  const { name, username } = route.params;
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Vici.</Text>
-      <View style={styles.buttonLayout}>
-        <TouchableOpacity
-          style={styles.pageBtn}
-          onPress={() => navigation.navigate('ListBusiness')}
-        >
-          <Icon name="shopping-basket" size={50} color="green" />
-          <Text style={styles.pageText}>Businesses</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.pageBtn}
-          onPress={() => navigation.navigate('Map')}
-        >
-          <Icon name="map" size={50} color="#EF233C" />
-          <Text style={styles.pageText}>Map</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.pageBtn}
-          onPress={() => navigation.navigate('ListContacts')}
-        >
-          <Icon name="contacts" size={40} color="gray" />
-          <Text style={styles.pageText}>Contacts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.pageBtn}
-          onPress={() => navigation.navigate('UserProfile',
-            {
-              name: 'Rosa Sun',
-              avatarUrl: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-              username: 'rosasun',
-              email: 'rosasun@gmail.com',
-            })}
-        >
-          <Icon name="person" size={50} color="#2b2d42" />
-          <Text style={styles.pageText}>My Profile</Text>
-        </TouchableOpacity>
-      </View>
+const Home = ({ navigation }) => (
+  <View style={styles.container}>
+    <Text style={styles.title}>Welcome to Vici.</Text>
+    <View style={styles.buttonLayout}>
+      <TouchableOpacity
+        style={styles.pageBtn}
+        onPress={() => navigation.navigate('ListBusiness')}
+      >
+        <Icon name="shopping-basket" size={50} color="green" />
+        <Text style={styles.pageText}>Businesses</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.pageBtn}
+        onPress={() => navigation.navigate('Map')}
+      >
+        <Icon name="map" size={50} color="#EF233C" />
+        <Text style={styles.pageText}>Map</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.pageBtn}
+        onPress={() => navigation.navigate('ListContacts')}
+      >
+        <Icon name="contacts" size={40} color="gray" />
+        <Text style={styles.pageText}>Contacts</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.pageBtn}
+        onPress={() => navigation.navigate('UserProfile',
+          {
+            name: 'Rosa Sun',
+            avatarUrl: 'https://bootdey.com/img/Content/avatar/avatar3.png',
+            username: 'rosasun',
+            email: 'rosasun@gmail.com',
+          })}
+      >
+        <Icon name="person" size={50} color="#2b2d42" />
+        <Text style={styles.pageText}>My Profile</Text>
+      </TouchableOpacity>
     </View>
-  );
-};
+  </View>
+);
 
 export default Home;
 
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
-  }).isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      name: PropTypes.string,
-      username: PropTypes.string,
-    }),
   }).isRequired,
 };
 

@@ -6,22 +6,27 @@ import {
 import { Icon } from 'react-native-elements';
 
 const Alert = ({
-  msg, show, onClose, variant, dismissable,
+  msg, show, onClose, variant, dismissable, icon,
 }) => {
   const variantConfigs = (vari) => {
     // error variant
     if (vari === 'error') {
       return {
         viewStyle: styles.errorView,
-        iconName: 'error-outline',
         iconColor: '#905300',
         textStyle: styles.errorText,
+      };
+    }
+    if (vari === 'light') {
+      return {
+        viewStyle: styles.lightView,
+        iconColor: '#000000',
+        textStyle: styles.lightText,
       };
     }
     // success variant
     return {
       viewStyle: styles.successView,
-      iconName: 'check-circle-outline',
       iconColor: '#4F8A10',
       textStyle: styles.successText,
     };
@@ -38,7 +43,7 @@ const Alert = ({
               <Icon name="clear" type="material" size={20} color="#905300" onPress={onClose} />
             )}
           </View>
-          <Icon name={variantConfigs(variant).iconName} type="material" size={35} color={variantConfigs(variant).iconColor} />
+          <Icon name={icon} type="material" size={35} color={variantConfigs(variant).iconColor} />
           <Text style={variantConfigs(variant).textStyle}>
             {msg}
           </Text>
@@ -51,6 +56,7 @@ const Alert = ({
 
 Alert.defaultProps = {
   dismissable: false,
+  icon: 'check-circle-outline',
   variant: 'success',
   onClose: null,
   show: true,
@@ -58,6 +64,7 @@ Alert.defaultProps = {
 
 Alert.propTypes = {
   msg: PropTypes.string.isRequired,
+  icon: PropTypes.string,
   show: PropTypes.bool,
   onClose: PropTypes.func,
   dismissable: PropTypes.bool,
@@ -93,6 +100,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
   },
+  lightView: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    marginBottom: 25,
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+  },
   errorText: {
     marginTop: 2,
     color: '#905300',
@@ -103,6 +119,13 @@ const styles = StyleSheet.create({
   successText: {
     marginTop: 2,
     color: '#4F8A10',
+    textAlign: 'center',
+    width: '85%',
+    fontWeight: 'bold',
+  },
+  lightText: {
+    marginTop: 2,
+    color: '#000000',
     textAlign: 'center',
     width: '85%',
     fontWeight: 'bold',

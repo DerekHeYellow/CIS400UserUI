@@ -1,5 +1,5 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
@@ -8,9 +8,41 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import Alert from '../components/Alert';
+
+import { getBusinessProfile } from '../js/fetchData';
 
 const BusinessProfile = ({ route, navigation }) => {
-  const { name, type, email } = route.params;
+  const [businessName, setBusinessName] = useState('');
+  const [description, setDescription] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState({});
+  const [businessEmail, setBusinessEmail] = useState('');
+  const [businessHours, setBusinessHours] = useState('');
+  const [showNoProfile, setShowNoProfile] = useState(false);
+  const [noProfileError, setNoProfileError] = useState('');
+
+  useEffect(() => {
+    getBusinessProfile(route.params.username).then((response) => {
+      if (response && typeof response === 'object') {
+        setBusinessName(response.businessName);
+        setDescription(response.description);
+        setPhoneNumber(response.phoneNumber);
+        setAddress({
+          number: response.addressNumber,
+          street: response.addressStreet,
+          city: response.addressCity,
+          state: response.addressState,
+        });
+        setBusinessEmail(response.businessEmail);
+        setBusinessHours(response.businessHours);
+      } else {
+        setNoProfileError(response);
+        setShowNoProfile(true);
+      }
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -18,24 +50,58 @@ const BusinessProfile = ({ route, navigation }) => {
         <Image style={styles.avatar} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg' }} />
         <View style={styles.body}>
           <View style={styles.bodyContent}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.info}>{type}</Text>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Our Location</Text>
-              <Text style={styles.cardInfo}>3900 Walnut Street, Philadelphia PA, USA</Text>
+            <Text style={styles.name}>{businessName}</Text>
+            <View style={styles.alert}>
+              <Alert
+                show={showNoProfile}
+                msg={noProfileError}
+                variant="light"
+                icon="business"
+              />
             </View>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Business Email</Text>
-              <Text style={styles.cardInfo}>{email}</Text>
-            </View>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Business Phone</Text>
-              <Text style={styles.cardInfo}>(271) 111-1234</Text>
-            </View>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Hours</Text>
-              <Text style={styles.cardInfo}>M-F: 9AM - 3PM</Text>
-            </View>
+            { description !== null && description !== ''
+            && (<Text style={styles.info}>{description}</Text>)}
+            { Object.keys(address).length > 0
+              && (address.number !== null
+                || address.street !== null
+                || address.city !== null
+                || address.state !== null)
+              && (
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Our Location</Text>
+
+                <Text style={styles.cardInfo}>
+                  {address.number}
+                  {' '}
+                  {address.street}
+                  {' '}
+                  {address.city}
+                  {' '}
+                  {address.state}
+                </Text>
+              </View>
+              )}
+            { businessEmail !== null && businessEmail !== ''
+             && (
+             <View style={styles.card}>
+               <Text style={styles.cardTitle}>Business Email</Text>
+               <Text style={styles.cardInfo}>{businessEmail}</Text>
+             </View>
+             )}
+            { phoneNumber !== null && businessEmail !== ''
+              && (
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Business Phone</Text>
+                <Text style={styles.cardInfo}>{phoneNumber}</Text>
+              </View>
+              )}
+            { businessHours !== null && businessHours !== ''
+              && (
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Hours</Text>
+                <Text style={styles.cardInfo}>{businessHours}</Text>
+              </View>
+              )}
 
             <TouchableOpacity
               style={styles.buttonContainer}
@@ -56,6 +122,17 @@ const BusinessProfile = ({ route, navigation }) => {
   );
 };
 
+BusinessProfile.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      username: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
 export default BusinessProfile;
 
 const styles = StyleSheet.create({
@@ -66,6 +143,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#2B2D42',
     height: 170,
+  },
+  alert: {
+    width: '70%',
   },
   avatar: {
     width: 130,

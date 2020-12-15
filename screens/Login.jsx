@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
+import { storeUsername, storeEmail } from '../js/asyncStorage';
 
 import Alert from '../components/Alert';
 import { Status } from '../js/enums';
 import { loginUser } from '../js/fetchData';
+// import putDummyBusinessProfiles from '../js/dummyData';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -38,9 +40,23 @@ const Login = ({ navigation }) => {
     const isValid = validateInputs(username, password);
     if (isValid) {
       loginUser(username, password).then((response) => {
-        if (response === Status.SUCCESS) {
-          navigation.navigate('Home',
-            { name: '', username });
+        if (response && typeof response === 'object') {
+          storeUsername(response.username).then((r) => {
+            if (r === Status.SUCCESS) {
+              storeEmail(response.email).then((r2) => {
+                if (r2 === Status.SUCCESS) {
+                  // putDummyBusinessProfiles().then(() => navigation.navigate('Home'));
+                  navigation.navigate('Home');
+                } else {
+                  setLoginErrorShow(true);
+                  setLoginError(r2);
+                }
+              });
+            } else {
+              setLoginErrorShow(true);
+              setLoginError(r);
+            }
+          });
         } else {
           setLoginErrorShow(true);
           setLoginError(response);
@@ -69,6 +85,7 @@ const Login = ({ navigation }) => {
           msg={loginError}
           onClose={() => setLoginErrorShow(false)}
           dismissable
+          icon="error-outline"
         />
       </View>
       <View style={styles.labelView}>
@@ -92,6 +109,7 @@ const Login = ({ navigation }) => {
             style={styles.inputText}
             placeholder="Password"
             placeholderTextColor="#2B2D42"
+            autoCapitalize="none"
             onChangeText={handlePasswordChange}
           />
         </View>
