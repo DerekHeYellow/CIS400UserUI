@@ -5,12 +5,14 @@ import { SearchBar, Avatar, ListItem } from 'react-native-elements';
 
 const list = [
   {
+    username: 'kims',
     name: 'Kim\'s',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
     subtitle: 'Chinese Food Truck',
     email: 'kims@gmail.com',
   },
   {
+    username: 'magicCarpet',
     name: 'Magic Carpet',
     avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
     subtitle: 'Middle Eastern Food Truck',
@@ -93,7 +95,9 @@ const ListBusiness = ({ navigation }) => {
   const getItem = (item) => {
     // Function for click on an item
     navigation.navigate('BusinessProfile',
-      { name: item.name, type: item.subtitle, email: item.email });
+      {
+        username: item.username, name: item.name, type: item.subtitle, email: item.email,
+      });
   };
 
   const ItemView = ({ item }) => (
