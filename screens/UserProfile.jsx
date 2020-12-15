@@ -20,26 +20,28 @@ const UserProfile = ({ navigation }) => {
   const [picture, setPicture] = useState('https://bootdey.com/img/Content/avatar/avatar3.png');
 
   useEffect(() => {
-    console.log('in ue');
-    getUsername().then((un) => {
-      if (un) {
-        setUsername(un);
-        getCustomerProfile(un).then((response) => {
-          if (response && typeof response === 'object') {
-            setFirstName(response.firstName);
-            setLastName(response.lastName);
-            setPhoneNumber(response.phoneNumber);
-            setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
-          }
-        });
-      }
+    const unsubscribe = navigation.addListener('focus', () => {
+      getUsername().then((un) => {
+        if (un) {
+          setUsername(un);
+          getCustomerProfile(un).then((response) => {
+            if (response && typeof response === 'object') {
+              setFirstName(response.firstName);
+              setLastName(response.lastName);
+              setPhoneNumber(response.phoneNumber);
+              setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+            }
+          });
+        }
+      });
+      getEmail().then((em) => {
+        if (em) {
+          setEmail(em);
+        }
+      });
     });
-    getEmail().then((em) => {
-      if (em) {
-        setEmail(em);
-      }
-    });
-  }, []);
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -96,6 +98,7 @@ const UserProfile = ({ navigation }) => {
 UserProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
