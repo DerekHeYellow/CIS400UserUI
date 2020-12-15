@@ -28,7 +28,6 @@ async function signupUser(username, password, email, usertype) {
   if (response.status === HttpStatus.CONFLICT) {
     return Status.ERROR.USER_ALREADY_EXISTS_ERROR;
   }
-  console.log("here", response)
   return Status.ERROR.OTHER_ERROR;
 }
 

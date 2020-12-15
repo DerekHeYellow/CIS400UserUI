@@ -120,11 +120,9 @@ const Signup = ({ navigation }) => {
         if (response === Status.SUCCESS) {
           setSuccessMsg('Signup was succesful!');
           setSignupDone(true);
-          console.log("sucess ")
         } else {
           setSignupErrorShow(true);
           setSignupError(response);
-          console.log("noo ")
         }
       });
     }
