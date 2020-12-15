@@ -1,5 +1,5 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
@@ -9,54 +9,99 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { putCustomerProfile, getCustomerProfile } from '../js/fetchData';
+import { Status } from '../js/enums';
 
 const EditUserProfile = ({ route, navigation }) => {
-  const {
-    name, avatar_url, username, email,
-  } = route.params;
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [picture, setPicture] = useState('https://bootdey.com/img/Content/avatar/avatar3.png');
+  const { username } = route.params;
+
+  useEffect(() => {
+    getCustomerProfile(username).then((response) => {
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      setPhoneNumber(response.phoneNumber);
+      setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+    });
+  }, []);
+
+  const handleSave = () => {
+    const info = {
+      firstName,
+      lastName,
+      phoneNumber,
+      picture,
+    };
+    putCustomerProfile(username, info).then((response) => {
+      if (response === Status.SUCCESS) {
+        navigation.navigate('UserProfile');
+      }
+    });
+  };
+
+  const handleFirstNameChange = (fn) => {
+    setFirstName(fn);
+  };
+  const handleLastNameChange = (ln) => {
+    setLastName(ln);
+  };
+
+  const handlePhoneNumberChange = (pn) => {
+    setPhoneNumber(pn);
+  };
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header} />
-        {/* <Image style={styles.avatar} source={{uri: avatar_url}}/>
-          <View style={styles.body}>
-            <View style={styles.bodyContent}>
-              <Text style={styles.name}>{name}</Text>
-              <Text style={styles.info}>{username}</Text> */}
-        <Image style={styles.avatar} source={{ uri: avatar_url }} />
+        <Image style={styles.avatar} source={{ uri: picture }} />
         <Text style={styles.editAvatar}>Click to Edit</Text>
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <View style={styles.card}>
               <Text style={styles.cardTitle}>First Name</Text>
-              <TextInput style={styles.input} />
+              <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={handleFirstNameChange}
+              />
             </View>
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Last Name</Text>
-              <TextInput style={styles.input} />
+              <TextInput
+                style={styles.input}
+                value={lastName}
+                onChangeText={handleLastNameChange}
+              />
             </View>
-            <View style={styles.card}>
+            {/* <View style={styles.card}>
               <Text style={styles.cardTitle}>Bio</Text>
               <TextInput style={styles.input} />
-            </View>
-            <View style={styles.card}>
+            </View> */}
+            {/* <View style={styles.card}>
               <Text style={styles.cardTitle}>Email</Text>
               <TextInput style={styles.input} />
-            </View>
+            </View> */}
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Phone</Text>
-              <TextInput style={styles.input} />
+              <TextInput
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={handlePhoneNumberChange}
+              />
             </View>
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('UserProfile')}
+              onPress={handleSave}
             >
               <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('UserProfile')}
+              onPress={handleSave}
             >
               <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
@@ -71,6 +116,18 @@ const EditUserProfile = ({ route, navigation }) => {
       </ScrollView>
     </View>
   );
+};
+
+EditUserProfile.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      email: PropTypes.string,
+      username: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default EditUserProfile;
@@ -93,11 +150,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 30,
   },
-  name: {
-    fontSize: 22,
-    color: '#2B2D42',
-    fontWeight: '600',
-  },
   body: {
     marginTop: 40,
   },
@@ -105,18 +157,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 30,
-  },
-  info: {
-    fontSize: 16,
-    color: '#00BFFF',
-    marginTop: 10,
-  },
-  description: {
-    fontSize: 16,
-    color: '#696969',
-    marginTop: 10,
-    textAlign: 'center',
-    marginBottom: 20,
   },
   buttonContainer: {
     marginTop: 10,
@@ -162,7 +202,8 @@ const styles = StyleSheet.create({
     width: '95%',
     marginBottom: 15,
   },
-  cardInfo: {
+  input: {
+    paddingTop: 14,
     fontSize: 14,
   },
 });

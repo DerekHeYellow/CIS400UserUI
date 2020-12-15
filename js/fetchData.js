@@ -3,7 +3,7 @@ import { Status, HttpStatus, Api } from './enums';
 /**
  * Create a new user
  *
- * @param {String} username 
+ * @param {String} username
  * @param {String} password
  * @param {String} usertype
 
@@ -21,8 +21,7 @@ async function signupUser(username, password, email, usertype) {
       usertype,
     }),
   });
-
-  if (response.status.ok) {
+  if (response.ok) {
     return Status.SUCCESS;
   }
   if (response.status === HttpStatus.CONFLICT) {
@@ -49,7 +48,8 @@ async function loginUser(username, password) {
     }),
   });
   if (response.ok) {
-    return Status.SUCCESS;
+    const json = await response.json();
+    return json;
   }
   if (response.status === HttpStatus.UNAUTHORIZED) {
     return Status.ERROR.LOGIN_PASSWORD_ERROR;
@@ -85,8 +85,51 @@ async function resetPassword(username, newPassword) {
   return Status.ERROR.OTHER_ERROR;
 }
 
+/**
+ * Create or update user profile
+ *
+ * @param {String} username
+ */
+async function putCustomerProfile(username, info) {
+  const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      firstName: info.firstName,
+      lastName: info.lastName,
+      phoneNumber: info.phoneNumber,
+      picture: info.picture,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Gets user profile
+ *
+ * @param {String} username
+ */
+async function getCustomerProfile(username) {
+  const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.USER_NOT_EXIST_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
 export {
   signupUser,
   loginUser,
   resetPassword,
+  putCustomerProfile,
+  getCustomerProfile,
 };

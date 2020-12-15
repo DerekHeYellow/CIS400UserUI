@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
+import { loginUser } from '../js/fetchData';
 
 import Alert from '../components/Alert';
 import { Status } from '../js/enums';
-import { loginUser } from '../js/fetchData';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -38,9 +37,12 @@ const Login = ({ navigation }) => {
     const isValid = validateInputs(username, password);
     if (isValid) {
       loginUser(username, password).then((response) => {
-        if (response === Status.SUCCESS) {
-          navigation.navigate('Home',
-            { name: '', username });
+        if (response && typeof response === 'object') {
+          const route = {
+            username: response.username,
+            email: response.email,
+          };
+          navigation.navigate('Home', route);
         } else {
           setLoginErrorShow(true);
           setLoginError(response);

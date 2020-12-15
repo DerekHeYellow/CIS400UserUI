@@ -10,6 +10,7 @@ const Status = Object.freeze({
     CONFIRM_PASSWORD_ERROR: 'Passwords do not match.',
     USERNAME_NOT_EXIST_ERROR: 'Sorry, we couldn\'t find an account with this username.',
     LOGIN_PASSWORD_ERROR: 'Sorry, that was the wrong password. Please try again.',
+    USER_NOT_EXIST_ERROR: 'No user profile yet',
     OTHER_ERROR: 'Oops! Something went wrong.',
   },
   SUCCESS: 'Success.',

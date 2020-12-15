@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -6,8 +8,13 @@ import {
 import { Icon } from 'react-native-elements';
 
 const Home = ({ route, navigation }) => {
-  // eslint-disable-next-line no-unused-vars
-  const { name, username } = route.params;
+  const { email, username } = route.params;
+
+  console.log("in home: ", route)
+  console.log("in home params: ", route.params)
+  console.log("in home email: ", email)
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to Vici.</Text>
@@ -35,13 +42,7 @@ const Home = ({ route, navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.pageBtn}
-          onPress={() => navigation.navigate('UserProfile',
-            {
-              name: 'Rosa Sun',
-              avatarUrl: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-              username: 'rosasun',
-              email: 'rosasun@gmail.com',
-            })}
+          onPress={() => navigation.navigate('UserProfile', {email, username})}
         >
           <Icon name="person" size={50} color="#2b2d42" />
           <Text style={styles.pageText}>My Profile</Text>
@@ -59,7 +60,7 @@ Home.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      name: PropTypes.string,
+      email: PropTypes.string,
       username: PropTypes.string,
     }),
   }).isRequired,

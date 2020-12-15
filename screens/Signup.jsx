@@ -75,7 +75,7 @@ const Signup = ({ navigation }) => {
    * @param {string} checkPwd
    */
   const validateData = (usr, em, pwd, checkPwd) => {
-    // validate password
+    // validate username
     let error = false;
     if (!usr) {
       setUNError(Status.ERROR.USERNAME_IS_EMPTY_ERROR);
@@ -85,7 +85,7 @@ const Signup = ({ navigation }) => {
       error = true;
     }
 
-    //validate email
+    // validate email
     if (!em) {
       setEmailError(Status.ERROR.EMAIL_IS_EMPTY_ERROR);
       error = true;
