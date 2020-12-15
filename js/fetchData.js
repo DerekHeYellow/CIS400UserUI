@@ -1,17 +1,17 @@
 import { Status } from './enums';
 
-const SERVICE = 'http://localhost:8080/v1/api/';
+const SERVICE = 'http://localhost:8080/v1/api';
 
 /**
  * Create a new user
  *
- * @param {String} username
+ * @param {String} username 
  * @param {String} password
  * @param {String} usertype
 
  */
-async function signupUser(username, password, usertype) {
-  const response = await fetch(`${SERVICE}/signup`, {
+async function signupUser(username, password, email, usertype) {
+  const response = await fetch(`${SERVICE}/accounts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -19,6 +19,7 @@ async function signupUser(username, password, usertype) {
     body: JSON.stringify({
       username,
       password,
+      email,
       usertype,
     }),
   });
@@ -28,6 +29,7 @@ async function signupUser(username, password, usertype) {
   if (response.status === 409) {
     return Status.ERROR.USER_ALREADY_EXISTS_ERROR;
   }
+  console.log("here", response)
   return Status.ERROR.OTHER_ERROR;
 }
 

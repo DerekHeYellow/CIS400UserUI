@@ -10,6 +10,7 @@ import { signupUser } from '../js/fetchData';
 
 const Signup = ({ navigation }) => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isBusiness, setIsBusiness] = useState(false);
   const [userType, setUserType] = useState(UserType.CUSTOMER);
@@ -17,6 +18,7 @@ const Signup = ({ navigation }) => {
 
   // errors
   const [unError, setUNError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [pwError, setPWError] = useState('');
   const [cpwError, setCPWError] = useState('');
   const [signupErrorShow, setSignupErrorShow] = useState(false);
@@ -39,6 +41,11 @@ const Signup = ({ navigation }) => {
   const handleUsername = (un) => {
     setUsername(un);
     setUNError('');
+  };
+
+  const handleEmail = (un) => {
+    setEmail(un);
+    setEmailError('');
   };
 
   const handlePassword = (pw) => {
@@ -67,7 +74,7 @@ const Signup = ({ navigation }) => {
    * @param {string} pwd
    * @param {string} checkPwd
    */
-  const validateData = (usr, pwd, checkPwd) => {
+  const validateData = (usr, em, pwd, checkPwd) => {
     // validate password
     let error = false;
     if (!usr) {
@@ -75,6 +82,15 @@ const Signup = ({ navigation }) => {
       error = true;
     } else if (!(usr.toString().match(/^[0-9a-zA-Z]+$/))) {
       setUNError(Status.ERROR.USERNAME_NOT_ALPHANUM_ERROR);
+      error = true;
+    }
+
+    //validate email
+    if (!em) {
+      setEmailError(Status.ERROR.EMAIL_IS_EMPTY_ERROR);
+      error = true;
+    } else if (!em.toString().match(/\S+@\S+\.\S+/)) {
+      setUNError(Status.ERROR.EMAIL_NOT_PROPER_FORMATE_ERROR);
       error = true;
     }
     // validate password
@@ -98,15 +114,17 @@ const Signup = ({ navigation }) => {
     setCPWError('');
     setSignupErrorShow(false);
 
-    const isValid = validateData(username, password, confirmPassword);
+    const isValid = validateData(username, email, password, confirmPassword);
     if (isValid) {
-      signupUser(username, password, userType).then((response) => {
+      signupUser(username, password, email, userType).then((response) => {
         if (response === Status.SUCCESS) {
           setSuccessMsg('Signup was succesful!');
           setSignupDone(true);
+          console.log("sucess ")
         } else {
           setSignupErrorShow(true);
           setSignupError(response);
+          console.log("noo ")
         }
       });
     }
@@ -151,10 +169,27 @@ const Signup = ({ navigation }) => {
           <View style={styles.inputView}>
             <TextInput
               style={styles.inputText}
+              textContentType="email"
+              autoCapitalize="none"
+              placeholder="Email"
+              placeholderTextColor="#2b2d42"
+              underlineColorAndroid="transparent"
+              onChangeText={handleEmail}
+            />
+          </View>
+          <Text style={styles.errorText}>
+            {emailError}
+          </Text>
+        </View>
+
+        <View style={styles.labelView}>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.inputText}
               textContentType="password"
               placeholder="Password"
               placeholderTextColor="#2b2d42"
-              secureTextEntry
+              secureTextEntry={false}
               underlineColorAndroid="transparent"
               onChangeText={handlePassword}
             />
@@ -170,7 +205,7 @@ const Signup = ({ navigation }) => {
               style={styles.inputText}
               placeholder="Confirm Password"
               placeholderTextColor="#2b2d42"
-              secureTextEntry
+              secureTextEntry={false}
               underlineColorAndroid="transparent"
               onChangeText={handleConfirmPassword}
             />
