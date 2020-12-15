@@ -3,13 +3,13 @@ import { Status, HttpStatus, Api } from './enums';
 /**
  * Create a new user
  *
- * @param {String} username
+ * @param {String} username 
  * @param {String} password
  * @param {String} usertype
 
  */
-async function signupUser(username, password, usertype) {
-  const response = await fetch(`${Api.DOMAIN}/signup`, {
+async function signupUser(username, password, email, usertype) {
+  const response = await fetch(`${Api.DOMAIN}/accounts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -17,6 +17,7 @@ async function signupUser(username, password, usertype) {
     body: JSON.stringify({
       username,
       password,
+      email,
       usertype,
     }),
   });
