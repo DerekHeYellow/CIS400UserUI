@@ -9,22 +9,30 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { getUsername } from '../js/asyncStorage';
 import { putCustomerProfile, getCustomerProfile } from '../js/fetchData';
 import { Status } from '../js/enums';
 
-const EditUserProfile = ({ route, navigation }) => {
+const EditUserProfile = ({ navigation }) => {
+  const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [picture, setPicture] = useState('https://bootdey.com/img/Content/avatar/avatar3.png');
-  const { username } = route.params;
 
   useEffect(() => {
-    getCustomerProfile(username).then((response) => {
-      setFirstName(response.firstName);
-      setLastName(response.lastName);
-      setPhoneNumber(response.phoneNumber);
-      setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+    getUsername().then((un) => {
+      if (un) {
+        setUsername(un);
+        getCustomerProfile(un).then((response) => {
+          if (response && typeof response === 'object') {
+            setFirstName(response.firstName);
+            setLastName(response.lastName);
+            setPhoneNumber(response.phoneNumber);
+            setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+          }
+        });
+      }
     });
   }, []);
 
@@ -68,6 +76,7 @@ const EditUserProfile = ({ route, navigation }) => {
                 onChangeText={handleFirstNameChange}
               />
             </View>
+
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Last Name</Text>
               <TextInput
@@ -76,14 +85,7 @@ const EditUserProfile = ({ route, navigation }) => {
                 onChangeText={handleLastNameChange}
               />
             </View>
-            {/* <View style={styles.card}>
-              <Text style={styles.cardTitle}>Bio</Text>
-              <TextInput style={styles.input} />
-            </View> */}
-            {/* <View style={styles.card}>
-              <Text style={styles.cardTitle}>Email</Text>
-              <TextInput style={styles.input} />
-            </View> */}
+
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Phone</Text>
               <TextInput

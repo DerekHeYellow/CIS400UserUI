@@ -84,13 +84,12 @@ const Signup = ({ navigation }) => {
       setUNError(Status.ERROR.USERNAME_NOT_ALPHANUM_ERROR);
       error = true;
     }
-
     // validate email
     if (!em) {
       setEmailError(Status.ERROR.EMAIL_IS_EMPTY_ERROR);
       error = true;
     } else if (!em.toString().match(/\S+@\S+\.\S+/)) {
-      setUNError(Status.ERROR.EMAIL_NOT_PROPER_FORMATE_ERROR);
+      setEmailError(Status.ERROR.EMAIL_NOT_PROPER_FORMATE_ERROR);
       error = true;
     }
     // validate password
@@ -140,11 +139,13 @@ const Signup = ({ navigation }) => {
           onClose={() => setSignupErrorShow(false)}
           dismissable
           variant="error"
+          icon="error-outline"
         />
         <Alert
           show={signupDone}
           msg={successMsg}
           variant="success"
+          icon="check-circle-outline"
         />
         <View style={styles.labelView}>
           <View style={styles.inputView}>
@@ -167,7 +168,6 @@ const Signup = ({ navigation }) => {
           <View style={styles.inputView}>
             <TextInput
               style={styles.inputText}
-              textContentType="email"
               autoCapitalize="none"
               placeholder="Email"
               placeholderTextColor="#2b2d42"
@@ -185,6 +185,7 @@ const Signup = ({ navigation }) => {
             <TextInput
               style={styles.inputText}
               textContentType="password"
+              autoCapitalize="none"
               placeholder="Password"
               placeholderTextColor="#2b2d42"
               secureTextEntry={false}
@@ -201,6 +202,7 @@ const Signup = ({ navigation }) => {
           <View style={styles.inputView}>
             <TextInput
               style={styles.inputText}
+              autoCapitalize="none"
               placeholder="Confirm Password"
               placeholderTextColor="#2b2d42"
               secureTextEntry={false}

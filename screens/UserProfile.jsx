@@ -8,23 +8,35 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { getUsername, getEmail } from '../js/asyncStorage';
 import { getCustomerProfile } from '../js/fetchData';
 
-const UserProfile = ({ route, navigation }) => {
+const UserProfile = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [picture, setPicture] = useState('https://bootdey.com/img/Content/avatar/avatar3.png');
 
-  const { email, username } = route.params;
-
   useEffect(() => {
-    getCustomerProfile(username).then((response) => {
-      if (response && typeof response === 'object') {
-        setFirstName(response.firstName);
-        setLastName(response.lastName);
-        setPhoneNumber(response.phoneNumber);
-        setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+    console.log('in ue');
+    getUsername().then((un) => {
+      if (un) {
+        setUsername(un);
+        getCustomerProfile(un).then((response) => {
+          if (response && typeof response === 'object') {
+            setFirstName(response.firstName);
+            setLastName(response.lastName);
+            setPhoneNumber(response.phoneNumber);
+            setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+          }
+        });
+      }
+    });
+    getEmail().then((em) => {
+      if (em) {
+        setEmail(em);
       }
     });
   }, []);
@@ -42,9 +54,6 @@ const UserProfile = ({ route, navigation }) => {
               {lastName}
             </Text>
             <Text style={styles.username}>{username}</Text>
-            <Text style={styles.description}>
-              {/* This is my bio. I tell you a little about myself here. */}
-            </Text>
 
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Email</Text>
@@ -134,13 +143,6 @@ const styles = StyleSheet.create({
     color: '#2B2D42',
     marginTop: 10,
   },
-  description: {
-    fontSize: 16,
-    color: '#8d99ae',
-    marginTop: 10,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
   buttonContainer: {
     marginTop: 10,
     height: 45,
@@ -169,6 +171,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 60,
     width: '95%',
+    marginTop: 20,
     marginBottom: 15,
   },
   cardInfo: {

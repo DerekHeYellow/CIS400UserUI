@@ -86,7 +86,24 @@ async function resetPassword(username, newPassword) {
 }
 
 /**
- * Create or update user profile
+ * Gets customer profile
+ *
+ * @param {String} username
+ */
+async function getCustomerProfile(username) {
+  const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.USER_NOT_EXIST_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Create or update customer profile
  *
  * @param {String} username
  */
@@ -110,18 +127,52 @@ async function putCustomerProfile(username, info) {
 }
 
 /**
- * Gets user profile
+ * Gets a business profile by username.
  *
- * @param {String} username
+ * @param {String} usrname
  */
-async function getCustomerProfile(username) {
-  const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`);
+async function getBusinessProfile(usrname) {
+  const response = await fetch(`${Api.DOMAIN}/businessProfiles/${usrname}`);
   if (response.ok) {
     const json = await response.json();
     return json;
   }
   if (response.status === HttpStatus.NOT_FOUND) {
-    return Status.ERROR.USER_NOT_EXIST_ERROR;
+    return Status.ERROR.BUSINESS_PROFILE_NOT_EXISTS_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Creates or a updates a business profile
+ *
+ * @param {String} username
+ * @param {String} password
+ */
+async function putBusinessProfile(username, info) {
+  const response = await fetch(`${Api.DOMAIN}/businessProfiles/${username}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      businessName: info.businessName,
+      latitude: info.latitude,
+      longitude: info.longitude,
+      addressNumber: info.addressNumber,
+      addressStreet: info.addressStreet,
+      addressCity: info.addressCity,
+      addressState: info.addressState,
+      addressZIP: info.addressZIP,
+      description: info.description,
+      phoneNumber: info.phoneNumber,
+      businessEmail: info.businessEmail,
+      businessHours: info.businessHours,
+      picture: info.picture,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
   }
   return Status.ERROR.OTHER_ERROR;
 }
@@ -130,6 +181,8 @@ export {
   signupUser,
   loginUser,
   resetPassword,
-  putCustomerProfile,
   getCustomerProfile,
+  putCustomerProfile,
+  getBusinessProfile,
+  putBusinessProfile,
 };
