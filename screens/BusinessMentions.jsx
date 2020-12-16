@@ -47,7 +47,7 @@ export default class Notifications extends Component {
         ItemSeparatorComponent={() => (
           <View style={styles.separator} />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={(item) => {
           const Notification = item.item;
           let attachment = <View />;
