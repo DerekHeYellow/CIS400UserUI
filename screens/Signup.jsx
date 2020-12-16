@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyleSheet, Switch, View, Text, TextInput, TouchableOpacity,
+  StyleSheet, Switch, View, Text, TextInput, TouchableOpacity, Keyboard,
 } from 'react-native';
 
 import Alert from '../components/Alert';
@@ -186,13 +186,14 @@ const Signup = ({ navigation }) => {
           <View style={styles.inputView}>
             <TextInput
               style={styles.inputText}
-              textContentType="password"
               autoCapitalize="none"
               placeholder="Password"
               placeholderTextColor="#2b2d42"
               secureTextEntry
               underlineColorAndroid="transparent"
               onChangeText={handlePassword}
+              blurOnSubmit={false}
+              onSubmitEditing={() => Keyboard.dismiss()}
             />
           </View>
           <Text style={styles.errorText}>
@@ -210,6 +211,8 @@ const Signup = ({ navigation }) => {
               secureTextEntry
               underlineColorAndroid="transparent"
               onChangeText={handleConfirmPassword}
+              blurOnSubmit={false}
+              onSubmitEditing={() => Keyboard.dismiss()}
             />
           </View>
           <Text style={styles.errorText}>

@@ -11,41 +11,38 @@ import { Icon } from 'react-native-elements';
 import Alert from '../components/Alert';
 
 const Map = ({ navigation }) => {
-  const [initialRegion, setInitialRegion] = useState({});
-  const [mapRegion, setMapRegion] = useState({});
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 39.955797, longitude: -75.201833, latitudeDelta: 1, longitudeDelta: 1,
+  });
+  // eslint-disable-next-line no-unused-vars
+  const [mapRegion, setMapRegion] = useState(null);
   const mapView = useRef(null);
   const [markers, setMarkers] = useState([]);
   const [showError, setShowError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const getCurrentLocation = async () => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const region = {
-          latitude: parseFloat(position.coords.latitude),
-          longitude: parseFloat(position.coords.longitude),
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
-        };
-        // zoom to region
-        setInitialRegion(region);
-        mapView.current.animateToRegion(region, 1000);
-        // delete this if we want to have a zoom effect
-        setMapRegion(region);
-      },
-      (error) => {
-        setShowError(true);
-        setErrorMsg(error.message);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 1000,
-      },
-    );
-  };
-
   useEffect(() => {
+    const id = Geolocation.watchPosition((position) => {
+      setShowError(false);
+      const region = {
+        latitude: parseFloat(position.coords.latitude),
+        longitude: parseFloat(position.coords.longitude),
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      };
+      // zoom to region
+      setInitialRegion(region);
+      mapView.current.animateToRegion(region, 1000);
+    },
+    (error) => {
+      setShowError(true);
+      setErrorMsg(error.message);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 1000,
+    });
     setMarkers([
       {
         username: 'kims',
@@ -76,7 +73,9 @@ const Map = ({ navigation }) => {
         longitude: -75.20143855194483,
       },
     ]);
-    getCurrentLocation();
+    return () => {
+      Geolocation.clearWatch(id);
+    };
   }, []);
 
   const onLinkPress = (username) => {

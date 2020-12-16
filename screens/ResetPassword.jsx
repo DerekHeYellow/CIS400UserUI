@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyleSheet, View, Text, TextInput, TouchableOpacity,
+  StyleSheet, View, Text, TextInput, TouchableOpacity, Keyboard,
 } from 'react-native';
 
 import Alert from '../components/Alert';
@@ -119,6 +119,8 @@ const ResetPassword = ({ navigation }) => {
             secureTextEntry
             underlineColorAndroid="transparent"
             onChangeText={(pwd) => setPassword(pwd)}
+            blurOnSubmit={false}
+            onSubmitEditing={() => Keyboard.dismiss()}
           />
         </View>
         <Text style={styles.errorText}>
@@ -135,6 +137,8 @@ const ResetPassword = ({ navigation }) => {
             secureTextEntry
             underlineColorAndroid="transparent"
             onChangeText={(confirmPwd) => setConfirmPassword(confirmPwd)}
+            blurOnSubmit={false}
+            onSubmitEditing={() => Keyboard.dismiss()}
           />
         </View>
         <Text style={styles.errorText}>
