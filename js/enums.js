@@ -20,8 +20,8 @@ const Status = Object.freeze({
 });
 
 const UserType = Object.freeze({
-  CUSTOMER: 'Customer',
-  BUSINESS: 'Business',
+  CUSTOMER: 0,
+  BUSINESS: 1,
 });
 
 const Api = Object.freeze({
