@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -8,23 +8,54 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { getUsername, getEmail } from '../js/asyncStorage';
+import { getCustomerProfile } from '../js/fetchData';
 
-const UserProfile = ({ route, navigation }) => {
-  const {
-    name, avatarUrl, username, email,
-  } = route.params;
+const UserProfile = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [picture, setPicture] = useState('https://bootdey.com/img/Content/avatar/avatar3.png');
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getUsername().then((un) => {
+        if (un) {
+          setUsername(un);
+          getCustomerProfile(un).then((response) => {
+            if (response && typeof response === 'object') {
+              setFirstName(response.firstName);
+              setLastName(response.lastName);
+              setPhoneNumber(response.phoneNumber);
+              setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+            }
+          });
+        }
+      });
+      getEmail().then((em) => {
+        if (em) {
+          setEmail(em);
+        }
+      });
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header} />
-        <Image style={styles.avatar} source={{ uri: avatarUrl }} />
+        <Image style={styles.avatar} source={{ uri: picture }} />
         <View style={styles.body}>
           <View style={styles.bodyContent}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.username}>{username}</Text>
-            <Text style={styles.description}>
-              This is my bio. I tell you a little about myself here.
+            <Text style={styles.name}>
+              {firstName}
+              {' '}
+              {lastName}
             </Text>
+            <Text style={styles.username}>{username}</Text>
 
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Email</Text>
@@ -33,7 +64,7 @@ const UserProfile = ({ route, navigation }) => {
 
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Phone</Text>
-              <Text style={styles.cardInfo}>(493)594-3920</Text>
+              <Text style={styles.cardInfo}>{phoneNumber}</Text>
             </View>
 
             <TouchableOpacity
@@ -45,10 +76,7 @@ const UserProfile = ({ route, navigation }) => {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('EditUserProfile',
-                {
-                  name, avatarUrl, username, email,
-                })}
+              onPress={() => navigation.navigate('EditUserProfile', { email, username })}
             >
               <Text style={styles.buttonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -70,13 +98,12 @@ const UserProfile = ({ route, navigation }) => {
 UserProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      name: PropTypes.string,
-      username: PropTypes.string,
-      avatarUrl: PropTypes.string,
       email: PropTypes.string,
+      username: PropTypes.string,
     }),
   }).isRequired,
 };
@@ -119,13 +146,6 @@ const styles = StyleSheet.create({
     color: '#2B2D42',
     marginTop: 10,
   },
-  description: {
-    fontSize: 16,
-    color: '#8d99ae',
-    marginTop: 10,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
   buttonContainer: {
     marginTop: 10,
     height: 45,
@@ -154,6 +174,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 60,
     width: '95%',
+    marginTop: 20,
     marginBottom: 15,
   },
   cardInfo: {

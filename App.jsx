@@ -14,6 +14,7 @@ import EditUserProfile from './screens/EditUserProfile';
 import UserPosts from './screens/UserPosts';
 import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
+import EditBusinessProfile from './screens/EditBusinessProfile';
 import BusinessMentions from './screens/BusinessMentions';
 import Menu from './screens/Menu';
 import Posts from './screens/Posts';
@@ -65,6 +66,10 @@ const App = () => (
       <Stack.Screen
         name="BusinessProfile"
         component={BusinessProfile}
+      />
+      <Stack.Screen
+        name="EditBusinessProfile"
+        component={EditBusinessProfile}
       />
       <Stack.Screen
         name="BusinessMentions"

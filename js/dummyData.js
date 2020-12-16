@@ -10,7 +10,7 @@ async function putDummyBusinessProfiles() {
     addressStreet: 'Walnut St',
     addressCity: 'Phildelphia',
     addressState: 'PA',
-    addressZip: '19104',
+    addressZIP: '19104',
     description: 'Chinese Food Truck',
     phoneNumber: '13242134',
     businessEmail: 'kims@gmail.com',
