@@ -23,7 +23,6 @@ const BusinessProfile = ({ route, navigation }) => {
   const [businessHours, setBusinessHours] = useState('');
   const [showNoProfile, setShowNoProfile] = useState(false);
   const [noProfileError, setNoProfileError] = useState('');
-  // const [type, setType] = useState('');
   const [editShow, setEditShow] = useState(false);
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const BusinessProfile = ({ route, navigation }) => {
                 show={showNoProfile}
                 msg={noProfileError}
                 variant="light"
-                icon="business"
+                icon="sentiment-very-dissatisfied"
               />
             </View>
             { description !== null && description !== ''
@@ -86,7 +85,6 @@ const BusinessProfile = ({ route, navigation }) => {
               && (
               <View style={styles.card}>
                 <Text style={styles.cardTitle}>Our Location</Text>
-
                 <Text style={styles.cardInfo}>
                   {address.number}
                   {' '}

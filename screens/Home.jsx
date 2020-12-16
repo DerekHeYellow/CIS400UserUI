@@ -43,6 +43,14 @@ const Home = ({ navigation }) => (
         <Icon name="person" size={50} color="#2b2d42" />
         <Text style={styles.pageText}>My Profile</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.pageBtn}
+        onPress={() => navigation.navigate('Posts')}
+      >
+        <Icon name="insert-comment" size={40} color="gray" />
+        <Text style={styles.pageText}>Posts</Text>
+      </TouchableOpacity>
     </View>
   </View>
 );

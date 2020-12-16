@@ -97,7 +97,7 @@ async function getCustomerProfile(username) {
     return json;
   }
   if (response.status === HttpStatus.NOT_FOUND) {
-    return Status.ERROR.USER_NOT_EXIST_ERROR;
+    return Status.ERROR.USER_PROFILE_NOT_EXIST_ERROR;
   }
   return Status.ERROR.OTHER_ERROR;
 }
