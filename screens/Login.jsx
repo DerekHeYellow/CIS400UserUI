@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';

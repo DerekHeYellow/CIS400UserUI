@@ -86,6 +86,47 @@ async function resetPassword(username, newPassword) {
 }
 
 /**
+ * Gets customer profile
+ *
+ * @param {String} username
+ */
+async function getCustomerProfile(username) {
+  const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.USER_NOT_EXIST_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Create or update customer profile
+ *
+ * @param {String} username
+ */
+async function putCustomerProfile(username, info) {
+  const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      firstName: info.firstName,
+      lastName: info.lastName,
+      phoneNumber: info.phoneNumber,
+      picture: info.picture,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
  * Gets a business profile by username.
  *
  * @param {String} usrname
@@ -140,6 +181,8 @@ export {
   signupUser,
   loginUser,
   resetPassword,
+  getCustomerProfile,
+  putCustomerProfile,
   getBusinessProfile,
   putBusinessProfile,
 };
