@@ -56,7 +56,7 @@ const BusinessProfile = ({ route, navigation }) => {
                 show={showNoProfile}
                 msg={noProfileError}
                 variant="light"
-                icon="business"
+                icon="sentiment-very-dissatisfied"
               />
             </View>
             { description !== null && description !== ''

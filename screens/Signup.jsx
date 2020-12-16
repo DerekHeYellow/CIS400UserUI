@@ -171,6 +171,7 @@ const Signup = ({ navigation }) => {
               autoCapitalize="none"
               placeholder="Email"
               placeholderTextColor="#2b2d42"
+              keyboardType="email-address"
               underlineColorAndroid="transparent"
               onChangeText={handleEmail}
             />
@@ -188,7 +189,7 @@ const Signup = ({ navigation }) => {
               autoCapitalize="none"
               placeholder="Password"
               placeholderTextColor="#2b2d42"
-              secureTextEntry={false}
+              secureTextEntry
               underlineColorAndroid="transparent"
               onChangeText={handlePassword}
             />
@@ -205,7 +206,7 @@ const Signup = ({ navigation }) => {
               autoCapitalize="none"
               placeholder="Confirm Password"
               placeholderTextColor="#2b2d42"
-              secureTextEntry={false}
+              secureTextEntry
               underlineColorAndroid="transparent"
               onChangeText={handleConfirmPassword}
             />

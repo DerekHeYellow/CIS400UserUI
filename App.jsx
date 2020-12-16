@@ -16,6 +16,7 @@ import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
 import BusinessMentions from './screens/BusinessMentions';
 import Menu from './screens/Menu';
+import Posts from './screens/Posts';
 
 // const Tab = createBottomTabNavigator();
 
@@ -76,6 +77,10 @@ const App = () => (
       <Stack.Screen
         name="Menu"
         component={Menu}
+      />
+      <Stack.Screen
+        name="Posts"
+        component={Posts}
       />
     </Stack.Navigator>
   </NavigationContainer>
