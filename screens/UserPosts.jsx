@@ -15,28 +15,28 @@ export default class Notifications extends Component {
     this.state = {
       data: [
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I ate some stuff today. Yum yum!', attachment: 'https://via.placeholder.com/100x100/FFB6C1/000000',
+          id: 1, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I ate some stuff today. Yum yum!', attachment: 'https://via.placeholder.com/100x100/FFB6C1/000000',
         },
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: "I didn't eat anything. I'm so hungry I don't want to code.", attachment: 'https://via.placeholder.com/100x100/20B2AA/000000',
+          id: 2, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: "I didn't eat anything. I'm so hungry I don't want to code.", attachment: 'https://via.placeholder.com/100x100/20B2AA/000000',
         },
         {
           id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I want to drink boba tea. I know a good place! Message me!', attachment: '',
         },
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: "I like posting so much, I'm addicted to social media and I have no regrets about it.", attachment: '',
+          id: 4, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: "I like posting so much, I'm addicted to social media and I have no regrets about it.", attachment: '',
         },
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I miss food!', attachment: 'https://via.placeholder.com/100x100/FFB6C1/000000',
+          id: 5, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I miss food!', attachment: 'https://via.placeholder.com/100x100/FFB6C1/000000',
         },
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: "It's so cold today, but will that stop me from getting food? NO!", attachment: 'https://via.placeholder.com/100x100/7B68EE/000000',
+          id: 6, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: "It's so cold today, but will that stop me from getting food? NO!", attachment: 'https://via.placeholder.com/100x100/7B68EE/000000',
         },
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I am posting just to post.', attachment: '',
+          id: 7, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I am posting just to post.', attachment: '',
         },
         {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I gained 70 pounds last month. Yikes!', attachment: '',
+          id: 8, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Rosa Sun', text: 'I gained 70 pounds last month. Yikes!', attachment: '',
         },
       ],
     };

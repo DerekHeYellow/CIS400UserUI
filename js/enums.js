@@ -10,6 +10,7 @@ const Status = Object.freeze({
     CONFIRM_PASSWORD_ERROR: 'Passwords do not match.',
     USERNAME_NOT_EXIST_ERROR: 'Sorry, we couldn\'t find an account with this username.',
     LOGIN_PASSWORD_ERROR: 'Sorry, that was the wrong password. Please try again.',
+    USER_NOT_EXIST_ERROR: 'No user profile yet.',
     ASYNC_STORAGE_SET_ERROR: 'Sorry, there was an error saving your data.',
     ASYNC_STORAGE_GET_ERROR: 'Sorry, there was an error retrieving your data.',
     BUSINESS_PROFILE_NOT_EXISTS_ERROR: 'There is no profile for this business.',
