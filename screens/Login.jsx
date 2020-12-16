@@ -47,6 +47,7 @@ const Login = ({ navigation }) => {
                   storeType(response.type.toString()).then((r3) => {
                     if (r3 === Status.SUCCESS) {
                       putDummyBusinessProfiles().then(() => navigation.navigate('Home'));
+                      console.log('type: ', response.type);
                       if (response.type === UserType.CUSTOMER) {
                         navigation.navigate('Home');
                       } else if (response.type === UserType.BUSINESS) {

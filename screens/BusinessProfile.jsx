@@ -28,18 +28,18 @@ const BusinessProfile = ({ route, navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      getType().then((response) => {
+        if (response) {
+          // setType(response);
+          if (parseInt(response, 10) === UserType.BUSINESS) {
+            setEditShow(true);
+          } else {
+            setEditShow(false);
+          }
+        }
+      });
       getBusinessProfile(route.params.username).then((response) => {
         if (response && typeof response === 'object') {
-          getType().then((response2) => {
-            if (response2) {
-            // setType(response2);
-              if (parseInt(response2, 10) === UserType.BUSINESS) {
-                setEditShow(true);
-              } else {
-                setEditShow(false);
-              }
-            }
-          });
           setBusinessName(response.businessName);
           setDescription(response.description);
           setPhoneNumber(response.phoneNumber);
@@ -91,9 +91,9 @@ const BusinessProfile = ({ route, navigation }) => {
                   {address.number}
                   {' '}
                   {address.street}
-                  {', '}
+                  {' '}
                   {address.city}
-                  {', '}
+                  {' '}
                   {address.state}
                 </Text>
               </View>

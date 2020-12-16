@@ -1,3 +1,4 @@
+/* eslint-disable import/named */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -13,7 +14,7 @@ const Signup = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isBusiness, setIsBusiness] = useState(false);
-  const [userType, setUserType] = useState(UserType.CUSTOMER);
+  const [userType, setUserType] = useState('Customer');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // errors
@@ -60,9 +61,9 @@ const Signup = ({ navigation }) => {
 
   const toggleSwitch = () => {
     if (isBusiness) {
-      setUserType(UserType.CUSTOMER);
+      setUserType('Customer');
     } else {
-      setUserType(UserType.BUSINESS);
+      setUserType('Business');
     }
     setIsBusiness((previousState) => !previousState);
   };

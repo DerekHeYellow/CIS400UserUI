@@ -19,7 +19,7 @@ const EditBusinessProfile = ({ navigation }) => {
   const [description, setDescription] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [businessHours, setBusinessHours] = useState('');
-  const [addressNumber, setAddNumber] = useState(0);
+  const [addressNumber, setAddNumber] = useState();
   const [addressStreet, setAddStreet] = useState('');
   const [addressCity, setAddCity] = useState('');
   const [addressState, setAddState] = useState('');
