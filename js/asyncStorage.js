@@ -19,6 +19,15 @@ const storeEmail = async (value) => {
   }
 };
 
+const storeType = async (value) => {
+  try {
+    await AsyncStorage.setItem('@type', value);
+    return Status.SUCCESS;
+  } catch (e) {
+    return Status.ERROR.ASYNC_STORAGE_SET_ERROR;
+  }
+};
+
 const getUsername = async () => {
   try {
     const value = await AsyncStorage.getItem('@username');
@@ -37,9 +46,20 @@ const getEmail = async () => {
   }
 };
 
+const getType = async () => {
+  try {
+    const value = await AsyncStorage.getItem('@type');
+    return value;
+  } catch (e) {
+    return Status.ERROR.ASYNC_STORAGE_GET_ERROR;
+  }
+};
+
 export {
   storeUsername,
   storeEmail,
+  storeType,
   getUsername,
   getEmail,
+  getType,
 };

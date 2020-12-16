@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Alert from '../components/Alert';
+import { getType } from '../js/asyncStorage';
+import { UserType } from '../js/enums';
 
 import { getBusinessProfile } from '../js/fetchData';
 
@@ -21,27 +23,42 @@ const BusinessProfile = ({ route, navigation }) => {
   const [businessHours, setBusinessHours] = useState('');
   const [showNoProfile, setShowNoProfile] = useState(false);
   const [noProfileError, setNoProfileError] = useState('');
+  // const [type, setType] = useState('');
+  const [editShow, setEditShow] = useState(false);
 
   useEffect(() => {
-    getBusinessProfile(route.params.username).then((response) => {
-      if (response && typeof response === 'object') {
-        setBusinessName(response.businessName);
-        setDescription(response.description);
-        setPhoneNumber(response.phoneNumber);
-        setAddress({
-          number: response.addressNumber,
-          street: response.addressStreet,
-          city: response.addressCity,
-          state: response.addressState,
-        });
-        setBusinessEmail(response.businessEmail);
-        setBusinessHours(response.businessHours);
-      } else {
-        setNoProfileError(response);
-        setShowNoProfile(true);
-      }
+    const unsubscribe = navigation.addListener('focus', () => {
+      getBusinessProfile(route.params.username).then((response) => {
+        if (response && typeof response === 'object') {
+          getType().then((response2) => {
+            if (response2) {
+            // setType(response2);
+              if (parseInt(response2, 10) === UserType.BUSINESS) {
+                setEditShow(true);
+              } else {
+                setEditShow(false);
+              }
+            }
+          });
+          setBusinessName(response.businessName);
+          setDescription(response.description);
+          setPhoneNumber(response.phoneNumber);
+          setAddress({
+            number: response.addressNumber,
+            street: response.addressStreet,
+            city: response.addressCity,
+            state: response.addressState,
+          });
+          setBusinessEmail(response.businessEmail);
+          setBusinessHours(response.businessHours);
+        } else {
+          setNoProfileError(response);
+          setShowNoProfile(true);
+        }
+      });
     });
-  }, []);
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -74,9 +91,9 @@ const BusinessProfile = ({ route, navigation }) => {
                   {address.number}
                   {' '}
                   {address.street}
-                  {' '}
+                  {', '}
                   {address.city}
-                  {' '}
+                  {', '}
                   {address.state}
                 </Text>
               </View>
@@ -91,7 +108,7 @@ const BusinessProfile = ({ route, navigation }) => {
             { phoneNumber !== null && businessEmail !== ''
               && (
               <View style={styles.card}>
-                <Text style={styles.cardTitle}>Business Phone</Text>
+                <Text style={styles.cardTitle}>Phone Number</Text>
                 <Text style={styles.cardInfo}>{phoneNumber}</Text>
               </View>
               )}
@@ -102,7 +119,6 @@ const BusinessProfile = ({ route, navigation }) => {
                 <Text style={styles.cardInfo}>{businessHours}</Text>
               </View>
               )}
-
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.navigate('Menu')}
@@ -110,11 +126,19 @@ const BusinessProfile = ({ route, navigation }) => {
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.buttonContainer2}
+              style={styles.buttonContainer3}
               onPress={() => navigation.navigate('BusinessMentions')}
             >
-              <Text style={styles.buttonText2}>Mentions</Text>
+              <Text style={styles.buttonText}>Mentions</Text>
             </TouchableOpacity>
+            {editShow && (
+            <TouchableOpacity
+              style={styles.buttonContainer2}
+              onPress={() => navigation.navigate('EditBusinessProfile')}
+            >
+              <Text style={styles.buttonText2}>Edit Profile</Text>
+            </TouchableOpacity>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -125,6 +149,7 @@ const BusinessProfile = ({ route, navigation }) => {
 BusinessProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    addListener: PropTypes.func,
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
@@ -179,7 +204,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 20,
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -195,6 +220,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 250,
     borderRadius: 30,
+  },
+  buttonContainer3: {
+    marginTop: 15,
+    height: 45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 250,
+    borderRadius: 30,
+    backgroundColor: '#2B2D42',
   },
   buttonText: {
     color: 'white',

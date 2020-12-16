@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet, Text, View, TextInput, TouchableOpacity,
 } from 'react-native';
-import { storeUsername, storeEmail } from '../js/asyncStorage';
+import { storeUsername, storeEmail, storeType } from '../js/asyncStorage';
 
 import Alert from '../components/Alert';
-import { Status } from '../js/enums';
+import { Status, UserType } from '../js/enums';
 import { loginUser } from '../js/fetchData';
-// import putDummyBusinessProfiles from '../js/dummyData';
+import putDummyBusinessProfiles from '../js/dummyData';
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -44,8 +44,16 @@ const Login = ({ navigation }) => {
             if (r === Status.SUCCESS) {
               storeEmail(response.email).then((r2) => {
                 if (r2 === Status.SUCCESS) {
-                  // putDummyBusinessProfiles().then(() => navigation.navigate('Home'));
-                  navigation.navigate('Home');
+                  storeType(response.type.toString()).then((r3) => {
+                    if (r3 === Status.SUCCESS) {
+                      putDummyBusinessProfiles().then(() => navigation.navigate('Home'));
+                      if (response.type === UserType.CUSTOMER) {
+                        navigation.navigate('Home');
+                      } else if (response.type === UserType.BUSINESS) {
+                        navigation.navigate('BusinessProfile', { username });
+                      }
+                    }
+                  });
                 } else {
                   setLoginErrorShow(true);
                   setLoginError(r2);

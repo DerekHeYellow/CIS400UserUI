@@ -109,7 +109,7 @@ async function getCustomerProfile(username) {
  */
 async function putCustomerProfile(username, info) {
   const response = await fetch(`${Api.DOMAIN}/customerProfiles/${username}`, {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
