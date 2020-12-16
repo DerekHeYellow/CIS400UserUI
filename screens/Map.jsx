@@ -11,38 +11,43 @@ import { Icon } from 'react-native-elements';
 import Alert from '../components/Alert';
 
 const Map = ({ navigation }) => {
-  const [initialRegion, setInitialRegion] = useState({
+  const [initialRegion] = useState({
     latitude: 39.955797, longitude: -75.201833, latitudeDelta: 1, longitudeDelta: 1,
   });
-  // eslint-disable-next-line no-unused-vars
-  const [mapRegion, setMapRegion] = useState(null);
+  const [mapRegion] = useState(null);
   const mapView = useRef(null);
   const [markers, setMarkers] = useState([]);
   const [showError, setShowError] = useState(false);
+  const [followUser, setFollowUser] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const getCurrentLocation = async () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const region = {
+          latitude: parseFloat(position.coords.latitude),
+          longitude: parseFloat(position.coords.longitude),
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
+        };
+        // setMapRegion(region);
+        // zoom to region
+        mapView.current.animateToRegion(region, 1000);
+      },
+      (error) => {
+        setShowError(true);
+        setErrorMsg(error.message);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000,
+      },
+    );
+  };
+
   useEffect(() => {
-    const id = Geolocation.watchPosition((position) => {
-      setShowError(false);
-      const region = {
-        latitude: parseFloat(position.coords.latitude),
-        longitude: parseFloat(position.coords.longitude),
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-      };
-      // zoom to region
-      setInitialRegion(region);
-      mapView.current.animateToRegion(region, 1000);
-    },
-    (error) => {
-      setShowError(true);
-      setErrorMsg(error.message);
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 20000,
-      maximumAge: 1000,
-    });
+    getCurrentLocation();
     setMarkers([
       {
         username: 'kims',
@@ -73,9 +78,6 @@ const Map = ({ navigation }) => {
         longitude: -75.20143855194483,
       },
     ]);
-    return () => {
-      Geolocation.clearWatch(id);
-    };
   }, []);
 
   const onLinkPress = (username) => {
@@ -87,11 +89,16 @@ const Map = ({ navigation }) => {
       <MapView
         style={styles.customMapStyle}
         region={mapRegion}
-        followUserLocation
+        followsUserLocation={followUser}
         ref={mapView}
         zoomEnabled
         showsUserLocation
         initialRegion={initialRegion}
+        loadingEnabled
+        loadingIndicatorColor="white"
+        loadingBackgroundColor="#2B2D42"
+        onPanDrag={() => setFollowUser(false)}
+        onLongPress={() => setFollowUser(false)}
       >
         { markers.map((marker) => (
           <Marker
@@ -131,9 +138,21 @@ const Map = ({ navigation }) => {
             msg={errorMsg}
             variant="light"
             icon="error-outline"
+            dismissable
+            onClose={() => setShowError(false)}
           />
         </View>
       </View>
+      <TouchableOpacity
+        style={styles.findBtn}
+        onPress={() => {
+          setFollowUser(true);
+          getCurrentLocation();
+        }}
+      >
+        <Icon name="my-location" size={40} color="white" />
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -200,5 +219,19 @@ const styles = StyleSheet.create({
   },
   alertBody: {
     width: '75%',
+  },
+  findBtn: {
+    position: 'absolute',
+    width: 80,
+    height: 80,
+    bottom: 80,
+    right: 30,
+    borderRadius: 40,
+    backgroundColor: '#8d99ae',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: 'lightgray',
   },
 });

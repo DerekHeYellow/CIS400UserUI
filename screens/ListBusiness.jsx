@@ -126,6 +126,7 @@ const ListBusiness = ({ navigation }) => {
   ItemView.propTypes = {
     item: PropTypes.shape({
       name: PropTypes.string,
+      subtitle: PropTypes.string,
       avatar_url: PropTypes.string,
       email: PropTypes.string,
     }).isRequired,
@@ -162,10 +163,6 @@ const ListBusiness = ({ navigation }) => {
 ListBusiness.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
-  }).isRequired,
-  item: PropTypes.shape({
-    name: PropTypes.string,
-    subtitle: PropTypes.string,
   }).isRequired,
 };
 
