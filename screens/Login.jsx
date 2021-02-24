@@ -115,6 +115,7 @@ const Login = ({ navigation }) => {
             placeholder="Password"
             placeholderTextColor="#2B2D42"
             autoCapitalize="none"
+            textContentType="password"
             onChangeText={handlePasswordChange}
             blurOnSubmit={false}
             onSubmitEditing={() => Keyboard.dismiss()}

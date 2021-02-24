@@ -1,198 +1,54 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-} from 'react-native';
-import ParsedText from 'react-native-parsed-text';
 import { getPostsByBusiness } from '../js/fetchData';
+import { Status } from '../js/enums';
+
+import PostList from '../components/PostList';
 
 // eslint-disable-next-line no-unused-vars
 const BusinessMentions = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
+  const [loadDone, setLoadDone] = useState(false);
   const [postTrigger, setPostTrigger] = useState(0);
 
   const refreshPosts = () => {
+    setLoadDone(false);
     setPostTrigger((t) => t + 1);
   };
 
   useEffect(() => {
     getPostsByBusiness(route.params.businessUsername).then((postResult) => {
-      const postItems = postResult.map((postData) => {
-        // convert to data object
-        const utcDate = postData.postDate.split('.')[0];
-        const date = new Date(utcDate);
-        return {
-          id: postData.postId,
-          name: postData.username,
-          text: postData.post,
-          date,
-        };
-      });
-      const sortedPostItems = postItems.sort((a, b) => b.date - a.date);
-      setPosts(sortedPostItems);
-      setIsFetching(false);
+      if (postResult === Status.ERROR.OTHER_ERROR) {
+        setPosts([{ id: 0, error: postResult }]);
+      } else if (Array.isArray(postResult) && !postResult.length) {
+        setPosts([{ id: 0, noItems: true }]);
+      } else {
+        const postItems = postResult.map((postData) => {
+          // convert to data object
+          const utcDate = postData.postDate.split('.')[0];
+          const date = new Date(utcDate);
+          return {
+            id: postData.postId,
+            name: postData.username,
+            text: postData.post,
+            date,
+          };
+        });
+        const sortedPostItems = postItems.sort((a, b) => b.date - a.date);
+        setPosts(sortedPostItems);
+      }
+      setLoadDone(true);
     });
   }, [postTrigger]);
 
-  const convertDateToString = (date) => {
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    };
-    return date.toLocaleString(undefined, options);
-  };
-
-  const renderMentionsText = (matchingString) => {
-    // matches => ["@[Don Memos](id:donmemos)", "Don Memos", "donmemos"]
-    const pattern = /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im;
-    const match = matchingString.match(pattern);
-    return `@${match[1]}`;
-  };
-
-  const handleMentionPress = (name) => {
-    const groupPat = /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im;
-    const businessUsername = name.match(groupPat)[2];
-    navigation.navigate('BusinessProfile',
-      {
-        username: businessUsername,
-      });
-  };
-
-  const getParsedText = (text, style) => (
-    <ParsedText
-      style={style}
-      multiline
-      parse={
-            [
-              {
-                pattern: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im,
-                style: styles.mention,
-                onPress: handleMentionPress,
-                renderText: renderMentionsText,
-              },
-            ]
-          }
-      childrenProps={{ allowFontScaling: false }}
-    >
-      {text}
-    </ParsedText>
-  );
-
   return (
-    <View style={styles.allPosts}>
-      <FlatList
-        style={styles.root}
-        data={posts}
-        extraData={posts}
-        refreshing={isFetching}
-        onRefresh={() => {
-          setIsFetching(true);
-          refreshPosts();
-        }}
-        ItemSeparatorComponent={() => (
-          <View style={styles.separator} />
-        )}
-        keyExtractor={(item) => item.id}
-        renderItem={(item) => (
-          <View style={styles.container}>
-            {item.item.image
-            && (<Image source={{ uri: item.item.image }} style={styles.avatar} />)}
-            {!item.item.image
-            && (
-            <View style={styles.avatar}>
-              <Text style={styles.avatarInitials}>
-                {!!item.item.name
-              && item.item.name.substring(0, 2).toUpperCase()}
-              </Text>
-            </View>
-            )}
-            <View style={styles.content}>
-              <View style={styles.mainContent}>
-                <View style={styles.text}>
-                  <Text style={styles.name}>{item.item.name}</Text>
-                  {getParsedText(item.item.text, styles.postBody)}
-                </View>
-                <Text style={styles.timeAgo}>
-                  {convertDateToString(item.item.date)}
-                </Text>
-              </View>
-            </View>
-          </View>
-        )}
-      />
-    </View>
+    <PostList
+      navigation={navigation}
+      posts={posts}
+      refreshPosts={refreshPosts}
+      loadDone={loadDone}
+    />
   );
 };
 
 export default BusinessMentions;
-
-const styles = StyleSheet.create({
-  root: {
-    backgroundColor: '#FFFFFF',
-  },
-  allPosts: {
-    flex: 1,
-  },
-  container: {
-    padding: 16,
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#FFFFFF',
-    alignItems: 'flex-start',
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#8d99ae',
-    justifyContent: 'center',
-    display: 'flex',
-    marginRight: 15,
-  },
-  avatarInitials: {
-    color: '#fff',
-    fontSize: 20,
-    textAlign: 'center',
-  },
-  text: {
-    marginBottom: 5,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  content: {
-    flex: 1,
-  },
-  mainContent: {
-    paddingRight: 10,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#CCCCCC',
-  },
-  timeAgo: {
-    fontSize: 12,
-    color: '#696969',
-  },
-  name: {
-    width: '100%',
-    fontSize: 16,
-    color: '#1E90FF',
-  },
-  mention: {
-    color: '#244dc9',
-  },
-  postBody: {
-    marginTop: 5,
-    width: '100%',
-  },
-});
