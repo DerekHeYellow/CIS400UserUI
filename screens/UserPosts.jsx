@@ -11,18 +11,26 @@ import ParsedText from 'react-native-parsed-text';
 import { Icon } from 'react-native-elements';
 import { getPostsByUser, deletePostById } from '../js/fetchData';
 import { Status } from '../js/enums';
+import { getUsername } from '../js/asyncStorage';
 
 // eslint-disable-next-line no-unused-vars
 const UserPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [postTrigger, setPostTrigger] = useState(0);
+  const [canEdit, setCanEdit] = useState(false);
 
   const refreshPosts = () => {
     setPostTrigger((t) => t + 1);
   };
 
   useEffect(() => {
+    // check for edit permissions
+    getUsername().then((username) => {
+      if (username === route.params.username) {
+        setCanEdit(true);
+      }
+    });
     getPostsByUser(route.params.username).then((postResult) => {
       const postItems = postResult.map((postData) => {
         // convert to data object
@@ -137,9 +145,12 @@ const UserPosts = ({ route, navigation }) => {
                 </Text>
               </View>
             </View>
+            {canEdit
+            && (
             <View style={styles.deleteButton}>
               <Icon name="delete" type="material" size={20} color="black" onPress={() => onDelete(item.item.id)} />
             </View>
+            )}
           </View>
         )}
       />
