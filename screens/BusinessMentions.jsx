@@ -5,7 +5,6 @@ import { Status } from '../js/enums';
 
 import PostList from '../components/PostList';
 
-// eslint-disable-next-line no-unused-vars
 const BusinessMentions = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
   const [loadDone, setLoadDone] = useState(false);
