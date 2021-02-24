@@ -221,6 +221,12 @@ async function createPost(post) {
  */
 async function getAllPosts() {
   const response = await fetch(`${Api.DOMAIN}/posts`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
 
 /**
  * Gets menus by username
@@ -233,6 +239,9 @@ async function getMenus(username) {
     const json = await response.json();
     return json;
   }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.BUSINESS_PROFILE_NOT_EXISTS_ERROR;
+  }
   return Status.ERROR.OTHER_ERROR;
 }
 
@@ -244,8 +253,6 @@ async function getPostsByUser(username) {
   if (response.ok) {
     const json = await response.json();
     return json;
-  if (response.status === HttpStatus.NOT_FOUND) {
-    return Status.ERROR.BUSINESS_PROFILE_NOT_EXISTS_ERROR;
   }
   return Status.ERROR.OTHER_ERROR;
 }
@@ -288,6 +295,7 @@ async function deletePostById(postId) {
   }
   if (response.status === HttpStatus.NOT_FOUND) {
     return Status.ERROR.POST_DELETION_ERROR;
+  }
   if (response.status === HttpStatus.NOT_FOUND) {
     return Status.ERROR.BUSINESS_PROFILE_NOT_EXISTS_ERROR;
   }
