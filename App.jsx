@@ -16,8 +16,9 @@ import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
 import EditBusinessProfile from './screens/EditBusinessProfile';
 import BusinessMentions from './screens/BusinessMentions';
-import Menu from './screens/Menu';
 import Posts from './screens/Posts';
+import CustomerMenu from './screens/CustomerMenu';
+import CustomerMenus from './screens/CustomerMenus';
 // const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
@@ -79,8 +80,12 @@ const App = () => (
         component={Map}
       />
       <Stack.Screen
-        name="Menu"
-        component={Menu}
+        name="CustomerMenus"
+        component={CustomerMenus}
+      />
+      <Stack.Screen
+        name="CustomerMenu"
+        component={CustomerMenu}
       />
       <Stack.Screen
         name="Posts"
