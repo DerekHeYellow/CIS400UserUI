@@ -15,6 +15,7 @@ import { UserType } from '../js/enums';
 import { getBusinessProfile } from '../js/fetchData';
 
 const BusinessProfile = ({ route, navigation }) => {
+  const [businessUsername, setBusinessUsername] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [description, setDescription] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -39,6 +40,7 @@ const BusinessProfile = ({ route, navigation }) => {
       });
       getBusinessProfile(route.params.username).then((response) => {
         if (response && typeof response === 'object') {
+          setBusinessUsername(route.params.username);
           setBusinessName(response.businessName);
           setDescription(response.description);
           setPhoneNumber(response.phoneNumber);
@@ -119,7 +121,7 @@ const BusinessProfile = ({ route, navigation }) => {
               )}
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('Menu')}
+              onPress={() => navigation.navigate('CustomerMenus', { business: businessUsername })}
             >
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
