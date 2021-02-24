@@ -3,52 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { SearchBar, Avatar, ListItem } from 'react-native-elements';
 
-const list = [
-  {
-    username: 'kims',
-    name: 'Kim\'s',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Chinese Food Truck',
-    email: 'kims@gmail.com',
-  },
-  {
-    username: 'magicCarpet',
-    name: 'Magic Carpet',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Middle Eastern Food Truck',
-    email: 'magiccarpet@gmail.com',
-  },
-  {
-    name: 'Don Memos',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Mexican Food Truck',
-    email: 'donmemos@gmail.com',
-  },
-  {
-    name: 'Yue Kee',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Chinese Food Truck',
-    email: 'yuekees@gmail.com',
-  },
-  {
-    name: 'Lynn\'s',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Breakfast/Sandwich Food Truck',
-    email: 'lynns@gmail.com',
-  },
-  {
-    name: 'Hemo\'s',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Breakfast/Sandwich Food Truck',
-    email: 'hemos@gmail.com',
-  },
-  {
-    name: 'MexiCali',
-    avatar_url: 'https://upload.wikimedia.org/wikipedia/commons/0/07/WIN_preview_Food.jpg',
-    subtitle: 'Mexican Food Truck',
-    email: 'mexicali@gmail.com',
-  },
-];
+import { getAllBusinessProfiles } from '../js/fetchData';
 
 const ListBusiness = ({ navigation }) => {
   const [search, setSearch] = useState('');
@@ -56,17 +11,17 @@ const ListBusiness = ({ navigation }) => {
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   useEffect(() => {
-    setFilteredDataSource(list);
-    setMasterDataSource(list);
-    // fetch('https://jsonplaceholder.typicode.com/posts')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     setFilteredDataSource(responseJson);
-    //     setMasterDataSource(responseJson);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    getAllBusinessProfiles().then((result) => {
+      const items = result.map((businessProfile) => ({
+        username: businessProfile.username,
+        name: businessProfile.businessName,
+        avatar_url: businessProfile.picture,
+        subtitle: businessProfile.description,
+        email: businessProfile.businessEmail,
+      }));
+      setFilteredDataSource(items);
+      setMasterDataSource(items);
+    });
   }, []);
 
   const searchFilterFunction = (text) => {
