@@ -1,0 +1,92 @@
+diff --git a/node_modules/react-native-mentions-editor/src/Editor/EditorStyles.js b/node_modules/react-native-mentions-editor/src/Editor/EditorStyles.js
+index e1367d7..1c8213b 100644
+--- a/node_modules/react-native-mentions-editor/src/Editor/EditorStyles.js
++++ b/node_modules/react-native-mentions-editor/src/Editor/EditorStyles.js
+@@ -3,9 +3,8 @@ import { StyleSheet } from "react-native";
+ export default StyleSheet.create({
+   container: {
+     backgroundColor: "#fff",
+-    borderColor: "green",
+-    borderWidth: 1,
+-    width: 300
++    width: '100%',
++    paddingTop: 10,
+   },
+   textContainer: {
+     alignSelf: "stretch",
+diff --git a/node_modules/react-native-mentions-editor/src/Editor/index.js b/node_modules/react-native-mentions-editor/src/Editor/index.js
+index ef31dea..5dbd4c6 100644
+--- a/node_modules/react-native-mentions-editor/src/Editor/index.js
++++ b/node_modules/react-native-mentions-editor/src/Editor/index.js
+@@ -232,7 +232,7 @@ export class Editor extends React.Component {
+       adjMentIndexes
+     );
+     mentionKeys.forEach(key => {
+-      remStr = `@${this.mentionsMap.get(key).username} ${remStr}`;
++      remStr = `@${this.mentionsMap.get(key).name} ${remStr}`;
+     });
+     return {
+       initialStr,
+@@ -252,13 +252,13 @@ export class Editor extends React.Component {
+       menIndex
+     );
+ 
+-    const username = `@${user.username}`;
+-    const text = `${initialStr}${username} ${remStr}`;
++    const name = `@${user.name}`;
++    const text = `${initialStr}${name} ${remStr}`;
+     //'@[__display__](__id__)' ///find this trigger parsing from react-mentions
+ 
+     //set the mentions in the map.
+     const menStartIndex = initialStr.length;
+-    const menEndIndex = menStartIndex + (username.length - 1);
++    const menEndIndex = menStartIndex + (name.length - 1);
+ 
+     this.mentionsMap.set([menStartIndex, menEndIndex], user);
+ 
+@@ -326,7 +326,7 @@ export class Editor extends React.Component {
+       lastIndex = end + 1;
+       formattedText.push(initialStr);
+       const formattedMention = this.formatMentionNode(
+-        `@${men.username}`,
++        `@${men.name}`,
+         `${start}-${men.id}-${end}`
+       );
+       formattedText.push(formattedMention);
+@@ -349,7 +349,7 @@ export class Editor extends React.Component {
+         start === 1 ? "" : inputText.substring(lastIndex, start);
+       lastIndex = end + 1;
+       formattedText = formattedText.concat(initialStr);
+-      formattedText = formattedText.concat(`@[${men.username}](id:${men.id})`);
++      formattedText = formattedText.concat(`@[${men.name}](id:${men.id})`);
+       if (
+         EU.isKeysAreSame(EU.getLastKeyInMap(this.mentionsMap), [start, end])
+       ) {
+@@ -569,7 +569,6 @@ export class Editor extends React.Component {
+                 value={state.inputText}
+                 onBlur={props.toggleEditor}
+                 onChangeText={this.onChange}
+-                selection={this.state.selection}
+                 selectionColor={"#000"}
+                 onSelectionChange={this.handleSelectionChange}
+                 placeholder={state.placeholder}
+diff --git a/node_modules/react-native-mentions-editor/src/MentionList/index.js b/node_modules/react-native-mentions-editor/src/MentionList/index.js
+index 5938925..0b59ba9 100644
+--- a/node_modules/react-native-mentions-editor/src/MentionList/index.js
++++ b/node_modules/react-native-mentions-editor/src/MentionList/index.js
+@@ -38,7 +38,14 @@ export class MentionList extends React.PureComponent {
+     const list = this.props.list;
+     const suggestions =
+       withoutAtKeyword !== ""
+-        ? list.filter(user => user.username.includes(withoutAtKeyword))
++        ? list.filter((item) => {
++            const itemData = (item.name.substring(0, withoutAtKeyword.length)
++            + item.username.substring(0, withoutAtKeyword.length))
++              ? (item.name.substring(0, withoutAtKeyword.length)
++              + item.username.substring(0, withoutAtKeyword.length)).toUpperCase()
++              : ''.toUpperCase();
++            const textData = withoutAtKeyword.toUpperCase();
++            return itemData.indexOf(textData) > -1})
+         : list;
+     if (!isTrackingStarted) {
+       return null;

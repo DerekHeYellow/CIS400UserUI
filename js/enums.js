@@ -14,6 +14,8 @@ const Status = Object.freeze({
     ASYNC_STORAGE_SET_ERROR: 'Sorry, there was an error saving your data.',
     ASYNC_STORAGE_GET_ERROR: 'Sorry, there was an error retrieving your data.',
     BUSINESS_PROFILE_NOT_EXISTS_ERROR: 'There is no profile for this business.',
+    POST_CREATION_ERROR: 'Sorry, an error occured when creating your post.',
+    POST_DELETION_ERROR: 'Sorry, could not find post to delete.',
     OTHER_ERROR: 'Oops! Something went wrong.',
   },
   SUCCESS: 'Success.',
