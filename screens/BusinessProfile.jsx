@@ -125,7 +125,7 @@ const BusinessProfile = ({ route, navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer3}
-              onPress={() => navigation.navigate('BusinessMentions')}
+              onPress={() => navigation.navigate('BusinessMentions', { businessUsername: route.params.username })}
             >
               <Text style={styles.buttonText}>Mentions</Text>
             </TouchableOpacity>

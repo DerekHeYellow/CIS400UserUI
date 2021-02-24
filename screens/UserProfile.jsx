@@ -17,7 +17,7 @@ const UserProfile = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [picture, setPicture] = useState('https://bootdey.com/img/Content/avatar/avatar3.png');
+  const [picture, setPicture] = useState('');
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -29,7 +29,10 @@ const UserProfile = ({ navigation }) => {
               setFirstName(response.firstName);
               setLastName(response.lastName);
               setPhoneNumber(response.phoneNumber);
-              setPicture('https://bootdey.com/img/Content/avatar/avatar3.png');
+              if (response.picture) {
+                setPicture(response.picture);
+              }
+              setPicture('NO_PICTURE');
             }
           });
         }
@@ -43,11 +46,38 @@ const UserProfile = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  const generateInitials = () => {
+    if (!firstName && !lastName) {
+      return (username.charAt(0) + username.charAt(1)).toUpperCase();
+    }
+    if (firstName && lastName) {
+      return (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+    }
+    if (firstName && !lastName) {
+      return (firstName.charAt(0) + firstName.charAt(1)).toUpperCase();
+    }
+    return (lastName.charAt(0) + lastName.charAt(1)).toUpperCase();
+  };
+
+  const getProfilePic = (pic) => {
+    if (pic === 'NO_PICTURE') {
+      return (
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{generateInitials()}</Text>
+        </View>
+      );
+    }
+    if (!pic) {
+      return <View style={styles.avatar} />;
+    }
+    return <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar3.png' }} />;
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header} />
-        <Image style={styles.avatar} source={{ uri: picture }} />
+        {getProfilePic(picture)}
         <View style={styles.body}>
           <View style={styles.bodyContent}>
             <Text style={styles.name}>
@@ -69,7 +99,7 @@ const UserProfile = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('UserPosts')}
+              onPress={() => navigation.navigate('UserPosts', { username })}
             >
               <Text style={styles.buttonText}>My Posts</Text>
             </TouchableOpacity>
@@ -87,9 +117,7 @@ const UserProfile = ({ navigation }) => {
               <Text style={styles.logouttext}>Log Out</Text>
             </TouchableOpacity>
           </View>
-
         </View>
-
       </ScrollView>
     </View>
   );
@@ -127,6 +155,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     marginTop: 100,
+    backgroundColor: '#8d99ae',
+    justifyContent: 'center',
+    display: 'flex',
+  },
+  avatarText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 50,
   },
   name: {
     fontSize: 28,
@@ -147,12 +183,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonContainer: {
-    marginTop: 10,
+    marginTop: 20,
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
     width: '50%',
     borderRadius: 25,
     backgroundColor: '#2B2D42',
@@ -166,6 +201,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   logouttext: {
+    marginTop: 20,
     color: '#2B2D42',
     fontWeight: 'bold',
   },
@@ -175,7 +211,6 @@ const styles = StyleSheet.create({
     height: 60,
     width: '95%',
     marginTop: 20,
-    marginBottom: 15,
   },
   cardInfo: {
     fontSize: 14,

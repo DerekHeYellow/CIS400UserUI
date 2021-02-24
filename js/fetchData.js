@@ -127,6 +127,18 @@ async function putCustomerProfile(username, info) {
 }
 
 /**
+ * Get all businessProfiles
+ */
+async function getAllBusinessProfiles() {
+  const response = await fetch(`${Api.DOMAIN}/businessProfiles`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
  * Gets a business profile by username.
  *
  * @param {String} usrname
@@ -177,12 +189,97 @@ async function putBusinessProfile(username, info) {
   return Status.ERROR.OTHER_ERROR;
 }
 
+/**
+ * Create a user post
+ *
+ * @param {String} username
+ */
+async function createPost(post) {
+  const response = await fetch(`${Api.DOMAIN}/posts/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username: post.username,
+      post: post.post,
+      businessMentions: post.businessMentions,
+      isFlagged: post.isFlagged,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  if (response.status === HttpStatus.CONFLICT) {
+    return Status.ERROR.POST_CREATION_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Get all posts
+ */
+async function getAllPosts() {
+  const response = await fetch(`${Api.DOMAIN}/posts`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Get all posts by a user
+ */
+async function getPostsByUser(username) {
+  const response = await fetch(`${Api.DOMAIN}/posts/?byUser=${username}`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Get all posts that mentions a certain business
+ */
+async function getPostsByBusiness(businessUsername) {
+  const response = await fetch(`${Api.DOMAIN}/posts/?byBusiness=${businessUsername}`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Delete post by id
+ */
+async function deletePostById(postId) {
+  const response = await fetch(`${Api.DOMAIN}/posts/${postId}`, {
+    method: 'DELETE',
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  if (response.status === HttpStatus.NOT_FOUND) {
+    return Status.ERROR.POST_DELETION_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
 export {
   signupUser,
   loginUser,
   resetPassword,
+  getAllBusinessProfiles,
   getCustomerProfile,
   putCustomerProfile,
   getBusinessProfile,
   putBusinessProfile,
+  createPost,
+  getAllPosts,
+  getPostsByUser,
+  getPostsByBusiness,
+  deletePostById,
 };

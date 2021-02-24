@@ -1,5 +1,5 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,87 +7,141 @@ import {
   Image,
   FlatList,
 } from 'react-native';
+import ParsedText from 'react-native-parsed-text';
+import { getPostsByBusiness } from '../js/fetchData';
 
-export default class Notifications extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [
-        {
-          id: 3, image: 'https://bootdey.com/img/Content/avatar/avatar7.png', name: 'March SoulLaComa', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: 'https://via.placeholder.com/100x100/FFB6C1/000000',
-        },
-        {
-          id: 2, image: 'https://bootdey.com/img/Content/avatar/avatar6.png', name: 'John DoeLink', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: 'https://via.placeholder.com/100x100/20B2AA/000000',
-        },
-        {
-          id: 4, image: 'https://bootdey.com/img/Content/avatar/avatar2.png', name: 'Finn DoRemiFaso', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: '',
-        },
-        {
-          id: 5, image: 'https://bootdey.com/img/Content/avatar/avatar3.png', name: 'Maria More More', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: '',
-        },
-        {
-          id: 1, image: 'https://bootdey.com/img/Content/avatar/avatar1.png', name: 'Frank Odalthh', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: 'https://via.placeholder.com/100x100/7B68EE/000000',
-        },
-        {
-          id: 6, image: 'https://bootdey.com/img/Content/avatar/avatar4.png', name: 'Clark June Boom!', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: '',
-        },
-        {
-          id: 7, image: 'https://bootdey.com/img/Content/avatar/avatar5.png', name: 'The googler', text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.', attachment: '',
-        },
-      ],
+// eslint-disable-next-line no-unused-vars
+const BusinessMentions = ({ route, navigation }) => {
+  const [posts, setPosts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [postTrigger, setPostTrigger] = useState(0);
+
+  const refreshPosts = () => {
+    setPostTrigger((t) => t + 1);
+  };
+
+  useEffect(() => {
+    getPostsByBusiness(route.params.businessUsername).then((postResult) => {
+      const postItems = postResult.map((postData) => {
+        // convert to data object
+        const utcDate = postData.postDate.split('.')[0];
+        const date = new Date(utcDate);
+        return {
+          id: postData.postId,
+          name: postData.username,
+          text: postData.post,
+          date,
+        };
+      });
+      const sortedPostItems = postItems.sort((a, b) => b.date - a.date);
+      setPosts(sortedPostItems);
+      setIsFetching(false);
+    });
+  }, [postTrigger]);
+
+  const convertDateToString = (date) => {
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
     };
-  }
+    return date.toLocaleString(undefined, options);
+  };
 
-  render() {
-    return (
+  const renderMentionsText = (matchingString) => {
+    // matches => ["@[Don Memos](id:donmemos)", "Don Memos", "donmemos"]
+    const pattern = /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im;
+    const match = matchingString.match(pattern);
+    return `@${match[1]}`;
+  };
+
+  const handleMentionPress = (name) => {
+    const groupPat = /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im;
+    const businessUsername = name.match(groupPat)[2];
+    navigation.navigate('BusinessProfile',
+      {
+        username: businessUsername,
+      });
+  };
+
+  const getParsedText = (text, style) => (
+    <ParsedText
+      style={style}
+      multiline
+      parse={
+            [
+              {
+                pattern: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im,
+                style: styles.mention,
+                onPress: handleMentionPress,
+                renderText: renderMentionsText,
+              },
+            ]
+          }
+      childrenProps={{ allowFontScaling: false }}
+    >
+      {text}
+    </ParsedText>
+  );
+
+  return (
+    <View style={styles.allPosts}>
       <FlatList
         style={styles.root}
-        data={this.state.data}
-        extraData={this.state}
+        data={posts}
+        extraData={posts}
+        refreshing={isFetching}
+        onRefresh={() => {
+          setIsFetching(true);
+          refreshPosts();
+        }}
         ItemSeparatorComponent={() => (
           <View style={styles.separator} />
         )}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={(item) => {
-          const Notification = item.item;
-          let attachment = <View />;
-
-          let mainContentStyle;
-          if (Notification.attachment) {
-            mainContentStyle = styles.mainContent;
-            attachment = (
-              <Image
-                style={styles.attachment}
-                source={{ uri: Notification.attachment }}
-              />
-            );
-          }
-          return (
-            <View style={styles.container}>
-              <Image source={{ uri: Notification.image }} style={styles.avatar} />
-              <View style={styles.content}>
-                <View style={mainContentStyle}>
-                  <View style={styles.text}>
-                    <Text style={styles.name}>{Notification.name}</Text>
-                    <Text>{Notification.text}</Text>
-                  </View>
-                  <Text style={styles.timeAgo}>
-                    2 hours ago
-                  </Text>
+        keyExtractor={(item) => item.id}
+        renderItem={(item) => (
+          <View style={styles.container}>
+            {item.item.image
+            && (<Image source={{ uri: item.item.image }} style={styles.avatar} />)}
+            {!item.item.image
+            && (
+            <View style={styles.avatar}>
+              <Text style={styles.avatarInitials}>
+                {!!item.item.name
+              && item.item.name.substring(0, 2).toUpperCase()}
+              </Text>
+            </View>
+            )}
+            <View style={styles.content}>
+              <View style={styles.mainContent}>
+                <View style={styles.text}>
+                  <Text style={styles.name}>{item.item.name}</Text>
+                  {getParsedText(item.item.text, styles.postBody)}
                 </View>
-                {attachment}
+                <Text style={styles.timeAgo}>
+                  {convertDateToString(item.item.date)}
+                </Text>
               </View>
             </View>
-          );
-        }}
+          </View>
+        )}
       />
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default BusinessMentions;
 
 const styles = StyleSheet.create({
   root: {
     backgroundColor: '#FFFFFF',
+  },
+  allPosts: {
+    flex: 1,
   },
   container: {
     padding: 16,
@@ -100,6 +154,15 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+    backgroundColor: '#8d99ae',
+    justifyContent: 'center',
+    display: 'flex',
+    marginRight: 15,
+  },
+  avatarInitials: {
+    color: '#fff',
+    fontSize: 20,
+    textAlign: 'center',
   },
   text: {
     marginBottom: 5,
@@ -108,17 +171,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginLeft: 16,
-    marginRight: 0,
   },
   mainContent: {
-    marginRight: 60,
-  },
-  attachment: {
-    position: 'absolute',
-    right: 0,
-    height: 50,
-    width: 50,
+    paddingRight: 10,
   },
   separator: {
     height: 1,
@@ -129,7 +184,15 @@ const styles = StyleSheet.create({
     color: '#696969',
   },
   name: {
+    width: '100%',
     fontSize: 16,
     color: '#1E90FF',
+  },
+  mention: {
+    color: '#244dc9',
+  },
+  postBody: {
+    marginTop: 5,
+    width: '100%',
   },
 });
