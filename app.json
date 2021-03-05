@@ -1,15 +1,4 @@
 {
   "name": "vicinity",
-  "displayName": "vicinity",
-  "expo": {
-    "web": {
-      "build": {
-        "babel": {
-          "include": [
-            "native-base-shoutem-theme"
-          ]
-        }
-      }
-    }
-  }
+  "displayName": "vicinity"
 }
