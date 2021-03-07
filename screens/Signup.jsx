@@ -192,6 +192,7 @@ const Signup = ({ navigation }) => {
               secureTextEntry
               underlineColorAndroid="transparent"
               onChangeText={handlePassword}
+              textContentType="newPassword"
               blurOnSubmit={false}
               onSubmitEditing={() => Keyboard.dismiss()}
             />
@@ -209,6 +210,7 @@ const Signup = ({ navigation }) => {
               placeholder="Confirm Password"
               placeholderTextColor="#2b2d42"
               secureTextEntry
+              textContentType="newPassword"
               underlineColorAndroid="transparent"
               onChangeText={handleConfirmPassword}
               blurOnSubmit={false}

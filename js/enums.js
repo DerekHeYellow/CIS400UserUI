@@ -37,6 +37,11 @@ const HttpStatus = Object.freeze({
   CONFLICT: 409,
 });
 
+const Pattern = Object.freeze({
+  MENTION_REGEX: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im,
+  MENTION_REGEX_WITH_G: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/igm,
+});
+
 export {
-  Status, UserType, Api, HttpStatus,
+  Status, UserType, Api, HttpStatus, Pattern,
 };
