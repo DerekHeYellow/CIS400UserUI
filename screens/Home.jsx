@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+// import { Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 
 const Home = ({ navigation }) => (
   <View style={styles.container}>
@@ -13,21 +14,22 @@ const Home = ({ navigation }) => (
         style={styles.pageBtn}
         onPress={() => navigation.navigate('ListBusiness')}
       >
-        <Icon name="shopping-basket" size={50} color="green" />
+        {/* <Ionicons name="shopping-basket" size={50} color="green" /> */}
+        <Ionicons name="basket" size={50} color="green" />
         <Text style={styles.pageText}>Businesses</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.pageBtn}
         onPress={() => navigation.navigate('Map')}
       >
-        <Icon name="map" size={50} color="#EF233C" />
+        <Ionicons name="map" size={50} color="#EF233C" />
         <Text style={styles.pageText}>Map</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.pageBtn}
         onPress={() => navigation.navigate('ListContacts')}
       >
-        <Icon name="contacts" size={40} color="gray" />
+        <Ionicons name="contacts" size={40} color="gray" />
         <Text style={styles.pageText}>Contacts</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -40,7 +42,7 @@ const Home = ({ navigation }) => (
             email: 'rosasun@gmail.com',
           })}
       >
-        <Icon name="person" size={50} color="#2b2d42" />
+        <Ionicons name="person" size={50} color="#2b2d42" />
         <Text style={styles.pageText}>My Profile</Text>
       </TouchableOpacity>
 
@@ -48,7 +50,7 @@ const Home = ({ navigation }) => (
         style={styles.pageBtn}
         onPress={() => navigation.navigate('Posts')}
       >
-        <Icon name="insert-comment" size={40} color="gray" />
+        <Ionicons name="clipboard" size={40} color="gray" />
         <Text style={styles.pageText}>Posts</Text>
       </TouchableOpacity>
     </View>

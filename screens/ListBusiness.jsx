@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { SearchBar, Avatar, ListItem } from 'react-native-elements';
+// import { Ionicons } from '@expo/vector-icons';
 
 import { getAllBusinessProfiles } from '../js/fetchData';
 
