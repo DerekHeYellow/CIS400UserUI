@@ -1,36 +1,11 @@
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
-  SafeAreaView, Text, StyleSheet, View, FlatList,
+  StyleSheet, View, FlatList,
 } from 'react-native';
 import { SearchBar, Avatar, ListItem } from 'react-native-elements';
-
-const list = [
-  {
-    name: 'Derek He',
-    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar5.png',
-    username: 'derekhe',
-    email: 'derekhe@gmail.com',
-  },
-  {
-    name: 'Ally Zhang',
-    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar8.png',
-    username: 'allyzhang',
-    email: 'allyzhang@gmail.com',
-  },
-  {
-    name: 'Rosa Sun',
-    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-    username: 'rosasun',
-    email: 'rosasun@gmail.com',
-  },
-  {
-    name: 'Kaung Khant',
-    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-    username: 'kaungkhant',
-    email: 'kk@gmail.com',
-  },
-];
+import { getAllCustomerProfiles } from '../js/fetchData';
+import { getUsername } from '../js/asyncStorage';
 
 const ListContacts = ({ navigation }) => {
   const [search, setSearch] = useState('');
@@ -38,17 +13,20 @@ const ListContacts = ({ navigation }) => {
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   useEffect(() => {
-    setFilteredDataSource(list);
-    setMasterDataSource(list);
-    // fetch('https://jsonplaceholder.typicode.com/posts')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     setFilteredDataSource(responseJson);
-    //     setMasterDataSource(responseJson);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    // check for edit permissions
+    getUsername().then((user) => {
+      getAllCustomerProfiles().then((result) => {
+        const users = result.filter((userData) => userData.username !== user)
+          .map((userData) => ({
+            name: `${userData.firstName.trim()} ${userData.lastName.trim()}`.trim() || userData.username.trim(),
+            username: userData.username,
+            email: userData.email,
+            avatar_url: userData.picture,
+          }));
+        setFilteredDataSource(users);
+        setMasterDataSource(users);
+      });
+    });
   }, []);
 
   const searchFilterFunction = (text) => {
@@ -74,15 +52,28 @@ const ListContacts = ({ navigation }) => {
     }
   };
 
+  const onPressItem = (item) => {
+    // Function for click on an item
+    navigation.navigate('UserProfile',
+      {
+        username: item.username,
+      });
+  };
+
   const ItemView = ({ item }) => (
     // Flat List Item
     <View>
       <ListItem
         bottomDivider
-        containerStyle={{ backgroundColor: '#2B2D42' }}
-        onPress={() => getItem(item)}
+        containerStyle={styles.listItemContainer}
+        onPress={() => onPressItem(item)}
       >
-        <Avatar rounded size={55} title={item.name[0]} source={item.avatar_url && { uri: item.avatar_url }} />
+        <Avatar
+          rounded
+          size={55}
+          title={item.name[0]}
+          source={item.avatar_url && { uri: item.avatar_url }}
+        />
         <ListItem.Content>
           <ListItem.Title style={styles.title}>{item.name}</ListItem.Title>
           <ListItem.Subtitle style={styles.username}>{item.username}</ListItem.Subtitle>
@@ -90,30 +81,21 @@ const ListContacts = ({ navigation }) => {
         <ListItem.Chevron />
       </ListItem>
     </View>
-
-    // <View style={styles.itemStyle} onPress={() => getItem(item)}>
-    //   {/* <Avatar source={{uri: item.avatar_url}} /> */}
-    //   <Text style = {styles.title}> {item.name} </Text>
-    //   {/* <Text style = {styles.subtitle}> {item.subtitle} </Text> */}
-    // </View>
   );
 
   const ItemSeparatorView = () => (
     // Flat List Item Separator
     <View
-      style={{
-        width: '100%',
-        backgroundColor: '#8d99ae',
-      }}
+      style={styles.itemSeparator}
     />
   );
 
-  const getItem = (item) => {
-    // Function for click on an item
-    navigation.navigate('UserProfile',
-      {
-        name: item.name, avatar_url: item.avatar_url, username: item.username, email: item.email,
-      });
+  ItemView.propTypes = {
+    item: PropTypes.shape({
+      name: PropTypes.string,
+      username: PropTypes.string,
+      avatar_url: PropTypes.string,
+    }).isRequired,
   };
 
   return (
@@ -123,7 +105,7 @@ const ListContacts = ({ navigation }) => {
         round
         searchIcon={{ size: 24 }}
         onChangeText={(text) => searchFilterFunction(text)}
-        onClear={(text) => searchFilterFunction('')}
+        onClear={() => searchFilterFunction('')}
         placeholder="Search Contact..."
         value={search}
       />
@@ -137,23 +119,23 @@ const ListContacts = ({ navigation }) => {
   );
 };
 
+ListContacts.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2B2D42',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
-  itemStyle: {
-    padding: 10,
+  itemSeparator: {
+    width: '100%',
+    backgroundColor: '#8d99ae',
   },
-  inputView: {
-    width: '80%',
-    borderRadius: 25,
-    height: 50,
-    marginBottom: 20,
-    justifyContent: 'center',
-    padding: 20,
+  listItemContainer: {
+    backgroundColor: '#2B2D42',
   },
   inputText: {
     height: 50,

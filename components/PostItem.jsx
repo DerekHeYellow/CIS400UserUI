@@ -100,7 +100,7 @@ PostItem.propTypes = {
   id: PropTypes.number.isRequired,
   image: PropTypes.string,
   user: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.instanceOf(Date).isRequired,
   post: PropTypes.string.isRequired,
   editable: PropTypes.bool,
   onDelete: PropTypes.func,

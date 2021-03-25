@@ -62,3 +62,6 @@ buck-out/
 # random 
 android/.project
 android/.settings
+
+.expo
+web-build
