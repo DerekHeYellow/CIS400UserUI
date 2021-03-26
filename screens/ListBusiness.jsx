@@ -12,13 +12,15 @@ const ListBusiness = ({ navigation }) => {
 
   useEffect(() => {
     getAllBusinessProfiles().then((result) => {
-      const items = result.map((businessProfile) => ({
-        username: businessProfile.username,
-        name: businessProfile.businessName,
-        avatar_url: businessProfile.picture,
-        subtitle: businessProfile.description,
-        email: businessProfile.businessEmail,
-      }));
+      const items = result
+        .filter((businessProfile) => (businessProfile.businessName))
+        .map((businessProfile) => ({
+          username: businessProfile.username,
+          name: businessProfile.businessName,
+          avatar_url: businessProfile.picture,
+          subtitle: businessProfile.description,
+          email: businessProfile.businessEmail,
+        }));
       setFilteredDataSource(items);
       setMasterDataSource(items);
     });
@@ -51,7 +53,7 @@ const ListBusiness = ({ navigation }) => {
     // Function for click on an item
     navigation.navigate('BusinessProfile',
       {
-        username: item.username, name: item.name, type: item.subtitle, email: item.email,
+        username: item.username, name: item.name,
       });
   };
 

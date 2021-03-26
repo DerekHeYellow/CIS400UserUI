@@ -91,7 +91,7 @@ const UserProfile = ({ route, navigation }) => {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('UserPosts', { username })}
+              onPress={() => navigation.push('UserPosts', { username })}
             >
               <Text style={styles.buttonText}>{canEdit ? 'My Posts' : 'See Posts'}</Text>
             </TouchableOpacity>
@@ -100,7 +100,7 @@ const UserProfile = ({ route, navigation }) => {
             && (
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('EditUserProfile', { email, username })}
+              onPress={() => navigation.push('EditUserProfile', { email, username })}
             >
               <Text style={styles.buttonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -124,6 +124,7 @@ const UserProfile = ({ route, navigation }) => {
 UserProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
     addListener: PropTypes.func.isRequired,
   }).isRequired,
   route: PropTypes.shape({

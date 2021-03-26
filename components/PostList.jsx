@@ -112,4 +112,8 @@ const styles = StyleSheet.create({
   alert: {
     marginTop: 20,
   },
+  separator: {
+    height: 1,
+    backgroundColor: 'lightgrey',
+  },
 });
