@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { getMenu } from '../js/fetchData';
 
-const CustomerMenu = ({ navigation, route }) => {
+const BusinessMenu = ({ navigation, route }) => {
   const [business, setBusiness] = useState('');
   const [menu, setMenu] = useState('');
   const [data, setData] = useState([]);
@@ -51,7 +51,7 @@ const CustomerMenu = ({ navigation, route }) => {
   }, []);
 
   const Item = ({ item }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.item}
       onPress={() => {
         setSelectedItem(item.item);
@@ -69,6 +69,22 @@ const CustomerMenu = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        backgroundColor='#7fffd4'
+        flexDirection="row">
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {}}
+        >
+          <Text style={styles.title}>Add Item</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {}}
+        >
+          <Text style={styles.title}>Add Section</Text>
+        </TouchableOpacity>
+      </View>
       <SectionList
         sections={data}
         keyExtractor={(item, index) => item + index}
@@ -108,7 +124,7 @@ const CustomerMenu = ({ navigation, route }) => {
   );
 };
 
-CustomerMenu.propTypes = {
+BusinessMenu.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -120,7 +136,7 @@ CustomerMenu.propTypes = {
   }).isRequired,
 };
 
-export default CustomerMenu;
+export default BusinessMenu;
 
 const styles = StyleSheet.create({
   container: {

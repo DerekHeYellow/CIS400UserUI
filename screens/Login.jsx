@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard,
+  StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard
 } from 'react-native';
 import { storeUsername, storeEmail, storeType } from '../js/asyncStorage';
 

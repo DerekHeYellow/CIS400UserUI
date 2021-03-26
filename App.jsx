@@ -19,6 +19,8 @@ import BusinessMentions from './screens/BusinessMentions';
 import Posts from './screens/Posts';
 import CustomerMenu from './screens/CustomerMenu';
 import CustomerMenus from './screens/CustomerMenus';
+import BusinessMenu from './screens/BusinessMenu';
+import BusinessMenus from './screens/BusinessMenus';
 // const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
@@ -86,6 +88,14 @@ const App = () => (
       <Stack.Screen
         name="CustomerMenu"
         component={CustomerMenu}
+      />
+      <Stack.Screen
+        name="BusinessMenus"
+        component={BusinessMenus}
+      />
+      <Stack.Screen
+        name="BusinessMenu"
+        component={BusinessMenu}
       />
       <Stack.Screen
         name="Posts"

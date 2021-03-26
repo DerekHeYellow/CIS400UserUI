@@ -284,6 +284,78 @@ async function getMenu(username, menu) {
 }
 
 /**
+ * Adds menu for a user
+ *
+ * @param {String} username
+ * @param {String} menu
+ */
+async function addMenu(username, menu) {
+  const response = await fetch(`${Api.DOMAIN}/menu/${username}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newMenu : menu,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  if (response.status === HttpStatus.CONFLICT) {
+    return Status.ERROR.MENU_EXISTS_ERROR;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Changes menu name for a user
+ *
+ * @param {String} username
+ * @param {String} prevMenu
+ * @param {String} newMenu
+ */
+async function changeMenuName(username, prevMenu, newMenu) {
+  const response = await fetch(`${Api.DOMAIN}/menu/${username}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      previousMenu : prevMenu,
+      newMenu : newMenu,
+    }),
+  });
+  if (response.ok) {
+    return;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Deletes menu for a user
+ *
+ * @param {String} username
+ * @param {String} menu
+ */
+async function deleteMenu(username, menu) {
+  const response = await fetch(`${Api.DOMAIN}/menu/${username}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      previousMenu : menu
+    }),
+  });
+  if (response.ok) {
+    return;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+
+/**
  * Delete post by id
  */
 async function deletePostById(postId) {
@@ -318,4 +390,7 @@ export {
   deletePostById,
   getMenus,
   getMenu,
+  addMenu,
+  changeMenuName,
+  deleteMenu,
 };
