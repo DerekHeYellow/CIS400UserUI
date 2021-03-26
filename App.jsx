@@ -7,6 +7,9 @@ import Signup from './screens/Signup';
 import ResetPassword from './screens/ResetPassword';
 
 import TabNavigator from './navigation/TabNavigator';
+import UserType from './screens/UserType';
+
+// const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
@@ -32,6 +35,10 @@ const App = () => (
         name="Home"
         options={{ headerShown: false }}
         component={TabNavigator}
+      />
+      <Stack.Screen
+        name="UserType"
+        component={UserType}
       />
     </Stack.Navigator>
   </NavigationContainer>
