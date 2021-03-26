@@ -19,6 +19,8 @@ import BusinessMentions from './screens/BusinessMentions';
 import Posts from './screens/Posts';
 import CustomerMenu from './screens/CustomerMenu';
 import CustomerMenus from './screens/CustomerMenus';
+import UserType from './screens/UserType';
+
 // const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
@@ -90,6 +92,10 @@ const App = () => (
       <Stack.Screen
         name="Posts"
         component={Posts}
+      />
+      <Stack.Screen
+        name="UserType"
+        component={UserType}
       />
     </Stack.Navigator>
   </NavigationContainer>

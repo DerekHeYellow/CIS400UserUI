@@ -9,12 +9,11 @@ import Alert from '../components/Alert';
 import { Status } from '../js/enums';
 import { signupUser } from '../js/fetchData';
 
-const Signup = ({ navigation }) => {
+const Signup = ({ route, navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isBusiness, setIsBusiness] = useState(false);
-  const [userType, setUserType] = useState('Customer');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // errors
@@ -57,15 +56,6 @@ const Signup = ({ navigation }) => {
   const handleConfirmPassword = (cpw) => {
     setConfirmPassword(cpw);
     setCPWError('');
-  };
-
-  const toggleSwitch = () => {
-    if (isBusiness) {
-      setUserType('Customer');
-    } else {
-      setUserType('Business');
-    }
-    setIsBusiness((previousState) => !previousState);
   };
 
   /**
@@ -116,7 +106,7 @@ const Signup = ({ navigation }) => {
 
     const isValid = validateData(username, email, password, confirmPassword);
     if (isValid) {
-      signupUser(username, password, email, userType).then((response) => {
+      signupUser(username, password, email, route.params.userType).then((response) => {
         if (response === Status.SUCCESS) {
           setSuccessMsg('Signup was succesful!');
           setSignupDone(true);
@@ -133,6 +123,9 @@ const Signup = ({ navigation }) => {
       <View style={styles.signupContainer}>
         <Text style={styles.title}>
           Sign up now.
+        </Text>
+        <Text style={styles.userType}>
+          {route.params.userType}
         </Text>
         <Alert
           show={signupErrorShow}
@@ -222,19 +215,6 @@ const Signup = ({ navigation }) => {
           </Text>
         </View>
 
-        <View style={styles.toggleView}>
-          <Switch
-            style={styles.toggleButton}
-            ios_backgroundColor="#595d88"
-            trackColor={{ true: '#595d88', false: '#595d88' }}
-            onValueChange={toggleSwitch}
-            value={isBusiness}
-          />
-          <Text style={styles.toggleText}>
-            {userType}
-          </Text>
-        </View>
-
         <TouchableOpacity
           style={styles.signupBtn}
           onPress={handleSignup}
@@ -250,6 +230,12 @@ Signup.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      userType: PropTypes.string,
+    }),
+  }).isRequired,
+
 };
 
 export default Signup;
@@ -268,6 +254,14 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     textAlign: 'center',
   },
+  userType: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: 'gray',
+    marginBottom: 40,
+    textAlign: 'center',
+  },
+
   labelView: {
     marginBottom: 8,
   },
@@ -286,20 +280,6 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'left',
     paddingHorizontal: 2,
-  },
-  toggleView: {
-    height: 42,
-    marginTop: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  toggleButton: {
-    backgroundColor: '#595d88',
-  },
-  toggleText: {
-    height: 35,
-    color: 'white',
-    padding: 5,
   },
   signupBtn: {
     backgroundColor: '#ef233c',
