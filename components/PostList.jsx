@@ -41,7 +41,7 @@ const PostList = ({
         ItemSeparatorComponent={() => (
           <View style={styles.separator} />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={(item) => {
           if (item.item.noItems) {
             return (
