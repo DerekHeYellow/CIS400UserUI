@@ -27,7 +27,8 @@ const UserType = Object.freeze({
 });
 
 const Api = Object.freeze({
-  DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api',
+  // DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api',
+  DOMAIN: 'http://localhost:8080/v1/api',
 });
 
 const HttpStatus = Object.freeze({

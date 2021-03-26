@@ -72,7 +72,10 @@ const EditBusinessProfile = ({ navigation }) => {
     setBusinessName(name);
   };
   const handlePhoneNumberChange = (num) => {
-    setPhoneNumber(num);
+    const numericRegex = /^([0-9]{1,100})+$/
+    if(numericRegex.test(num)) {
+      setPhoneNumber(num);
+    }
   };
   const handleHoursChange = (hr) => {
     setBusinessHours(hr);
