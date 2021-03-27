@@ -8,6 +8,7 @@ import ResetPassword from './screens/ResetPassword';
 
 import TabNavigator from './navigation/TabNavigator';
 import UserType from './screens/UserType';
+<<<<<<< HEAD
 import EditBusinessProfile from './screens/EditBusinessProfile';
 import BusinessProfile from './screens/BusinessProfile';
 import CustomerMenu from './screens/CustomerMenu';
@@ -15,6 +16,10 @@ import CustomerMenus from './screens/CustomerMenus';
 import BusinessMentions from './screens/BusinessMentions';
 import UserProfile from './screens/UserProfile';
 import UserPosts from './screens/UserPosts';
+=======
+
+// const Tab = createBottomTabNavigator();
+>>>>>>> beta
 
 const Stack = createStackNavigator();
 
@@ -40,6 +45,7 @@ const App = () => (
         name="Home"
         options={{ headerShown: false }}
         component={TabNavigator}
+<<<<<<< HEAD
       />
       <Stack.Screen
         name="UserType"
@@ -79,6 +85,8 @@ const App = () => (
         name="UserProfile"
         component={UserProfile}
         options={({ route }) => ({ title: route.params.username })}
+=======
+>>>>>>> beta
       />
       <Stack.Screen
         name="UserPosts"
