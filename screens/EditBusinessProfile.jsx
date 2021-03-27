@@ -19,7 +19,7 @@ const EditBusinessProfile = ({ navigation }) => {
   const [description, setDescription] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [businessHours, setBusinessHours] = useState('');
-  const [addressNumber, setAddNumber] = useState();
+  const [addressNumber, setAddNumber] = useState('');
   const [addressStreet, setAddStreet] = useState('');
   const [addressCity, setAddCity] = useState('');
   const [addressState, setAddState] = useState('');
@@ -31,7 +31,7 @@ const EditBusinessProfile = ({ navigation }) => {
         setUsername(un);
         getBusinessProfile(un).then((response) => {
           if (response && typeof response === 'object') {
-            setAddNumber(response.addressNumber.toString());
+            setAddNumber(response.addressNumber ? response.addressNumber.toString() : '');
             setAddStreet(response.addressStreet);
             setAddCity(response.addressCity);
             setAddState(response.addressState);
@@ -48,21 +48,25 @@ const EditBusinessProfile = ({ navigation }) => {
 
   const handleSave = () => {
     const info = {
-      businessName,
-      description,
-      phoneNumber,
-      businessHours,
-      addressNumber,
-      addressStreet,
-      addressCity,
-      addressState,
-      addressZIP,
+      businessName: businessName.trim(),
+      description: description.trim(),
+      phoneNumber: phoneNumber.trim(),
+      businessHours: businessHours.trim(),
+      addressNumber: addressNumber.trim(),
+      addressStreet: addressStreet.trim(),
+      addressCity: addressCity.trim(),
+      addressState: addressState.trim(),
+      addressZIP: addressZIP.trim(),
     };
     putBusinessProfile(username, info).then((response) => {
       if (response === Status.SUCCESS) {
         navigation.navigate('BusinessProfile');
       }
     });
+  };
+
+  const handleCancel = () => {
+    navigation.navigate('BusinessProfile');
   };
 
   const handleDescriptionChange = (desc) => {
@@ -192,7 +196,7 @@ const EditBusinessProfile = ({ navigation }) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={handleSave}
+              onPress={handleCancel}
             >
               <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>

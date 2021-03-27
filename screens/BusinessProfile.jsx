@@ -41,17 +41,17 @@ const BusinessProfile = ({ route, navigation }) => {
       getBusinessProfile(route.params.username).then((response) => {
         if (response && typeof response === 'object') {
           setBusinessUsername(route.params.username);
-          setBusinessName(response.businessName);
-          setDescription(response.description);
-          setPhoneNumber(response.phoneNumber);
+          setBusinessName(response.businessName || '');
+          setDescription(response.description || '');
+          setPhoneNumber(response.phoneNumber || '');
           setAddress({
-            number: response.addressNumber,
-            street: response.addressStreet,
-            city: response.addressCity,
-            state: response.addressState,
+            number: response.addressNumber || '',
+            street: response.addressStreet || '',
+            city: response.addressCity || '',
+            state: response.addressState || '',
           });
-          setBusinessEmail(response.businessEmail);
-          setBusinessHours(response.businessHours);
+          setBusinessEmail(response.businessEmail || '');
+          setBusinessHours(response.businessHours || '');
         } else {
           setNoProfileError(response);
           setShowNoProfile(true);
@@ -60,6 +60,8 @@ const BusinessProfile = ({ route, navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const generateAddress = (number, street, city, state) => `${number} ${street} ${city} ${state}`.trim();
 
   return (
     <View style={styles.container}>
@@ -80,21 +82,12 @@ const BusinessProfile = ({ route, navigation }) => {
             { description !== null && description !== ''
             && (<Text style={styles.info}>{description}</Text>)}
             { Object.keys(address).length > 0
-              && (address.number !== null
-                || address.street !== null
-                || address.city !== null
-                || address.state !== null)
+              && (generateAddress(address.number, address.street, address.city, address.state) !== '')
               && (
               <View style={styles.card}>
                 <Text style={styles.cardTitle}>Our Location</Text>
                 <Text style={styles.cardInfo}>
-                  {address.number}
-                  {' '}
-                  {address.street}
-                  {' '}
-                  {address.city}
-                  {' '}
-                  {address.state}
+                  {generateAddress(address.number, address.street, address.city, address.state)}
                 </Text>
               </View>
               )}
@@ -137,6 +130,14 @@ const BusinessProfile = ({ route, navigation }) => {
               onPress={() => navigation.push('EditBusinessProfile')}
             >
               <Text style={styles.buttonText2}>Edit Profile</Text>
+            </TouchableOpacity>
+            )}
+            {editShow
+            && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Login')}
+            >
+              <Text style={styles.logouttext}>Log Out</Text>
             </TouchableOpacity>
             )}
           </View>
@@ -254,5 +255,10 @@ const styles = StyleSheet.create({
   cardInfo: {
     fontSize: 14,
     color: '#2B2D42',
+  },
+  logouttext: {
+    marginTop: 20,
+    color: '#2B2D42',
+    fontWeight: 'bold',
   },
 });
