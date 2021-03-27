@@ -80,8 +80,8 @@ const Map = ({ navigation }) => {
     ]);
   }, []);
 
-  const onLinkPress = (username) => {
-    navigation.navigate('BusinessProfile', { username });
+  const onLinkPress = (username, name) => {
+    navigation.push('BusinessProfile', { username, name });
   };
 
   return (
@@ -121,7 +121,7 @@ const Map = ({ navigation }) => {
                 <Text style={styles.subTitle}>
                   {marker.description}
                 </Text>
-                <CalloutSubview onPress={() => onLinkPress(marker.username)}>
+                <CalloutSubview onPress={() => onLinkPress(marker.username, marker.businessName)}>
                   <TouchableOpacity style={styles.link}>
                     <Text>See Profile</Text>
                   </TouchableOpacity>
@@ -160,6 +160,7 @@ const Map = ({ navigation }) => {
 Map.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    push: PropTypes.func,
   }).isRequired,
 };
 

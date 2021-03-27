@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyleSheet, Switch, View, Text, TextInput, TouchableOpacity, Keyboard,
+  StyleSheet, View, Text, TextInput, TouchableOpacity, Keyboard,
 } from 'react-native';
 
 import Alert from '../components/Alert';
@@ -13,7 +13,6 @@ const Signup = ({ route, navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isBusiness, setIsBusiness] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // errors

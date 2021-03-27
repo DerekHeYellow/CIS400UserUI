@@ -6,6 +6,7 @@ import {
 import ParsedText from 'react-native-parsed-text';
 import { Icon } from 'react-native-elements';
 
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Pattern } from '../js/enums';
 
 const PostItem = ({
@@ -34,9 +35,11 @@ const PostItem = ({
   const handleMentionPress = (name) => {
     const groupPat = Pattern.MENTION_REGEX;
     const businessUsername = name.match(groupPat)[2];
+    const businessName = name.match(groupPat)[1];
     navigation.push('BusinessProfile',
       {
         username: businessUsername,
+        name: businessName,
       });
   };
 
@@ -60,6 +63,14 @@ const PostItem = ({
     </ParsedText>
   );
 
+  const onPressUsername = () => {
+    navigation.push('UserProfile',
+      {
+        username: user,
+        myProfile: false,
+      });
+  };
+
   return (
     <View style={styles.container}>
       {image && (<Image source={{ uri: image }} style={styles.avatar} />)}
@@ -75,7 +86,9 @@ const PostItem = ({
       <View style={styles.content}>
         <View style={styles.mainContent}>
           <View style={styles.text}>
-            <Text style={styles.name}>{user}</Text>
+            <TouchableOpacity onPress={onPressUsername}>
+              <Text style={styles.name}>{user}</Text>
+            </TouchableOpacity>
             {getParsedText(post, styles.postBody)}
           </View>
           <Text style={styles.timeAgo}>
@@ -95,6 +108,7 @@ const PostItem = ({
 
 PostItem.propTypes = {
   navigation: PropTypes.shape({
+    navigate: PropTypes.func,
     push: PropTypes.func,
   }).isRequired,
   id: PropTypes.number.isRequired,

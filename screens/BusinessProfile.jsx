@@ -121,20 +121,20 @@ const BusinessProfile = ({ route, navigation }) => {
               )}
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('CustomerMenus', { business: businessUsername })}
+              onPress={() => navigation.push('CustomerMenus', { business: businessUsername })}
             >
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonContainer3}
-              onPress={() => navigation.navigate('BusinessMentions', { businessUsername: route.params.username })}
+              onPress={() => navigation.push('BusinessMentions', { businessUsername: route.params.username })}
             >
               <Text style={styles.buttonText}>Mentions</Text>
             </TouchableOpacity>
             {editShow && (
             <TouchableOpacity
               style={styles.buttonContainer2}
-              onPress={() => navigation.navigate('EditBusinessProfile')}
+              onPress={() => navigation.push('EditBusinessProfile')}
             >
               <Text style={styles.buttonText2}>Edit Profile</Text>
             </TouchableOpacity>
@@ -149,6 +149,7 @@ const BusinessProfile = ({ route, navigation }) => {
 BusinessProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    push: PropTypes.func,
     addListener: PropTypes.func,
   }).isRequired,
   route: PropTypes.shape({
