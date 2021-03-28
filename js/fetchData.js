@@ -354,8 +354,254 @@ async function deleteMenu(username, menu) {
   if (response.ok) {
     return Status.SUCCESS;
   }
+  return Status.ERROR.OTHER_ERROR;
 }
 
+/**
+ * Adds menu section for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} section
+ */
+async function addMenuSection(username, menu, section) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newSection : section
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Changes menu section name for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} prevSection
+ * @param {String} newSection
+*/
+async function changeMenuSection(username, menu, prevSection, newSection) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      previousSection : prevSection,
+      newSection : newSection
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Deletes menu section for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} section
+ */
+async function deleteMenuSection(username, menu, section) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      previousSection : section
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Changes menu section order for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} section
+ * @param {int} order
+ */
+async function changeSectionOrder(username, menu, section, order) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/sectionOrder/${username}/${menu}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      section : section,
+      order : order
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Changes menu item order for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} item
+ * @param {int} order
+ */
+async function changeItemOrder(username, menu, item, order) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/itemOrderAndSection/${username}/${menu}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      item : item,
+      order : order
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Changes menu item section for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} item
+ * @param {String} section
+ */
+async function changeItemSection(username, menu, item, section) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/itemOrderAndSection/${username}/${menu}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      item : item,
+      section : section,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Adds menu item for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} item
+ */
+async function addMenuItem(username, menu, item, price, description) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newItem : item,
+      price : price,
+      description : description,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Adds menu item for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} item
+ */
+async function changeMenuItem(username, menu, oldItem, newItem, price, description, available) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      previousItem : oldItem,
+      newItem : newItem,
+      price : price,
+      description : description,
+      available : available,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Deletes menu item for a user and menu
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} item
+ */
+async function deleteMenuItem(username, menu, item) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      previousItem : item,
+    }),
+  });
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
+ * Sends image url for uploaded item
+ *
+ * @param {String} username
+ * @param {String} menu
+ * @param {String} item
+ */
+async function imageForItem(username, menu, item, url) {
+  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      newItem : item,
+      picture : url,
+    }),
+  });
+  console.log(url);
+  if (response.ok) {
+    return Status.SUCCESS;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
 
 /**
  * Delete post by id
@@ -395,4 +641,14 @@ export {
   addMenu,
   changeMenuName,
   deleteMenu,
+  addMenuSection,
+  addMenuItem,
+  deleteMenuItem,
+  changeMenuItem,
+  changeMenuSection,
+  deleteMenuSection,
+  changeSectionOrder,
+  changeItemOrder,
+  changeItemSection,
+  imageForItem,
 };

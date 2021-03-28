@@ -93,14 +93,15 @@ const CustomerMenu = ({ navigation, route }) => {
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Item: {selectedItem}</Text>
           <Text style={styles.modalText}>Price: {itemPrice}</Text>
-          <Text style={styles.modalText}>Available: {itemAvailable}</Text>
-          <Text style={styles.modalText}>Picture: {itemPicture}</Text>
-          <View style={styles.imageView}>
-            <Image
-              source={{uri: 'https://vici-image-bucket.s3.amazonaws.com/images/rn_image_picker_lib_temp_45563eaf-11e4-494c-b4e1-44a6f892b014.jpg'}}
-              style={styles.imageStyle}
-            />
-          </View>
+          {itemAvailable && (<Text style={styles.modalText}>Available: True</Text>)}
+          {!itemAvailable && (<Text style={styles.modalText}>Available: False</Text>)}
+          <Text style={styles.modalText}>Picture:</Text>
+          {itemPicture && (<View style={styles.imageView}>
+             <Image
+               source={{uri: itemPicture}}
+               style={styles.imageStyle}
+             />
+           </View>)}
           <Pressable
               style={[styles.button, styles.buttonOpen]}
               onPress={() => setModalVisible(!modalVisible)}

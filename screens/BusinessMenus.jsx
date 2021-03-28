@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Modal, Pressable, TextInput,
 } from 'react-native';
-import { getMenus, addMenu, changeMenuName, deleteMenu, } from '../js/fetchData';
+import {
+  getMenus,
+  addMenu,
+  changeMenuName,
+  deleteMenu,
+} from '../js/fetchData';
 import { Status } from '../js/enums';
 import Alert from '../components/Alert';
 
@@ -272,16 +277,16 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    padding: 3,
+    marginVertical: 3,
+    marginHorizontal: 3,
   },
   deleteButton: {
     alignItems: "center",
     backgroundColor: "#dc143c",
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    padding: 3,
+    marginVertical: 3,
+    marginHorizontal: 3,
   },
   title: {
     color: '#003049',
