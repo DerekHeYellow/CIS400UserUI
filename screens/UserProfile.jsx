@@ -8,38 +8,33 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { getUsername, getEmail } from '../js/asyncStorage';
+import { getUsername } from '../js/asyncStorage';
 import { getCustomerProfile } from '../js/fetchData';
 
-const UserProfile = ({ navigation }) => {
-  const [username, setUsername] = useState('');
+const UserProfile = ({ route, navigation }) => {
+  const [username] = useState(route.params.username);
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [picture, setPicture] = useState('');
+  const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getUsername().then((un) => {
-        if (un) {
-          setUsername(un);
-          getCustomerProfile(un).then((response) => {
-            if (response && typeof response === 'object') {
-              setFirstName(response.firstName);
-              setLastName(response.lastName);
-              setPhoneNumber(response.phoneNumber);
-              if (response.picture) {
-                setPicture(response.picture);
-              }
-              setPicture('NO_PICTURE');
-            }
-          });
+      // check for edit permissions
+      getUsername().then((currUser) => {
+        if (currUser === route.params.username) {
+          setCanEdit(true);
         }
       });
-      getEmail().then((em) => {
-        if (em) {
-          setEmail(em);
+      getCustomerProfile(route.params.username).then((response) => {
+        if (response && typeof response === 'object') {
+          setEmail(response.email);
+          setFirstName(response.firstName);
+          setLastName(response.lastName);
+          setPhoneNumber(response.phoneNumber);
+          setPicture(response.picture);
         }
       });
     });
@@ -60,17 +55,14 @@ const UserProfile = ({ navigation }) => {
   };
 
   const getProfilePic = (pic) => {
-    if (pic === 'NO_PICTURE') {
+    if (!pic) {
       return (
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>{generateInitials()}</Text>
         </View>
       );
     }
-    if (!pic) {
-      return <View style={styles.avatar} />;
-    }
-    return <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar3.png' }} />;
+    return <Image style={styles.avatar} source={{ uri: pic }} />;
   };
 
   return (
@@ -99,23 +91,29 @@ const UserProfile = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('UserPosts', { username })}
+              onPress={() => navigation.push('UserPosts', { username })}
             >
-              <Text style={styles.buttonText}>My Posts</Text>
+              <Text style={styles.buttonText}>{canEdit ? 'My Posts' : 'See Posts'}</Text>
             </TouchableOpacity>
 
+            {canEdit
+            && (
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('EditUserProfile', { email, username })}
+              onPress={() => navigation.push('EditUserProfile', { email, username })}
             >
               <Text style={styles.buttonText}>Edit Profile</Text>
             </TouchableOpacity>
+            )}
 
+            {canEdit
+            && (
             <TouchableOpacity
               onPress={() => navigation.navigate('Login')}
             >
               <Text style={styles.logouttext}>Log Out</Text>
             </TouchableOpacity>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -126,11 +124,11 @@ const UserProfile = ({ navigation }) => {
 UserProfile.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
     addListener: PropTypes.func.isRequired,
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      email: PropTypes.string,
       username: PropTypes.string,
     }),
   }).isRequired,

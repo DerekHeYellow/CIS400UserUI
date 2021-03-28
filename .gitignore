@@ -64,3 +64,5 @@ android/.project
 android/.settings
 
 S3creds.json
+.expo
+web-build

@@ -86,6 +86,18 @@ async function resetPassword(username, newPassword) {
 }
 
 /**
+ * Get all customerProfiles
+ */
+async function getAllCustomerProfiles() {
+  const response = await fetch(`${Api.DOMAIN}/customerProfiles`);
+  if (response.ok) {
+    const json = await response.json();
+    return json;
+  }
+  return Status.ERROR.OTHER_ERROR;
+}
+
+/**
  * Gets customer profile
  *
  * @param {String} username
@@ -626,9 +638,10 @@ export {
   signupUser,
   loginUser,
   resetPassword,
-  getAllBusinessProfiles,
+  getAllCustomerProfiles,
   getCustomerProfile,
   putCustomerProfile,
+  getAllBusinessProfiles,
   getBusinessProfile,
   putBusinessProfile,
   createPost,

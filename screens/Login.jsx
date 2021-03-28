@@ -46,7 +46,7 @@ const Login = ({ navigation }) => {
                   storeType(response.type.toString()).then((r3) => {
                     if (r3 === Status.SUCCESS) {
                       if (response.type === UserType.CUSTOMER) {
-                        navigation.navigate('Home');
+                        navigation.navigate('Home', { username });
                       } else if (response.type === UserType.BUSINESS) {
                         navigation.navigate('BusinessProfile', { username });
                       }
@@ -138,7 +138,7 @@ const Login = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.signupBtn}
-        onPress={() => navigation.navigate('Signup')}
+        onPress={() => navigation.navigate('UserType')}
       >
         <Text style={styles.loginText}>Sign Up</Text>
       </TouchableOpacity>

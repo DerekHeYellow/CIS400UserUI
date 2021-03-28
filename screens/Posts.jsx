@@ -61,11 +61,13 @@ const Posts = ({ navigation }) => {
 
   useEffect(() => {
     getAllBusinessProfiles().then((result) => {
-      const items = result.map((businessData) => ({
-        id: businessData.username,
-        name: businessData.businessName,
-        username: businessData.username,
-      }));
+      const items = result
+        .filter((businessData) => (businessData.businessName))
+        .map((businessData) => ({
+          id: businessData.username,
+          name: businessData.businessName,
+          username: businessData.username,
+        }));
       setAllSuggestions(items);
     });
     getUsername().then((result) => {
