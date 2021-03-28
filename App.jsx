@@ -50,6 +50,14 @@ const App = () => (
         component={TabNavigator}
       />
       <Stack.Screen
+        name="BusinessProfile"
+        component={BusinessProfile}
+      />
+      <Stack.Screen
+        name="EditBusinessProfile"
+        component={EditBusinessProfile}
+      />
+      <Stack.Screen
         name="BusinessMenus"
         component={BusinessMenus}
       />
@@ -60,7 +68,8 @@ const App = () => (
       <Stack.Screen
         name="Posts"
         component={Posts}
-      <Strack.Screen
+      />
+      <Stack.Screen
         name="UserType"
         component={UserType}
       />
