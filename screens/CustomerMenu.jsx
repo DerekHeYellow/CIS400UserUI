@@ -69,6 +69,11 @@ const CustomerMenu = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        backgroundColor='#deb887'
+        flexDirection="row">
+        <Text style={styles.title}>{menu}</Text>
+      </View>
       <SectionList
         sections={data}
         keyExtractor={(item, index) => item + index}

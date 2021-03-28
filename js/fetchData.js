@@ -327,7 +327,10 @@ async function changeMenuName(username, prevMenu, newMenu) {
     }),
   });
   if (response.ok) {
-    return;
+    return Status.SUCCESS;
+  }
+  if (response.status === HttpStatus.CONFLICT) {
+    return Status.ERROR.MENU_EXISTS_ERROR;
   }
   return Status.ERROR.OTHER_ERROR;
 }
@@ -349,9 +352,8 @@ async function deleteMenu(username, menu) {
     }),
   });
   if (response.ok) {
-    return;
+    return Status.SUCCESS;
   }
-  return Status.ERROR.OTHER_ERROR;
 }
 
 

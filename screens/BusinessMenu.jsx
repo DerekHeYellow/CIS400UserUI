@@ -70,6 +70,11 @@ const BusinessMenu = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View
+        backgroundColor='#deb887'
+        flexDirection="row">
+        <Text style={styles.title}>{menu}</Text>
+      </View>
+      <View
         backgroundColor='#7fffd4'
         flexDirection="row">
         <TouchableOpacity

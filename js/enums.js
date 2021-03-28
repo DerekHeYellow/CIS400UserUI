@@ -28,15 +28,7 @@ const UserType = Object.freeze({
 });
 
 const Api = Object.freeze({
-  DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api/',
-});
-
-const S3Path = Object.freeze({
-  keyPrefix: 'images/',
-  bucket: 'vici-image-bucket',
-  accessKey: 'AKIAQFXTWYHC2O4UZAKT',
-  secretKey: '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',
-  successActionStatus: 201,
+  DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api',
 });
 
 const HttpStatus = Object.freeze({
