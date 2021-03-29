@@ -50,6 +50,10 @@ const EditUserProfile = ({ navigation }) => {
     });
   };
 
+  const cancelChanges = () => {
+    navigation.navigate('UserProfile');
+  };
+
   const handleFirstNameChange = (fn) => {
     setFirstName(fn);
   };
@@ -112,7 +116,9 @@ const EditUserProfile = ({ navigation }) => {
               <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={cancelChanges}
+            >
               <Text style={styles.deleteText}>Delete Profile</Text>
             </TouchableOpacity>
           </View>

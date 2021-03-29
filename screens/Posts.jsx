@@ -111,15 +111,17 @@ const Posts = ({ navigation }) => {
 
   // Create post
   const onPostSubmitClick = () => {
-    createPost({
-      username,
-      post: message.text,
-      businessMentions: findMentions(),
-    }).then(() => {
-      setMessage(null);
-      setClearInput(true);
-      refreshPosts();
-    });
+    if (message?.text) {
+      createPost({
+        username,
+        post: message.text,
+        businessMentions: findMentions(),
+      }).then(() => {
+        setMessage(null);
+        setClearInput(true);
+        refreshPosts();
+      });
+    }
   };
 
   return (

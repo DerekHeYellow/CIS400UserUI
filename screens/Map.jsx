@@ -57,9 +57,9 @@ const Map = ({ navigation }) => {
         longitude: -75.20280216242843,
       },
       {
-        username: 'magiccarpet',
-        businessName: 'Magic Carpet',
-        description: 'Middle Eastern Food Truck',
+        username: 'tacos',
+        businessName: 'Tacos Tuesday',
+        description: '',
         latitude: 39.95699593854842,
         longitude: -75.20085215290271,
       },
@@ -75,7 +75,28 @@ const Map = ({ navigation }) => {
         businessName: 'Yue Kee',
         description: 'Chinese Food Truck',
         latitude: 39.95548691801169,
-        longitude: -75.20143855194483,
+        longitude: -75.20143855194482,
+      },
+      {
+        username: 'alz',
+        businessName: 'Farmers Market 36 Walnut',
+        description: 'Farmers Market',
+        latitude: 39.953450,
+        longitude: -75.194895,
+      },
+      {
+        username: 'magiccarpet',
+        businessName: 'Magic Carpet',
+        description: 'Middle Eastern Food Truck',
+        latitude: 39.951995,
+        longitude: -75.192555,
+      },
+      {
+        username: 'halal',
+        businessName: 'Halal Food Truck',
+        description: 'Halal Food Truck',
+        latitude: 39.954748,
+        longitude: -75.199870,
       },
     ]);
   }, []);
