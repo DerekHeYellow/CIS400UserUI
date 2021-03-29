@@ -24,7 +24,7 @@ const UserProfile = ({ route, navigation }) => {
     const unsubscribe = navigation.addListener('focus', () => {
       // check for edit permissions
       getUsername().then((currUser) => {
-        if (currUser === route.params.username) {
+        if (currUser.toLowerCase() === route.params.username.toLowerCase()) {
           setCanEdit(true);
         }
       });

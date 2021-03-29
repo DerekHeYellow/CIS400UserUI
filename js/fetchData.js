@@ -142,6 +142,7 @@ async function putCustomerProfile(username, info) {
  * Get all businessProfiles
  */
 async function getAllBusinessProfiles() {
+  // console.log('in')
   const response = await fetch(`${Api.DOMAIN}/businessProfiles`);
   if (response.ok) {
     const json = await response.json();
