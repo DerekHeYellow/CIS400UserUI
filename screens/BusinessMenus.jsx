@@ -303,14 +303,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: "green",
+    backgroundColor: "#8edab7",
     alignItems: "center",
     marginVertical: 3,
     marginHorizontal: 3,
     width:200
   },
   new_menu_button: {
-    backgroundColor: "green",
+    backgroundColor: "#8edab7",
     alignItems: "center",
     marginVertical: 3,
     marginHorizontal: 3,
@@ -351,7 +351,15 @@ const styles = StyleSheet.create({
     width:350, 
     marginTop:20,
     marginLeft:20,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    elevation: 7,
+    shadowColor: "#000000",
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        shadowOffset: {
+          height: 1,
+          width: 1
+        }
   },
   modalView: {
     margin: 20,

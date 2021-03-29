@@ -789,7 +789,7 @@ const styles = StyleSheet.create({
     marginTop:15
   },
   add_item_button: {
-    backgroundColor: "green",
+    backgroundColor: "#8edab7",
     marginRight: 40,
   },
   modalText: {
@@ -798,7 +798,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "green",
+    backgroundColor: "#8edab7",
     padding: 3,
     marginVertical: 3,
     marginHorizontal: 3,
@@ -862,7 +862,7 @@ const styles = StyleSheet.create({
   },
   round_button: {
     marginLeft:80,
-    backgroundColor: "green",
+    backgroundColor: "#8edab7",
     alignItems: "center",
     marginVertical: 3,
     marginHorizontal: 3,
