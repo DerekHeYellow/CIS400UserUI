@@ -21,12 +21,14 @@ import BusinessMenu from './screens/BusinessMenu';
 import BusinessMenus from './screens/BusinessMenus';
 import TabNavigator from './navigation/TabNavigator';
 import UserType from './screens/UserType';
+import { MenuProvider } from 'react-native-popup-menu';
 
 // const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
 const App = () => (
+  <MenuProvider>
   <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen
@@ -75,6 +77,7 @@ const App = () => (
       />
     </Stack.Navigator>
   </NavigationContainer>
+  </MenuProvider>
 );
 
 export default App;

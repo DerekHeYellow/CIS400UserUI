@@ -86,7 +86,7 @@ const Map = ({ navigation }) => {
 
   return (
     <View style={styles.mapView}>
-      <MapView
+      {/* <MapView
         style={styles.customMapStyle}
         region={mapRegion}
         followsUserLocation={followUser}
@@ -151,7 +151,7 @@ const Map = ({ navigation }) => {
         }}
       >
         <Icon name="my-location" size={40} color="white" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
     </View>
   );

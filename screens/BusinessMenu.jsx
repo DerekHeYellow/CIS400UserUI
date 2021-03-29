@@ -19,8 +19,17 @@ import {
 import { Status } from '../js/enums';
 import Alert from '../components/Alert';
 import S3creds from '../S3creds.json';
-import {RNS3} from 'react-native-aws3';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { RNS3 } from 'react-native-aws3';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import { color } from 'react-native-reanimated';
+import { bold } from 'chalk';
 
 const BusinessMenu = ({ navigation, route }) => {
   const [business, setBusiness] = useState('');
@@ -83,8 +92,8 @@ const BusinessMenu = ({ navigation, route }) => {
 
   const Item = ({ item }) => (
     <View style={styles.multiButtonRow}>
-      <Text>{item.item}</Text>
-      <TouchableOpacity
+      <Text style={styles.item_text}>{item.item}</Text>
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           setOldItem(item.item);
@@ -101,8 +110,8 @@ const BusinessMenu = ({ navigation, route }) => {
         }}
       >
         <Text>Edit</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </TouchableOpacity> */}
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => selectItemForSectionChange(item.item)}
       >
@@ -125,44 +134,112 @@ const BusinessMenu = ({ navigation, route }) => {
         onPress={() => menuItemDelete(item.item)}
       >
         <Text>Delete</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <View style={styles.header_button}>
+        <Menu>
+          <MenuTrigger style={{ height: 20, width: 20 }}>
+            <Text>...</Text>
+          </MenuTrigger>
+          <MenuOptions style={styles.header_option}>
+            <MenuOption onSelect={() => {
+              setOldItem(item.item);
+              setSelectedItem(item.item);
+              if (item.price) {
+                setItemPrice(item.price.toString());
+              } else {
+                setItemPrice('');
+              }
+              setItemAvailable(item.available);
+              setItemPicture(item.picture);
+              setItemDescription(item.description);
+              setModalVisible(true);
+            }}>
+              <Text style={{ color: 'black' }}>Edit Item</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => selectItemForSectionChange(item.item)}>
+              <Text style={{ color: 'black' }}>Move to Section</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => menuItemDelete(item.item)}>
+              <Text style={{ color: 'black' }}>Delete</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => itemOrderChange(item.item, item.order - 2)}>
+              <Text style={{ color: 'black' }}>Move Up</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => itemOrderChange(item.item, item.order)}>
+              <Text style={{ color: 'black' }}>Move Down</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
+      </View>
     </View>
   );
 
   const Section = ({ item }) => {
     if (item.title !== '') {
+      return (<View style={styles.multiButtonRow}>
+        <Text style={styles.title}>{item.title}</Text>
+        {/* <TouchableOpacity
+          style={styles.button}
+          onPress={() => { }}
+        >
+          <Text>Rename</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => sectionOrderChange(item.title, item.order - 2)}
+        >
+          <Text>Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => sectionOrderChange(item.title, item.order)}
+        >
+          <Text>Down</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => { }}
+        >
+          <Text>Delete</Text>
+        </TouchableOpacity> */}
+        <Menu>
+          <MenuTrigger style={{ height: 20, width: 20 }}>
+            <Text>...</Text>
+          </MenuTrigger>
+          <MenuOptions style={styles.header_option}>
+            <MenuOption onSelect={() => {
+              setOldItem(item.item);
+              setSelectedItem(item.item);
+              if (item.price) {
+                setItemPrice(item.price.toString());
+              } else {
+                setItemPrice('');
+              }
+              setItemAvailable(item.available);
+              setItemPicture(item.picture);
+              setItemDescription(item.description);
+              setModalVisible(true);
+            }}>
+              <Text style={{ color: 'black' }}>Rename Section</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => menuItemDelete(item.item)}>
+              <Text style={{ color: 'black' }}>Delete</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => sectionOrderChange(item.title, item.order - 2)}>
+              <Text style={{ color: 'black' }}>Move Up</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => sectionOrderChange(item.title, item.order)}>
+              <Text style={{ color: 'black' }}>Move Down</Text>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
+      </View>
+      )
+    } else {
       return (<View style={styles.multiButtonSectionRow}>
-      <Text style={styles.title}>{item.title}</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {}}
-      >
-        <Text>Name</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => sectionOrderChange(item.title, item.order - 2)}
-      >
-        <Text>Up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => sectionOrderChange(item.title, item.order)}
-      >
-        <Text>Down</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => {}}
-      >
-        <Text>Delete</Text>
-      </TouchableOpacity>
-    </View>
-  )} else {
-    return (<View style={styles.multiButtonSectionRow}>
-      <Text style={styles.title}> </Text>
-    </View>)
-  }
+        <Text style={styles.title}> </Text>
+      </View>)
+    }
   };
 
   const ItemSection = ({ item }) => {
@@ -170,10 +247,10 @@ const BusinessMenu = ({ navigation, route }) => {
       return (<View style={styles.multiButtonSectionRow}>
         <Text>{item.title}</Text>
         <Pressable
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => itemSectionChange(selectedItem, item.title)}
-          >
-          <Text>Change to Section</Text>
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => itemSectionChange(selectedItem, item.title)}
+        >
+          <Text>Assign to Section</Text>
         </Pressable>
       </View>);
     } else {
@@ -345,8 +422,7 @@ const BusinessMenu = ({ navigation, route }) => {
     )
       .progress((progress) =>
         setUploadSuccessMessage(
-          `Uploading: ${progress.loaded / progress.total} (${
-            progress.percent
+          `Uploading: ${progress.loaded / progress.total} (${progress.percent
           }%)`,
         ),
       )
@@ -389,25 +465,24 @@ const BusinessMenu = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        backgroundColor='#deb887'
-        flexDirection="row">
+      <View style={styles.header_title}>
         <Text style={styles.title}>{menu}</Text>
       </View>
       <View
-        backgroundColor='#7fffd4'
-        flexDirection="row">
+        backgroundColor='white'
+        flexDirection="row"
+      >
         <TouchableOpacity
           style={styles.button}
           onPress={() => setItemAddModalVisible(true)}
         >
-          <Text style={styles.title}>Add Item</Text>
+          <Text style={styles.add_item}>Add Item</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setSectionAddModalVisible(true)}
         >
-          <Text style={styles.title}>Add Section</Text>
+          <Text style={styles.add_section}>Add Section</Text>
         </TouchableOpacity>
       </View>
       <SectionList
@@ -425,13 +500,13 @@ const BusinessMenu = ({ navigation, route }) => {
         }}
       >
         <View style={styles.modalView}>
-          <Text style={styles.title}>Edit Item</Text>
+          <Text style={styles.title}>Edit Item Info:</Text>
           <View style={styles.card}>
             <TextInput
               style={styles.input}
               value={selectedItem}
               onChangeText={handleSelectedItem}
-              placeholder="item"
+              placeholder="Item name"
             />
           </View>
           <View style={styles.card}>
@@ -439,7 +514,7 @@ const BusinessMenu = ({ navigation, route }) => {
               style={styles.input}
               value={itemPrice}
               onChangeText={handleItemPrice}
-              placeholder="price"
+              placeholder="Price"
             />
           </View>
           <View style={styles.card}>
@@ -447,7 +522,7 @@ const BusinessMenu = ({ navigation, route }) => {
               style={styles.input}
               value={itemDescription}
               onChangeText={handleItemDescription}
-              placeholder="description"
+              placeholder="Description"
             />
           </View>
           <View style={styles.card}>
@@ -459,21 +534,21 @@ const BusinessMenu = ({ navigation, route }) => {
           </View>
           <View style={styles.multiButtonRow}>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => menuItemChange(oldItem, selectedItem, itemPrice, itemDescription, itemAvailable)}
-              >
-              <Text>Change</Text>
+              style={styles.edit_buttons}
+              onPress={() => menuItemChange(oldItem, selectedItem, itemPrice, itemDescription, itemAvailable)}
+            >
+              <Text>Save</Text>
             </Pressable>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => changeToImageUpload()}
-              >
-              <Text>Change Image</Text>
+              style={styles.edit_buttons}
+              onPress={() => changeToImageUpload()}
+            >
+              <Text>Upload Image</Text>
             </Pressable>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
+              style={styles.edit_buttons}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
               <Text>Cancel</Text>
             </Pressable>
           </View>
@@ -492,12 +567,12 @@ const BusinessMenu = ({ navigation, route }) => {
           <FlatList
             data={data}
             keyExtractor={(item, index) => item + index}
-            renderItem={({ item }) => <ItemSection item={item}/>}
+            renderItem={({ item }) => <ItemSection item={item} />}
           />
           <Pressable
-              style={[styles.button, styles.buttonOpen]}
-              onPress={() => setItemSectionModalVisible(!itemSectionModalVisible)}
-            >
+            style={styles.edit_buttons}
+            onPress={() => setItemSectionModalVisible(!itemSectionModalVisible)}
+          >
             <Text>Cancel</Text>
           </Pressable>
         </View>
@@ -518,7 +593,7 @@ const BusinessMenu = ({ navigation, route }) => {
             {filePath.uri ? (
               <>
                 <Image
-                  source={{uri: filePath.uri}}
+                  source={{ uri: filePath.uri }}
                   style={styles.imageStyle}
                 />
                 <Text style={styles.textStyle}>
@@ -549,9 +624,9 @@ const BusinessMenu = ({ navigation, route }) => {
             </TouchableOpacity>
           </ScrollView>
           <Pressable
-              style={[styles.button, styles.buttonOpen]}
-              onPress={() => setImageModalVisible(!imageModalVisible)}
-            >
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setImageModalVisible(!imageModalVisible)}
+          >
             <Text>Cancel</Text>
           </Pressable>
         </View>
@@ -565,13 +640,13 @@ const BusinessMenu = ({ navigation, route }) => {
         }}
       >
         <View style={styles.modalView}>
-          <Text style={styles.title}>Add New Section</Text>
+          <Text style={styles.title}>Add New Item</Text>
           <View style={styles.card}>
             <TextInput
               style={styles.input}
               value={newItemName}
               onChangeText={handleNewItemName}
-              placeholder="New Item"
+              placeholder="Item Name"
             />
           </View>
           <View style={styles.card}>
@@ -579,7 +654,7 @@ const BusinessMenu = ({ navigation, route }) => {
               style={styles.input}
               value={newItemPrice}
               onChangeText={handleNewItemPrice}
-              placeholder="New Item Price"
+              placeholder="Item Price"
             />
           </View>
           <View style={styles.card}>
@@ -587,20 +662,20 @@ const BusinessMenu = ({ navigation, route }) => {
               style={styles.input}
               value={newItemDescription}
               onChangeText={handleNewItemDescription}
-              placeholder="New Item Description"
+              placeholder="Item Description"
             />
           </View>
           <View style={styles.multiButtonRow}>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => addNewItem(newItemName, newItemPrice, newItemDescription)}
-              >
-              <Text>Add Item</Text>
+              style={styles.add_item_button}
+              onPress={() => addNewItem(newItemName, newItemPrice, newItemDescription)}
+            >
+              <Text style={{ color: "white", padding: 15 }}>Add Item</Text>
             </Pressable>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setItemAddModalVisible(!itemAddModalVisible)}
-              >
+              style={{ padding: 15 }}
+              onPress={() => setItemAddModalVisible(!itemAddModalVisible)}
+            >
               <Text>Cancel</Text>
             </Pressable>
           </View>
@@ -621,21 +696,20 @@ const BusinessMenu = ({ navigation, route }) => {
               style={styles.input}
               value={newSectionName}
               onChangeText={handleNewSectionName}
-              placeholder="New Section"
+              placeholder="Section Name"
             />
           </View>
           <View style={styles.multiButtonRow}>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => addNewSection(newSectionName)}
-              >
-              <Text>Add</Text>
+              style={styles.add_item_button}
+              onPress={() => addNewSection(newSectionName)}
+            >
+              <Text style={{ color: "white", padding: 15 }}>Add Section</Text>
             </Pressable>
             <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setSectionAddModalVisible(!sectionAddModalVisible)}
-              >
-              <Text>Cancel</Text>
+              onPress={() => setSectionAddModalVisible(!sectionAddModalVisible)}
+            >
+              <Text style={{ padding: 15 }}>Cancel</Text>
             </Pressable>
           </View>
         </View>
@@ -667,9 +741,23 @@ BusinessMenu.propTypes = {
 export default BusinessMenu;
 
 const styles = StyleSheet.create({
+  input: {
+    width: 200,
+    marginTop: 10,
+    backgroundColor: "lightgray",
+  },
+  header_title: {
+    backgroundColor:'white',
+    flexDirection:"row",
+    justifyContent:"center",
+    padding:20
+  },
+  header_button: {
+
+  },
   container: {
     flex: 1,
-    backgroundColor: '#edf2f4',
+    backgroundColor: 'lightgray',
   },
   item: {
     alignItems: "center",
@@ -678,10 +766,27 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  item_text: {
+    marginLeft: 25,
+    fontSize: 15,
+  },
   title: {
+    marginLeft: 15,
     color: '#003049',
-    marginTop: 10,
     fontSize: 25,
+    fontWeight: "bold"
+  },
+  add_section: {
+    color: 'white',
+    fontSize: 25,
+  },
+  add_item: {
+    color: 'white',
+    fontSize: 25,
+  },
+  add_item_button: {
+    backgroundColor: "green",
+    marginRight: 40
   },
   modalText: {
     marginBottom: 15,
@@ -689,28 +794,30 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#DDDDDD",
+    backgroundColor: "green",
     padding: 3,
     marginVertical: 3,
     marginHorizontal: 3,
   },
-  deleteButton: {
-    alignItems: "center",
-    backgroundColor: "#dc143c",
-    padding: 3,
-    marginVertical: 3,
-    marginHorizontal: 3,
-  },
+  // deleteButton: {
+  //   alignItems: "center",
+  //   backgroundColor: "#dc143c",
+  //   padding: 3,
+  //   marginVertical: 3,
+  //   marginHorizontal: 3,
+  // },
   buttonClose: {
     backgroundColor: "#2196F3",
   },
-  multiButtonRow : {
-    flexDirection: "row",
-    backgroundColor: '#edf2f4'
+  multiButtonRow: {
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'white'
   },
-  multiButtonSectionRow : {
+  multiButtonSectionRow: {
     flexDirection: "row",
-    backgroundColor: '#a9a9a9'
+    backgroundColor: 'white'
   },
   modalView: {
     margin: 20,
@@ -743,4 +850,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     margin: 5,
   },
+  edit_buttons: {
+    padding: 15
+  },
+  header_option: {
+    padding: 5
+  }
 });

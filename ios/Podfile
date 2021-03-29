@@ -15,6 +15,10 @@ target 'vicinity' do
 
 
 
+  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'vicinityTests' do
     inherit! :complete
     # Pods for testing
