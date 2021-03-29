@@ -9,7 +9,6 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import PhoneInput from "react-native-phone-number-input";
 import { getUsername } from '../js/asyncStorage';
 import { putCustomerProfile, getCustomerProfile } from '../js/fetchData';
 import { Status } from '../js/enums';
@@ -51,6 +50,10 @@ const EditUserProfile = ({ navigation }) => {
     });
   };
 
+  const cancelChanges = () => {
+    navigation.navigate('UserProfile');
+  };
+
   const handleFirstNameChange = (fn) => {
     setFirstName(fn);
   };
@@ -59,9 +62,9 @@ const EditUserProfile = ({ navigation }) => {
   };
 
   const handlePhoneNumberChange = (pn) => {
-    const numericRegex = /^([0-9]{1,100})+$/
-    if(numericRegex.test(pn)) {
-        setPhoneNumber(pn);
+    const numericRegex = /^([0-9]{1,100})+$/;
+    if (numericRegex.test(pn)) {
+      setPhoneNumber(pn);
     }
   };
 
@@ -90,7 +93,7 @@ const EditUserProfile = ({ navigation }) => {
                 onChangeText={handleLastNameChange}
               />
             </View>
-            
+
             <View style={styles.card}>
               <Text style={styles.cardTitle}>Phone</Text>
               <TextInput
@@ -113,7 +116,9 @@ const EditUserProfile = ({ navigation }) => {
               <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={cancelChanges}
+            >
               <Text style={styles.deleteText}>Delete Profile</Text>
             </TouchableOpacity>
           </View>
