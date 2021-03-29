@@ -473,16 +473,16 @@ const BusinessMenu = ({ navigation, route }) => {
         flexDirection="row"
       >
         <TouchableOpacity
-          style={styles.button}
+          style={styles.round_button}
           onPress={() => setItemAddModalVisible(true)}
         >
-          <Text style={styles.add_item}>Add Item</Text>
+          <Text style={styles.add_item}>New {"\n"}Item</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.round_button}
           onPress={() => setSectionAddModalVisible(true)}
         >
-          <Text style={styles.add_section}>Add Section</Text>
+          <Text style={styles.add_section}>New {"\n"}Section</Text>
         </TouchableOpacity>
       </View>
       <SectionList
@@ -778,15 +778,19 @@ const styles = StyleSheet.create({
   },
   add_section: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 18,
+    textAlign:"center",
+    marginTop:15
   },
   add_item: {
     color: 'white',
-    fontSize: 25,
+    fontSize: 18,
+    textAlign:"center",
+    marginTop:15
   },
   add_item_button: {
     backgroundColor: "green",
-    marginRight: 40
+    marginRight: 40,
   },
   modalText: {
     marginBottom: 15,
@@ -855,5 +859,15 @@ const styles = StyleSheet.create({
   },
   header_option: {
     padding: 5
+  },
+  round_button: {
+    marginLeft:80,
+    backgroundColor: "green",
+    alignItems: "center",
+    marginVertical: 3,
+    marginHorizontal: 3,
+    width:80,
+    height:80,
+    borderRadius:100
   }
 });
