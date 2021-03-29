@@ -8,8 +8,13 @@ import ResetPassword from './screens/ResetPassword';
 
 import TabNavigator from './navigation/TabNavigator';
 import UserType from './screens/UserType';
-
-// const Tab = createBottomTabNavigator();
+import EditBusinessProfile from './screens/EditBusinessProfile';
+import BusinessProfile from './screens/BusinessProfile';
+import CustomerMenu from './screens/CustomerMenu';
+import CustomerMenus from './screens/CustomerMenus';
+import BusinessMentions from './screens/BusinessMentions';
+import UserProfile from './screens/UserProfile';
+import UserPosts from './screens/UserPosts';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +44,46 @@ const App = () => (
       <Stack.Screen
         name="UserType"
         component={UserType}
+      />
+      <Stack.Screen
+        name="BusinessProfile"
+        component={BusinessProfile}
+        options={({ route }) => {
+          if (!route.params.myProfile) {
+            return { title: route.params.username };
+          }
+          return { title: 'My Profile', headerLeft: null };
+        }}
+      />
+      <Stack.Screen
+        name="EditBusinessProfile"
+        component={EditBusinessProfile}
+        options={{ title: 'Edit Profile' }}
+      />
+      <Stack.Screen
+        name="BusinessMentions"
+        component={BusinessMentions}
+        options={{ title: 'Mentions' }}
+      />
+      <Stack.Screen
+        name="CustomerMenus"
+        component={CustomerMenus}
+        options={{ title: 'Menus' }}
+      />
+      <Stack.Screen
+        name="CustomerMenu"
+        component={CustomerMenu}
+        options={({ route }) => ({ title: route.params.menu })}
+      />
+      <Stack.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={({ route }) => ({ title: route.params.username })}
+      />
+      <Stack.Screen
+        name="UserPosts"
+        component={UserPosts}
+        options={{ title: 'Posts' }}
       />
     </Stack.Navigator>
   </NavigationContainer>

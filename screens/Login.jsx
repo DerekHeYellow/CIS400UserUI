@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
                       if (response.type === UserType.CUSTOMER) {
                         navigation.navigate('Home', { username });
                       } else if (response.type === UserType.BUSINESS) {
-                        navigation.navigate('BusinessProfile', { username });
+                        navigation.navigate('BusinessProfile', { username, myProfile: true });
                       }
                     }
                   });
