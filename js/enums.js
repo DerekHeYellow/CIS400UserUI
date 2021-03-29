@@ -29,7 +29,6 @@ const UserType = Object.freeze({
 
 const Api = Object.freeze({
   DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api',
-  //DOMAIN: 'http://localhost:8080/v1/api',
 });
 
 const HttpStatus = Object.freeze({
@@ -41,7 +40,7 @@ const HttpStatus = Object.freeze({
 
 const Pattern = Object.freeze({
   MENTION_REGEX: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/im,
-  MENTION_REGEX_WITH_G: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/igm,
+  MENTION_REGEX_WITH_G: /@\[([^\]]+?)\]\(id:([^\]]+?)\)/gim,
 });
 
 export {

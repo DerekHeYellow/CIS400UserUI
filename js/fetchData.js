@@ -308,7 +308,7 @@ async function addMenu(username, menu) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      newMenu : menu,
+      newMenu: menu,
     }),
   });
   if (response.ok) {
@@ -334,8 +334,8 @@ async function changeMenuName(username, prevMenu, newMenu) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      previousMenu : prevMenu,
-      newMenu : newMenu,
+      previousMenu: prevMenu,
+      newMenu,
     }),
   });
   if (response.ok) {
@@ -360,7 +360,7 @@ async function deleteMenu(username, menu) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      previousMenu : menu
+      previousMenu: menu,
     }),
   });
   if (response.ok) {
@@ -377,13 +377,13 @@ async function deleteMenu(username, menu) {
  * @param {String} section
  */
 async function addMenuSection(username, menu, section) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      newSection : section
+      newSection: section,
     }),
   });
   if (response.ok) {
@@ -401,14 +401,14 @@ async function addMenuSection(username, menu, section) {
  * @param {String} newSection
 */
 async function changeMenuSection(username, menu, prevSection, newSection) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      previousSection : prevSection,
-      newSection : newSection
+      previousSection: prevSection,
+      newSection,
     }),
   });
   if (response.ok) {
@@ -425,13 +425,13 @@ async function changeMenuSection(username, menu, prevSection, newSection) {
  * @param {String} section
  */
 async function deleteMenuSection(username, menu, section) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/section/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      previousSection : section
+      previousSection: section,
     }),
   });
   if (response.ok) {
@@ -449,14 +449,14 @@ async function deleteMenuSection(username, menu, section) {
  * @param {int} order
  */
 async function changeSectionOrder(username, menu, section, order) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/sectionOrder/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/sectionOrder/${username}/${menu}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      section : section,
-      order : order
+      section,
+      order,
     }),
   });
   if (response.ok) {
@@ -474,14 +474,14 @@ async function changeSectionOrder(username, menu, section, order) {
  * @param {int} order
  */
 async function changeItemOrder(username, menu, item, order) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/itemOrderAndSection/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/itemOrderAndSection/${username}/${menu}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      item : item,
-      order : order
+      item,
+      order,
     }),
   });
   if (response.ok) {
@@ -499,14 +499,14 @@ async function changeItemOrder(username, menu, item, order) {
  * @param {String} section
  */
 async function changeItemSection(username, menu, item, section) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/itemOrderAndSection/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/itemOrderAndSection/${username}/${menu}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      item : item,
-      section : section,
+      item,
+      section,
     }),
   });
   if (response.ok) {
@@ -523,15 +523,15 @@ async function changeItemSection(username, menu, item, section) {
  * @param {String} item
  */
 async function addMenuItem(username, menu, item, price, description) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      newItem : item,
-      price : price,
-      description : description,
+      newItem: item,
+      price,
+      description,
     }),
   });
   if (response.ok) {
@@ -548,17 +548,17 @@ async function addMenuItem(username, menu, item, price, description) {
  * @param {String} item
  */
 async function changeMenuItem(username, menu, oldItem, newItem, price, description, available) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      previousItem : oldItem,
-      newItem : newItem,
-      price : price,
-      description : description,
-      available : available,
+      previousItem: oldItem,
+      newItem,
+      price,
+      description,
+      available,
     }),
   });
   if (response.ok) {
@@ -575,13 +575,13 @@ async function changeMenuItem(username, menu, oldItem, newItem, price, descripti
  * @param {String} item
  */
 async function deleteMenuItem(username, menu, item) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      previousItem : item,
+      previousItem: item,
     }),
   });
   if (response.ok) {
@@ -598,17 +598,16 @@ async function deleteMenuItem(username, menu, item) {
  * @param {String} item
  */
 async function imageForItem(username, menu, item, url) {
-  const response =  await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
+  const response = await fetch(`${Api.DOMAIN}/menu/item/${username}/${menu}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      newItem : item,
-      picture : url,
+      newItem: item,
+      picture: url,
     }),
   });
-  console.log(url);
   if (response.ok) {
     return Status.SUCCESS;
   }
