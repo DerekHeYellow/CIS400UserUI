@@ -112,12 +112,22 @@ const BusinessProfile = ({ route, navigation }) => {
                 <Text style={styles.cardInfo}>{businessHours}</Text>
               </View>
               )}
+            {!editShow && (
             <TouchableOpacity
               style={styles.buttonContainer}
               onPress={() => navigation.push('CustomerMenus', { business: businessUsername })}
             >
               <Text style={styles.buttonText}>Menus</Text>
             </TouchableOpacity>
+            )}
+            {editShow && (
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={() => navigation.navigate('BusinessMenus', { business: route.params.username })}
+              >
+                <Text style={styles.buttonText}>My Menus</Text>
+              </TouchableOpacity>
+            )}
             <TouchableOpacity
               style={styles.buttonContainer3}
               onPress={() => navigation.push('BusinessMentions', { businessUsername: route.params.username })}

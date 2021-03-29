@@ -16,6 +16,7 @@ const Status = Object.freeze({
     BUSINESS_PROFILE_NOT_EXISTS_ERROR: 'There is no profile for this business.',
     POST_CREATION_ERROR: 'Sorry, an error occured when creating your post.',
     POST_DELETION_ERROR: 'Sorry, could not find post to delete.',
+    MENU_EXISTS_ERROR: 'Sorry, you already have a menu of that name',
     OTHER_ERROR: 'Oops! Something went wrong.',
   },
   SUCCESS: 'Success.',
@@ -27,8 +28,8 @@ const UserType = Object.freeze({
 });
 
 const Api = Object.freeze({
-  // DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api',
-  DOMAIN: 'http://localhost:8080/v1/api',
+  DOMAIN: 'https://viciapi.vicirestapideployment.com/v1/api',
+  //DOMAIN: 'http://localhost:8080/v1/api',
 });
 
 const HttpStatus = Object.freeze({

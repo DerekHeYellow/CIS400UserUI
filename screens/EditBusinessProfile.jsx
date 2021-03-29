@@ -24,6 +24,7 @@ const EditBusinessProfile = ({ navigation }) => {
   const [addressCity, setAddCity] = useState('');
   const [addressState, setAddState] = useState('');
   const [addressZIP, setAddZip] = useState('');
+  const [picture, setPicture] = useState('');
 
   useEffect(() => {
     getUsername().then((un) => {
@@ -40,6 +41,7 @@ const EditBusinessProfile = ({ navigation }) => {
             setDescription(response.description);
             setPhoneNumber(response.phoneNumber);
             setBusinessHours(response.businessHours);
+            setPicture(response.picture);
           }
         });
       }

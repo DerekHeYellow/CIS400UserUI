@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyleSheet, Text, View, SafeAreaView, SectionList, Modal, TouchableOpacity, Pressable
+  StyleSheet, Text, View, SafeAreaView, SectionList, Modal, TouchableOpacity, Pressable, Image
 } from 'react-native';
 import { getMenu } from '../js/fetchData';
 
@@ -69,6 +69,11 @@ const CustomerMenu = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        backgroundColor='#deb887'
+        flexDirection="row">
+        <Text style={styles.title}>{menu}</Text>
+      </View>
       <SectionList
         sections={data}
         keyExtractor={(item, index) => item + index}
@@ -88,9 +93,15 @@ const CustomerMenu = ({ navigation, route }) => {
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Item: {selectedItem}</Text>
           <Text style={styles.modalText}>Price: {itemPrice}</Text>
-          <Text style={styles.modalText}>Available: {itemAvailable}</Text>
-          <Text style={styles.modalText}>Picture: {itemPicture}</Text>
-          <Text style={styles.modalText}>Description: {itemDescription}</Text>
+          {itemAvailable && (<Text style={styles.modalText}>Available: True</Text>)}
+          {!itemAvailable && (<Text style={styles.modalText}>Available: False</Text>)}
+          <Text style={styles.modalText}>Picture:</Text>
+          {itemPicture && (<View style={styles.imageView}>
+             <Image
+               source={{uri: itemPicture}}
+               style={styles.imageStyle}
+             />
+           </View>)}
           <Pressable
               style={[styles.button, styles.buttonOpen]}
               onPress={() => setModalVisible(!modalVisible)}
@@ -160,5 +171,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5
+  },
+  imageView: {
+    elevation: 8,
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 5,
+    marginVertical: 8,
+    marginHorizontal: 8,
+    height: '40%',
+  },
+  imageStyle: {
+    flex: 1,
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    margin: 5,
   },
 });

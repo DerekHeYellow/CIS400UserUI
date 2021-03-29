@@ -5,20 +5,28 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import ResetPassword from './screens/ResetPassword';
-
-import TabNavigator from './navigation/TabNavigator';
-import UserType from './screens/UserType';
-import EditBusinessProfile from './screens/EditBusinessProfile';
+import ListBusiness from './screens/ListBusiness';
+import ListContacts from './screens/ListContacts';
+import UserProfile from './screens/UserProfile';
+import EditUserProfile from './screens/EditUserProfile';
+import UserPosts from './screens/UserPosts';
+import Map from './screens/Map';
 import BusinessProfile from './screens/BusinessProfile';
+import EditBusinessProfile from './screens/EditBusinessProfile';
+import BusinessMentions from './screens/BusinessMentions';
+import Posts from './screens/Posts';
 import CustomerMenu from './screens/CustomerMenu';
 import CustomerMenus from './screens/CustomerMenus';
-import BusinessMentions from './screens/BusinessMentions';
-import UserProfile from './screens/UserProfile';
-import UserPosts from './screens/UserPosts';
+import BusinessMenu from './screens/BusinessMenu';
+import BusinessMenus from './screens/BusinessMenus';
+import TabNavigator from './navigation/TabNavigator';
+import UserType from './screens/UserType';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const Stack = createStackNavigator();
 
 const App = () => (
+  <MenuProvider>
   <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen
@@ -40,6 +48,26 @@ const App = () => (
         name="Home"
         options={{ headerShown: false }}
         component={TabNavigator}
+      />
+      <Stack.Screen
+        name="BusinessProfile"
+        component={BusinessProfile}
+      />
+      <Stack.Screen
+        name="EditBusinessProfile"
+        component={EditBusinessProfile}
+      />
+      <Stack.Screen
+        name="BusinessMenus"
+        component={BusinessMenus}
+      />
+      <Stack.Screen
+        name="BusinessMenu"
+        component={BusinessMenu}
+      />
+      <Stack.Screen
+        name="Posts"
+        component={Posts}
       />
       <Stack.Screen
         name="UserType"
@@ -87,6 +115,7 @@ const App = () => (
       />
     </Stack.Navigator>
   </NavigationContainer>
+  </MenuProvider>
 );
 
 export default App;
