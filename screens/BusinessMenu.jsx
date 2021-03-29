@@ -250,7 +250,7 @@ const BusinessMenu = ({ navigation, route }) => {
           style={[styles.button, styles.buttonOpen]}
           onPress={() => itemSectionChange(selectedItem, item.title)}
         >
-          <Text>Assign to Section</Text>
+          <Text>Assign</Text>
         </Pressable>
       </View>);
     } else {
@@ -563,7 +563,7 @@ const BusinessMenu = ({ navigation, route }) => {
         }}
       >
         <View style={styles.modalView}>
-          <Text style={styles.title}>Change {selectedItem} Section</Text>
+          <Text style={styles.title}>Change Section of {selectedItem}</Text>
           <FlatList
             data={data}
             keyExtractor={(item, index) => item + index}
@@ -587,7 +587,7 @@ const BusinessMenu = ({ navigation, route }) => {
       >
         <View style={styles.modalView}>
           <Text style={styles.title}>
-            UploadImage
+            Upload Image
           </Text>
           <ScrollView>
             {filePath.uri ? (
@@ -616,7 +616,7 @@ const BusinessMenu = ({ navigation, route }) => {
             ) : null}
             <TouchableOpacity
               activeOpacity={0.5}
-              style={styles.buttonStyle}
+              style={styles.edit_buttons}
               onPress={chooseFile}>
               <Text style={styles.textStyleWhite}>
                 Choose Image
@@ -624,7 +624,7 @@ const BusinessMenu = ({ navigation, route }) => {
             </TouchableOpacity>
           </ScrollView>
           <Pressable
-            style={[styles.button, styles.buttonOpen]}
+            style={styles.edit_buttons}
             onPress={() => setImageModalVisible(!imageModalVisible)}
           >
             <Text>Cancel</Text>
@@ -757,7 +757,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'lightgray',
+    backgroundColor: 'white',
   },
   item: {
     alignItems: "center",
@@ -820,7 +820,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   multiButtonSectionRow: {
+    padding:5,
+    width:200,
     flexDirection: "row",
+    justifyContent: 'space-between',
     backgroundColor: 'white'
   },
   modalView: {

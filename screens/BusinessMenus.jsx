@@ -66,7 +66,7 @@ const BusinessMenus = ({ navigation, route }) => {
         <Text>Delete</Text>
       </TouchableOpacity> */}
       <ActionButton size={40} buttonColor="rgba(251,234,144,1)" verticalOrientation="down" spacing={10}>
-        <ActionButton.Item buttonColor='#9b59b6' title="Edit" onPress={() => navigation.navigate('BusinessMenu', { business: business, menu: item.menu })}>
+        <ActionButton.Item buttonColor='#4ebeb6' title="Edit" onPress={() => navigation.navigate('BusinessMenu', { business: business, menu: item.menu })}>
           <Icon name="md-create" style={styles.actionButtonIcon} />
         </ActionButton.Item>
         <ActionButton.Item buttonColor='#894c6e' title="Rename" onPress={() => {
